@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<workflow>
+	    <useFlow>false</useFlow>
+		<defpath>E:\cyberway\CMS\workflow\</defpath>
+		<defaultUserId>0</defaultUserId>
+	</workflow>
+	<attachment>
+		<uploadpath>c:/workflow/upload</uploadpath>
+	</attachment>
+	<defaultallow><![CDATA[
+		/common/**
+		/images/**
+        /styles/**		
+		/webwork/**
+        /images/**	
+		/dwr/**
+		/ajax**
+		/reports/**
+		/index.jsp		       	
+		/test/**
+		/login.*
+		/login!*.action*
+		/flow/**
+		/base/user!*.action*
+		/base/role!*.action*
+		/base/mediaManager!*.action*
+	]]></defaultallow>
+	<poll>oppse</poll>
+ 
+	<jscall><![CDATA[
+	caller=com.cyberway.core.utils.ajax.Caller
+	basic=com.cyberway.common.base.jscall.BasicCall
+	]]></jscall>	
+</config>

@@ -1,0 +1,104 @@
+package com.cyberway.weixin.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import net.sf.json.JSONObject;
+
+import com.cyberway.weixin.api.SecondVerifyAPI;
+import com.cyberway.weixin.js.JSTicket;
+import com.cyberway.weixin.oauth.Oauth2Util;
+import com.cyberway.weixin.util.AccessTokenUtil;
+import com.cyberway.weixin.util.ConnectionUtil;
+import com.cyberway.weixin.util.Constants;
+/**
+ * 
+ * @com.cyberway.weixin.servlet.SecondVerify
+ * TODO : 用户关注二次验证
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年1月27日 上午10:50:29
+ */
+public class SecondVerify extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	 public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		  request.setCharacterEncoding("UTF-8");
+		  response.setCharacterEncoding("UTF-8"); 
+		  PrintWriter out = response.getWriter();
+		  String code = request.getParameter("code"); 
+		  if (!"authdeny".equals(code)) {
+			  String access_token = AccessTokenUtil.getAccessToken(Constants.CORPID, Constants.SECRET).getToken();
+		  // agentid 跳转链接时所在的企业应用ID 管理员须拥有agent的使用权限；agentid必须和跳转链接时所在的企业应用ID相同
+			  String UserID = Oauth2Util.getUserID(access_token, code, "2");
+	       // 二次验证地址          
+			  if(UserID!=""){
+				  String RequestURL = SecondVerifyAPI.SECOND_VERIFY_URL.replace("ACCESS_TOKEN",access_token).replace("USERID", UserID);  
+				  JSONObject jsonObject = ConnectionUtil.getHttpRequest(RequestURL, "GET", null); 
+//				  out.print("二次验证返回结果：\n"+jsonObject);  
+		  	  	  request.setAttribute("jsonObject", jsonObject);  
+				  request.setAttribute("UserID", UserID);
+				  Map<String, String> ret = JSTicket.getCorpSign(access_token);
+				  if(ret !=null){
+					 request.setAttribute("corpId", Constants.CORPID);
+					 request.setAttribute("timestamp", ret.get("timestamp"));
+					 request.setAttribute("nonceStr", ret.get("nonceStr"));
+					 request.setAttribute("jsapi_ticket", ret.get("jsapi_ticket"));
+					 request.setAttribute("signature", ret.get("signature"));
+					 request.setAttribute("url", ret.get("url"));
+				  }
+				  request.getRequestDispatcher("index.jsp").forward(request, response);
+			  }else{
+				  out.print("获取用户信息失败。。。");
+			  }
+		  }
+		  else{
+			  out.print("授权获取失败，至于为什么，自己找原因。。。");
+		  }
+		  // 跳转到index.jsp
+		  // 二次验证返回数据  35.          
+		  
+		  
+		  // 二次验证结果  37.          out.print("二次验证返回结果：\n"+jsonObject);  
+		  // 传值  39.          request.setAttribute("jsonObject", jsonObject);  
+//		  request.getRequestDispatcher("index.jsp").forward(request, response);
+		}	
+//	protected void doGet(HttpServletRequest request,
+//			HttpServletResponse response) throws ServletException, IOException {
+//		// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
+//		request.setCharacterEncoding("UTF-8");
+//		response.setCharacterEncoding("UTF-8");
+//		PrintWriter out = response.getWriter();
+//		String code = request.getParameter("code");
+//		if (!"authdeny".equals(code)) {
+//			// 调取凭证
+//			String access_token = AccessTokenUtil.getAccessToken(
+//					Constants.CORPID, Constants.SECRET).getToken();
+//			// 打印凭证
+//			out.print("凭证:" + access_token);
+//			// agentid 跳转链接时所在的企业应用ID
+//			// 管理员须拥有agent的使用权限；agentid必须和跳转链接时所在的企业应用ID相同
+//			String UserID = Oauth2Util.getUserID(access_token, code, "1");
+//			// 二次验证地址
+//			String RequestURL = SecondVerifyAPI.SECOND_VERIFY_URL.replace(
+//					"ACCESS_TOKEN", access_token).replace("USERID", UserID);
+//			// 二次验证返回数据
+//			JSONObject jsonObject = ConnectionUtil.getHttpRequest(RequestURL, "GET",null);
+//			// 二次验证结果
+//			out.print("二次验证返回结果：\n" + jsonObject);
+//			// 传值
+//			request.setAttribute("jsonObject", jsonObject);
+//		} else {
+//			out.print("Code获取失败，至于为什么，自己找原因。。。");
+//		}
+//	}
+	// public static void main(String[] args) {
+	// System.out.println(WeixinUtil.URLEncoder("http://121.40.195.86/WeiXinEnterprises/SecondaryVerification"));
+	// }
+}

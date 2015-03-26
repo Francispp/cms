@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.email.domain.CoreEmail" 
+    table="CORE_EMAIL"
+>
+
+    <id
+        name="oid"
+        type="java.lang.Long"
+        column="OID"
+    >
+        <generator class="native" />
+    </id>
+
+    <property
+        name="templatename"
+        type="java.lang.String"
+        column="TEMPLATENAME"
+        length="100"
+    />
+    <property
+        name="createtime"
+        type="java.util.Date"
+        column="CREATETIME"
+    />
+    <property
+        name="templatecontent"
+        type="java.lang.String"
+        column="TEMPLATECONTENT"
+    />        
+   
+</class>
+</hibernate-mapping>

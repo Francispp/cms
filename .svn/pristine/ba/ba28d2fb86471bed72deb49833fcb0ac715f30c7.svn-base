@@ -1,0 +1,441 @@
+package com.cyberway.core.web;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
+import org.ecside.core.ECSideConstants;
+import org.ecside.table.limit.Limit;
+import org.ecside.util.RequestUtils;
+import org.ecside.util.ServletUtils;
+import org.springframework.util.Assert;
+
+import com.cyberway.cms.component.webuser.domain.WebUser;
+import com.cyberway.cms.component.webuser.service.WebUserService;
+import com.cyberway.core.dao.EntityDao;
+import com.cyberway.core.dao.support.CriteriaSetup;
+import com.cyberway.core.dao.support.Page;
+import com.cyberway.core.objects.Loginer;
+import com.cyberway.core.utils.GenericsUtils;
+import com.cyberway.core.utils.StringUtil;
+import com.opensymphony.xwork2.Preparable;
+import com.opensymphony.xwork2.interceptor.ParameterNameAware;
+
+
+/**
+ * 无流程的业务相关的基类，供继承
+ * 
+ * @author caiw
+ *
+ * @param <T> domain
+ */
+abstract public class BaseBizController<T> extends BaseController implements ParameterNameAware{
+	
+	protected static final String LIST_RESULT = "list";// 列表result
+
+	protected static final String EDIT_RESULT = "input";// 编辑页面result
+
+	protected static final String TREE_RESULT = "tree";// 树列表页面result
+	
+	protected static final String DELETED = "deleted";	
+	
+	protected static final String AJAX = "ajax";
+	
+	protected static final String HTMLXTREE_RESULT = "dhtmlxTree";
+	
+	protected int totalRows;
+	
+
+	protected Page _data = new Page();
+	
+	protected Boolean isAjax = false;
+	/**
+	 * 构造
+	 */
+	public BaseBizController(){
+		try {
+			setDomain(getDomainClass().newInstance());
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
+    /**
+     * 获得Service类，必须在子类实现
+     */
+    abstract protected EntityDao<T> getService();
+	/**
+	 * 业务对象
+	 */
+	public T domain;
+	/**
+	 * 得到业务对象
+	 * 需要在业务controller中实现
+	 * @return
+	 */
+	public T getDomain(){
+		return this.domain;
+	}
+	/**
+	 * @param domain
+	 */
+	public void setDomain(T domain){
+		this.domain = domain;
+	}
+	
+	/**
+	 * 业务对象类型
+	 */
+	protected Class<T> getDomainClass(){
+		return GenericsUtils.getSuperClassGenricType(getClass());
+	}
+	
+	/**
+	 * 业务对象主键id的值
+	 */
+	protected Long id;
+	/**
+	 * 多条业务对象的主键值(一般用,分开)
+	 */
+	protected String keys;
+	
+	protected boolean isEdit=true;
+	
+	protected int pageStyle;
+	protected List items;
+	protected String tableId = "myTable";
+	
+	public String getTableId() {
+		return tableId;
+	}
+	public void setTableId(String tableId) {
+		this.tableId = tableId;
+	}	
+	/**
+	 * 得到一个指定ID的业务对象
+	 */
+	public void get(){	
+		domain = (T) getService().get(id);
+	}
+	
+	/**
+	 * 通用保存方法
+	 * @return
+	 * @throws Exception
+	 */
+	public String saveOrUpdate() throws Exception{
+		domain=getService().saveOrUpdate(domain);
+		return EDIT_RESULT;
+	}
+	/**
+	 * 新增
+	 * @return
+	 * @throws Exception
+	 */
+	public String add()throws Exception{
+		
+		return edit();
+	}
+	/**
+	 * 通用的编辑方法
+	 * @return
+	 * @throws Exception
+	 */
+	public String edit()throws Exception{
+		if(id!=null){
+			get();
+		}else{
+			domain=getDomainClass().newInstance();
+		}			
+		return EDIT_RESULT;
+	}
+	/**
+	 * 删除
+	 * @return
+	 */
+	public String delete() throws Exception{
+		if(!StringUtil.isEmpty(keys)){
+			List list=StringUtil.splitToList(keys,",");
+			
+			getService().removeByIds(list);
+			this.addActionMessage(this.getText("RESOURCE.HINTINFO.DELETESUCCESS"));
+			
+		}else
+			this.addActionError(this.getText("RESOURCE.HINTINFO.LETSELECTDELETERECORDWORD"));
+		return execute();
+	}
+	/**
+	 * 列表使用的action
+	 */
+	public String list() throws Exception{
+		doListEntity(new CriteriaSetup(), getTableId(), Page.DEFAULT_PAGE_SIZE);
+		return LIST_RESULT;
+	}
+	/**
+	 * ecside表格组件在通过ajax保存后的状态信息
+	 * @param result
+	 */
+	protected void ajaxSaveInfo(boolean result){
+		String message = this.getTableId();
+		if(result){
+			message += "\n";
+			message += "Success";
+			message += "\n \n";
+			message +=getText("RESOURCE.HINTINFO.SAVESUCCESS");
+		}else{
+			message += "\n";
+			message += "Failed";
+			message += "\n \n";
+			message +=getText("RESOURCE.HINTINFO.SAVEFAILED");
+		}
+		this.getHttpServletRequest().setAttribute(ECSideConstants.C_UPDATE_RESULT_CODE,message);		
+	}
+	
+
+	/**
+	 * ecside表格组件在通过ajax删除后的状态信息
+	 * @param result
+	 */
+	protected void ajaxDelInfo(String result){
+		String message = this.getTableId();
+		if(StringUtils.isBlank(result)){
+			
+			message += "\n";
+			message += "Failed";
+			message += "\n \n";
+			message += getText("RESOURCE.HINTINFO.DELETEFAILED");
+
+		}else{
+			message += "\n";
+			message += "Success";
+			message += "\n";
+			message += result;
+			message += "\n";
+			message +=getText("RESOURCE.HINTINFO.DELETESUCCESS");
+		}
+		this.getHttpServletRequest().setAttribute(ECSideConstants.C_UPDATE_RESULT_CODE,message);		
+	}
+	/**
+	 * 获取业务对象列表的函数.
+	 */
+	protected void doListEntity(CriteriaSetup criteriaSetup, String tableId,
+			int pageSize) throws Exception{
+		int totalRows = RequestUtils.getTotalRowsFromRequest(
+				getHttpServletRequest(), tableId);
+		if (totalRows < 0) {
+			totalRows = getService().getCount(criteriaSetup);
+		}
+		Limit limit = RequestUtils.getLimit(getHttpServletRequest(), tableId, totalRows, Page.DEFAULT_PAGE_SIZE);
+		Page page = getService().findECPage(limit, criteriaSetup);
+		this.setItems((List)page.getResult());
+		RequestUtils.setTotalRows(getHttpServletRequest(), page.getTotalCount());
+		setData(page);
+	}
+	
+	/**
+	 * ajax保存
+	 * @return
+	 */
+	public String saveAjax() {
+		logger.info("save user ajax......");
+		HttpServletRequest request = this.getHttpServletRequest();
+		Map map = ServletUtils.getParameterMap(request);
+		boolean result = false;
+		try{
+		 result = getService().saveByAjax(map);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.ajaxSaveInfo(result);
+		
+		return AJAX;
+	}
+    /* * 
+     * (non-Javadoc)
+     *  @see cn.org.coral.core.web.BaseEntityAction#delete()
+     */
+   @SuppressWarnings("unchecked")
+    public String deleteAjax(){
+   	 HttpServletRequest request = this.getHttpServletRequest();
+   	 Map map = ServletUtils.getParameterMap(request);
+   	 String result=null;
+   	 try{
+   	  result = getService().removeByAjax(map);
+	 }catch(Exception e){
+			e.printStackTrace();
+		}
+   	 this.ajaxDelInfo(result);
+   	 return AJAX;
+    }	
+	/**
+	 * 根据异常信息KEY从资源文件中取得对应的业务异常说明
+	 * @param errorMessageKey
+	 */
+	protected void addErrorByKey(String[] errorMessageKey){
+		Assert.notNull(errorMessageKey);
+		for(int i=0;i<errorMessageKey.length;i++){
+			addActionError(getText(errorMessageKey[i]));			
+		}
+	}
+	
+	//获得当前登录者信息
+    protected Loginer getLoginer() throws Exception{
+    	if(getSession().get(Loginer.LOGININFO_SESSION)!=null)
+    	  return (Loginer)getSession().get(Loginer.LOGININFO_SESSION);
+    	else 
+    	  throw new Exception(getText("RESOURCE.HINTINFO.NOLOGIN"));
+    	
+    }
+    
+    /**
+     * 获取session中的siteId
+     * @return
+     * @throws Exception
+     */
+    protected Long getLoginerSiteId(){
+    	Loginer loginer = (Loginer)getSession().get(Loginer.LOGININFO_SESSION);
+    		if(loginer != null && loginer.getSiteId() >0)
+    			return loginer.getSiteId();
+    		else return 0l;
+    
+    }
+    /**
+     * 
+    *  <p>TODO 
+    *  	从cookies获取userid
+    *  </p>
+     * @return
+     */
+    public String getWxUserId(){
+		Cookie[] cookies = getRequest().getCookies();
+		String userId = "";
+		if(cookies!=null && cookies.length>0){
+			for (Cookie cookie : cookies) {
+				if("user".equals(cookie.getName())){
+					userId = cookie.getValue();
+					break;
+				}
+			}
+		}
+		return userId;
+	}
+   
+    /**
+     * 无权限提示方法(若用户未登录，则提示请先登录)
+     * @throws Exception;
+     */
+    protected String NoPermissionHint()throws Exception{
+    	//若用户为空，提示未登录
+    	if(getLoginer()==null)
+    		throw new Exception(getText("RESOURCE.HINTINFO.NOLOGIN"));
+    	throw new Exception(getText("RESOURCE.HINTINFO.NOPERMISSION"));
+    }
+    
+    /**
+     * 从session或cookie中获取WebUser
+     * @return
+     * @throws Exception
+     * 2013-12-28 16:50:52
+     */
+    @SuppressWarnings("unchecked")
+	protected WebUser getWebUser() throws Exception{
+    	WebUser user = (WebUser)getSession().get(WebUser.WEB_USER_IN_SESSION);
+    	if(user != null){
+    		return user;
+    	}else{
+    		Long userId = getLongValueFromCookie("webuserLoginid");
+    		String pwd = getStringValueFromCookie("outerLoginpwd");
+    		if(userId!=null && StringUtils.isNotBlank(pwd)){
+    			WebUserService service = (WebUserService) this.getServiceById("WebUserService");
+    			user = service.get(userId);
+    			if(!pwd.equals(user.getLoginpwd())){
+    				user = null;//不同的机器登录且密码修改过, 需重新登录
+    			}else{
+    				getSession().put(WebUser.WEB_USER_IN_SESSION, user);
+    			}
+    		}else{
+    			user = null;//cookie中没有webuser信息
+    		}
+    	}
+    	return user;
+    }
+    
+    protected String outWrite(Object obj){
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.write(obj.toString());
+			writer.close();
+		} catch (IOException e) {
+			logger.error(e);
+		}
+		return NONE;
+	}
+    
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public int getTotalRows() {
+		return totalRows;
+	}
+	public void setTotalRows(int totalRows) {
+		this.totalRows = totalRows;
+	}
+	/* 默认接收所有参数
+	 * @see com.opensymphony.xwork.interceptor.ParameterNameAware#acceptableParameterName(java.lang.String)
+	 */
+	public boolean acceptableParameterName(String arg0) {
+		return true;
+	}
+	
+	public String getKeys() {
+		return keys;
+	}
+	public void setKeys(String keys) {
+		this.keys = keys;
+	}
+	public boolean getIsEdit() {
+		return isEdit;
+	}
+	public void setIsEdit(boolean isEdit) {
+		this.isEdit = isEdit;
+	}
+	public List getItems() {
+		return items;
+	}
+	public void setItems(List items) {
+		this.items = items;
+	}
+	public int getPageStyle() {
+		return pageStyle;
+	}
+	public void setPageStyle(int pageStyle) {
+		this.pageStyle = pageStyle;
+	}
+	public Page getData() {
+		return _data;
+	}
+	public void setData(Page _data) {
+		this._data = _data;
+	}
+	public Boolean getIsAjax() {
+		return isAjax;
+	}
+	public void setIsAjax(Boolean isAjax) {
+		this.isAjax = isAjax;
+	}
+	
+}

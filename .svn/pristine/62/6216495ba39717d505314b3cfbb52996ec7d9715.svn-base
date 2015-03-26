@@ -1,0 +1,15 @@
+package com.cyberway.weixin.business.attendance.service;
+
+import com.cyberway.core.dao.HibernateEntityDao;
+import com.cyberway.weixin.business.attendance.domain.Attendance;
+/**
+ * 
+ * @com.cyberway.weixin.business.attendance.service.AttendanceService
+ * TODO :
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年2月16日 下午1:56:32
+ */
+public class AttendanceService extends HibernateEntityDao<Attendance>{
+
+}

@@ -1,0 +1,127 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>		
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/rss.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/attachment.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/xml.js"></script>	
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>	
+		<script language="javascript">
+			new Rss ().handleDialog ();
+			var oEditor		= window.parent.InnerDialogLoaded() ;
+			function Add()
+			{
+			
+				AddComboOption($("optionFileTypeList"), $("channelTextField").getValue (), $("channelTextField").getValue ());
+				AddComboOption($("optionFileValueList"), $("channelValueField").getValue (), $("channelValueField").getValue ());
+				$("optionFileTypeList").selectedIndex = $("optionFileTypeList").options.length - 1 ;
+				$("channelTextField").value = "";
+				$("channelValueField").value = "";
+			}
+			function Delete ()
+			{
+				$A($("optionFileTypeList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+					        $("optionFileValueList").options[$("optionFileTypeList").selectedIndex] = null;
+						$("optionFileTypeList").removeChild (option);
+						
+					}
+				}.bind (this));
+				 
+			}
+			function AddComboOption(combo, optionText, optionValue, documentObject, index)
+			{
+				var option;
+				
+				if (documentObject)
+					option = documentObject.createElement("OPTION") ;
+				else
+					option = document.createElement("OPTION") ;
+			
+				if (index != null)
+					combo.options.add(option, index);
+				else
+					combo.options.add(option);
+				option.innerHTML = optionText.length > 0 ? HTMLEncode(optionText) : '&nbsp;';
+				option.value = optionValue ;
+			
+				return option;
+			}
+			function HTMLEncode( text )
+			{
+				if ( !text )
+					return '' ;
+			
+				text = text.replace( /&/g, '&amp;' ) ;
+				text = text.replace( /</g, '&lt;' ) ;
+				text = text.replace( />/g, '&gt;' ) ;
+			
+				return text ;
+			}
+			
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+			<td valign="top">
+			<div id="basicView">
+			
+	<br />
+	<div id="textView" style="display:block;">
+						<span>添加可订阅栏目：</span>
+						<br />
+						<input type="text" id="channelValueField" style="display:none" />
+						<input id="channelTextField" style="width:55%" type="text" />
+						<input id="popupImg" type="button" value="选择"/>
+						<input onclick="Add();" type="button" value="添加"/>
+						<input onclick="Delete();" type="button" value="移除"/>
+						<select id="optionFileTypeList" style="WIDTH:95%" size="5" name="cmbText"></select>
+						<select id="optionFileValueList" style="WIDTH:55%" size="5" name="cmbValue" style="display:none"></select>
+						<br />
+                                     <br />
+			
+			<div>
+			<span>登陆地址：</span>
+						<br />
+						<input id="loginpath" style="width:100%" type="text" />
+						<br />
+
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="rss_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="rss_style1">Style1</option>
+							<option value="rss_style2">Style2</option>
+						</select>
+						</div>
+			<br />
+			
+			</div>
+			
+
+			</div> 			
+	               
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+<SCRIPT LANGUAGE="JavaScript">
+
+	
+function switchView (view)
+	{
+		document.getElementById ("textView").style.display = "none";
+		document.getElementById ("iconView").style.display = "none";
+		document.getElementById (view).style.display = "";
+	}
+</SCRIPT>

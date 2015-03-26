@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.component.wsr.domain.Emailcfg" table="CMS_EMAILCFG" >
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>  
+ 
+		<property name="siteName" length="100"/><!--站点名称-->
+		<property name="siteId" length="20"/><!--站点编号-->
+		<property name="mailServer" length="100"/><!--邮件服务器-->
+		<property name="fromMail" length="100"/><!--发送人-->
+		<property name="frompwd" length="20"/><!--发送人密码-->
+		<property name="needvalidate"  /><!--订阅时间-->
+		<property name="subject" length="200"/><!--主题 -->
+		<property name="formName" length="100"/><!--发送人-->
+		<property name="createTime" length="20"/><!--创建时间-->
+		<property name="describe" length="300"/><!--备注-->
+		 
+		    </class>
+</hibernate-mapping >
+		

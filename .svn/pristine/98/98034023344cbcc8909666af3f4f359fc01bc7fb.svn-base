@@ -1,0 +1,448 @@
+/* main_css */
+img{
+	border:0px;
+}
+a{
+text-decoration:none;
+color:#000000;
+}
+a:hover{
+text-decoration:none;
+color:#ff0000;
+}
+#header{
+	position: absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:85px;
+	background:url(../../images/kms/kms_02.jpg) repeat-x top;
+	display:table;
+	text-align:right;
+}
+#header_left{
+	width:100%; 
+	height:85px;
+	background:url(../../images/kms/kms_01.jpg) no-repeat left top;
+}
+#header_right{
+	width:100%;
+	height:85px;
+	background:url(../../images/kms/kms_03.jpg) no-repeat right top;
+}
+#header_nav{
+	text-align:right !important;
+	text-align:left;
+	color:#ffffff;
+	display:block;
+}
+#header_nav a{
+	color:#ffffff;
+	text-decoration: none; 
+	position:relative;
+}
+#header_nav a:hover{
+	color:#CC0000;
+	position: relative;
+	right: 0px; 
+	top: 1px;
+	text-decoration: none; 
+}
+#header_nav span{
+color:#CC0000;
+}
+/* inside main css */
+#main{
+	height:100%;
+	width:100%;
+	margin:0 auto;
+}
+/* inside main left css */
+#main_left{
+	float:left;
+	width:178px;
+	height:100%;
+	background:url(../../images/kms/inside_left_bg.jpg) repeat-y top left;
+}
+#main_left_split{
+	float:right;
+	width:6px;
+	height:0px !important;
+	height:450px;
+	overflow:hidden;
+	cursor:hand; 
+	display:block;
+	background:url(../../images/kms/arrow.gif) no-repeat right center;
+}
+#main_left_line{
+	float:left;
+	width:6px;
+	height:100%;
+	cursor:hand; 
+	display:block;
+	background: #e4e4e4 url(../../images/kms/arrow1.gif) no-repeat left center;
+}
+#main_left_header{
+	height:8px;
+	width:178px;
+	background:url(../../images/kms/inside_8.jpg) no-repeat left top;
+}
+#main_left_center{
+	width:178px;
+}
+#main_left_footer{
+	height:100%;
+	width:178px;
+	background:url(../../images/kms/inside_10.jpg) no-repeat bottom left;
+}
+#main_left_center_content{
+	width:178px;
+	text-align:center;
+}
+#main_left_center_content ul{
+	margin:6px 0px 0px 6px !important;
+	>margin:0px !important;
+	margin:0px;
+	padding:0px;
+	text-align:left;
+	list-style-type:none;
+}
+#main_left_center_content ul li{
+    margin:10px 10px 0px 10px !important;
+	>margin:0px!important;
+	margin:0px;
+	padding:0px;
+	line-height:26px;
+	vertical-align:middle;
+	background:url(../../images/kms/menu_bg2.jpg) no-repeat center top;
+	list-style-position:none;
+	font-size:14px;
+	color:#fff;
+	display:block;
+	font-weight: bold;
+	cursor:hand;
+}
+#main_left_center_content ul li#change{background:url(../../images/kms/menu_bg2.jpg) no-repeat center top;}
+#main_left_center_content ul li p{margin:0px;padding:0px;overflow:hidden;}
+#main_left_center_content ul li a{margin:10px 10px 0px 10px; color:#fff;font-size:14px;font-weight:bold; text-indent:24px; display:block;}
+#main_left_center_content ul li a:hover{margin:10px 10px 0px 10px; background:url(../../images/kms/menu_bg1.jpg) no-repeat center top; text-indent:24px ;}
+#main_left_center_content tr{
+	margin:6px 0px 0px 6px !important;
+	>margin:0px !important;
+	margin:0px;
+	padding:0px;
+	text-align:left;
+	list-style-type:none;
+}
+#main_left_center_content tr td{
+    margin:10px 10px 0px 10px !important;
+	>margin:0px!important;
+	margin:0px;
+	padding:0px;
+	line-height:32px;
+	vertical-align:middle;
+	background:url(../../images/kms/menu_bg2.jpg) no-repeat center top;
+	list-style-position:none;
+	font-size:14px;
+	color:#fff;
+	display:block;
+	font-weight: bold;
+	cursor:hand;
+}
+#main_left_center_content tr td#change{background:url(../../images/kms/menu_bg2.jpg) no-repeat center top;}
+#main_left_center_content tr td p{margin:0px;padding:0px;overflow:hidden;}
+#main_left_center_content tr td a{color:#fff;font-size:14px;font-weight:bold; text-indent:24px; display:block;}
+#main_left_center_content tr td a:hover{background:url(../../images/kms/menu_bg1.jpg) no-repeat center top;text-indent:24px ;}
+#menu_tree_4 tr td{
+background:url();
+}
+#main_right { 
+	height: 100%;
+	width:100%;
+}
+/* inside footer css */
+#footer{
+clear:both;
+width:100%;
+height:26px;
+clear:left;
+background:url(../../images/kms/inside_32.jpg) repeat-x left top ;
+}
+#footer p{
+margin:0px;
+padding:0px;
+height:26px;
+line-height:26px;
+color:#035DA9;
+text-align:left;
+}
+#footer p span{
+float:right; 
+height:26px;
+line-height:26px;
+margin-right:10px;
+}
+#footer p a{
+color:#AF0000;
+}
+#footer p a:hover{
+color:#AF0000;
+text-decoration: underline;
+}
+.inside_top1{
+padding-top:5px;
+background:url(../../images/kms/kms_09.jpg) no-repeat center left;
+height:22px;
+width:78px;
+font-size:12px;
+text-align:center;
+color:#fff;
+font-weight:bold;
+}
+.inside_top2{
+padding-top:5px;
+background:url(../../images/kms/kms_11.jpg) no-repeat center left;
+height:22px;
+width:78px;
+font-size:12px;
+text-align:center;
+color:#fff;
+font-weight:bold;
+}
+.inside_top3{
+padding-top:5px;
+background:url(../../images/kms/kms_12.jpg) no-repeat center left;
+height:22px;
+width:100px;
+font-size:12px;
+text-align:center;
+color:#fff;
+font-weight:bold;
+}
+.inside_top4{
+padding-top:5px;
+background:url(../../images/kms/kms_12a.jpg) no-repeat center left;
+height:22px;
+width:100px;
+font-size:12px;
+text-align:center;
+color:#fff;
+font-weight:bold;
+}
+/* titel css */
+#titel{
+margin:0px 4px auto;
+width:100%;
+height:34px;
+text-align:center;
+background:url(../../images/kms/kms_13.jpg) repeat-x center;
+display:table;
+}
+#titel_left{
+width:100%; 
+height:34px;
+background:url(../../images/kms/kms_13a.jpg) no-repeat left center;
+}
+#titel_right{
+width:100%;
+height:34px;
+background:url(../../images/kms/kms_13b.jpg) no-repeat right center;
+}
+#nav{
+margin:8px 0px 0px 0px;
+width:98%;
+height:27px;
+display:table;
+}
+#nav  ul{
+float:right;
+margin:0px;
+text-align:right;
+list-style-type:none;
+}
+#nav ul li{
+float:left;
+margin:0px 6px 0px 4px;
+text-align:center;
+display:block;
+}
+#nav  ul li a{
+color:#000;
+}
+#nav  ul li a:hover{
+color:#CC0000;
+position: relative; right: 0px; top: 0px;
+}
+#button{
+float:left;
+margin:0px 6px 0px 4px;
+width:37px;
+height:23px;
+background:url(../../images/kms/buttonbg.gif) no-repeat top;
+text-align:center;
+line-height:23px;
+color:#000;
+}
+#titel2{
+margin:0px 4px auto;
+width:100%;
+height:34px;
+text-align:center;
+background:url(../../images/kms/kms_13.jpg) repeat-x center;
+display:table;
+}
+#titel2_left{
+width:100%; 
+height:34px;
+background:url(../../images/kms/kms_13a.jpg) no-repeat left center;
+}
+#titel2_right{
+width:100%;
+height:34px;
+background:url(../../images/kms/kms_13b.jpg) no-repeat right center;
+}
+#nav2{
+margin:8px 0px 0px 0px;
+width:98%;
+height:27px;
+display:table;
+}
+#nav2  ul{
+float:right;
+margin:0px;
+text-align:right;
+list-style-type:none;
+}
+#nav2 ul li{
+float:left;
+margin:0px 6px 0px 4px;
+text-align:center;
+display:block;
+}
+#nav2  ul li a{
+color:#000;
+}
+#nav2  ul li a:hover{
+color:#CC0000;
+position: relative; right: 0px; top: 0px;
+}
+#button2{
+float:left;
+margin:0px 6px 0px 4px;
+width:37px;
+height:23px;
+background:url(../../images/kms/buttonbg.gif) no-repeat top;
+text-align:center;
+line-height:23px;
+color:#000;
+}
+#button1{
+float:left;
+margin:0px 6px 0px 4px;
+width:70px;
+height:23px;
+background:url(../../images/kms/buttonbg1.gif) no-repeat top;
+text-align:center;
+line-height:23px;
+color:#000;
+}
+#button3{
+float:left;
+margin:0px 6px 0px 4px;
+width:100px;
+height:23px;
+background:url(../../images/kms/buttonbg2.gif) no-repeat top;
+text-align:center;
+line-height:23px;
+color:#000;
+}
+.table_title{
+font-size:14px;
+color:#0d84c6;
+font-weight:bold;
+text-align:center;
+height:26px;
+line-height:26px;
+}
+.table_no{
+color:#376db9;
+}
+.inside_list{
+font-size:12px;
+color:#0d84c6;
+}
+.inside_formcss{
+border:1px solid #95989f;
+background-color:#fff;
+}
+#titel1{
+margin:0px 4px auto;
+width:100%;
+height:26px;
+text-align:center;
+background:url(../../images/kms/titelbg.jpg) repeat-x center;
+display:table;
+}
+#titel1_left{
+width:100%; 
+height:26px;
+background:url(../../images/kms/titelleft.jpg) no-repeat left center;
+}
+#titel1_right{
+width:100%;
+height:26px;
+background:url(../../images/kms/titelright.jpg) no-repeat right center;
+}
+#titel1_txt{
+width:100%;
+	text-align:center;
+	font-size:14px;
+	color:#fff;
+	font-weight: bolder;
+	line-height:200%;
+	display:table;
+}
+/*新加上的*/
+.error{
+font-size:13px;
+text-decoration:underline;
+color:#0066CC;
+font-weight:bold;
+}
+.error:link{
+font-size:13px;
+text-decoration:underline;
+color:#0066CC;font-weight:bold;
+}
+.error:hover{
+font-size:13px;
+text-decoration:none;
+color:#D80000;font-weight:bold;
+}
+.error:visited{
+font-size:13px;
+text-decoration:underline;
+color:#0066CC;font-weight:bold;
+}
+#login{
+margin:0px 0px 0px 0px;
+padding:0px !important;
+padding-left:0px!important;
+>padding:0px !important;
+padding:0px;
+width:250px;
+height:127px;
+color:#299a91;
+text-align:left;
+}
+#login p{
+margin:5px 0px 0px 0px !important;
+>margin:5px 0px 0px 0px !important;
+margin:5px 0px 0px 0px ;
+padding:0px;
+}
+#login p#sub{
+margin-top:18px	!important;
+margin-top:18px;
+}
+.formcss1 {  background-color: #c2dde6; border: 1px solid #677d84}

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!-- Some or all of these can be flipped to true for debugging -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<constant name="struts.i18n.reload" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.custom.i18n.resources" value="application" />
+	<constant name="struts.action.extension" value="action,," />
+	<constant name="struts.action.excludePattern"
+		value="^/scripts/..*$,^/styles/..*$,^/images/..*$,^/swf/..*$,^..*.gif$,^..*.jpg$,^..*.js$,^..*.css$,^..*.swf$,^..*.html$,^..*.mp3$,^..*.xml$,^..*.png$" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.objectFactory.spring.autoWire" value="name" />
+	<!-- 附件大小10MB -->
+	<constant name="struts.multipart.maxSize" value="10485760" />
+	
+	<!-- struts2 启用注解模式
+	<constant name="struts.convention.package.locators" value="action" />
+	-->
+	<!--
+		<constant name="struts.convention.package.locators.basePackage"
+		value="org.apache.struts2.showcase.person" /> <constant
+		name="struts.convention.result.path" value="/" />
+	-->
+	<constant name="struts.freemarker.manager.classname" value="org.apache.struts2.views.freemarker.FreemarkerManager" />
+	<constant name="struts.serve.static" value="true" />
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<interceptor name="languageInterceptor"
+				class="com.cyberway.core.web.interceptor.LanguageInterceptor" />
+			<interceptor name="logInterceptor"
+				class="com.cyberway.core.web.interceptor.LogInterceptor" />
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="createSession" />
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">^dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">index,logout,doIndex,doView,doEdit,doDelete,doTree,exportData,importData,doImport,doExport,doList,doSearch</param>
+				</interceptor-ref>
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="languageInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		
+	   	<!--公用返回结果-->
+		<global-results>
+			<result name="flow_transact" type="dispatcher">
+				<param name="location">/WEB-INF/pages/flow/common/flow_transact.jsp</param>
+			</result>
+			<result name="flow_comple_content" type="dispatcher">
+				<param name="location">/WEB-INF/pages/flow/common/flow_comple_content.jsp</param>
+			</result>
+			<result name="flow_transfer_content" type="dispatcher">
+				<param name="location">/WEB-INF/pages/flow/common/flow_transfer_content.jsp</param>
+			</result>
+			<result name="flow_throwback_content" type="dispatcher">
+				<param name="location">/WEB-INF/pages/flow/common/flow_throwback_content.jsp</param>
+			</result>
+			<result name="flow_terminate_content" type="dispatcher">
+				<param name="location">/WEB-INF/pages/flow/common/flow_terminate_content.jsp</param>
+			</result>
+			<result name="flow_log" type="dispatcher">
+				<param name="location">/WEB-INF/pages/flow/common/flow_log.jsp</param>
+			</result>
+			<result name="ajax">/common/ec/ajax_result.jsp
+			</result>
+			<result name="dhtmlxTree">/common/dhtmlxtree/dhtmlxtree.jsp
+			</result>
+		</global-results>
+		<!-- action的异常拦截,并跳到指定result页面
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+		</global-exception-mappings>
+		-->
+	</package>
+	<!-- 定时器调度 -->
+	<package name="quartz" namespace="/quartz" extends="default">
+		<action name="secheduler" class="com.cyberway.core.quartz.web.SechedulerAdmin">
+			<result name="success">/frame.jsp</result>
+			<result name="list">/WEB-INF/pages/quartz/jobs_list.jsp
+			</result>
+		</action>
+	</package>	
+	<!--增加其他webwork配置文件-->
+	<include file="xwork/common.xml" />
+	<include file="xwork/common_select.xml" />
+	<include file="xwork/portal.xml" />
+	<include file="xwork/cms.xml" />
+	<include file="xwork/form_common.xml" />
+	<!--增加信息抓取webwork配置文件-->
+	<include file="xwork/crawl.xml" />
+	<!--增加 sample webwork配置文件-->
+	<include file="xwork/sample.xml" />
+	<include file="xwork/survey.xml" />
+	<include file="xwork/component.xml" />
+
+</struts>

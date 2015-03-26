@@ -1,0 +1,193 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>		
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/menu.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/attachment.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/xml.js"></script>	
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>	
+		<script language="javascript">
+			new Menu ().handleDialog ();
+			var oEditor		= window.parent.InnerDialogLoaded() ;
+			function Add()
+			{
+			
+				AddComboOption($("optionFileTypeList"), $("channelTextField").getValue (), $("channelTextField").getValue ());
+				AddComboOption($("optionFileValueList"), $("channelValueField").getValue (), $("channelValueField").getValue ());
+				$("optionFileTypeList").selectedIndex = $("optionFileTypeList").options.length - 1 ;
+				$("channelTextField").value = "";
+				$("channelValueField").value = "";
+			}
+			function Delete ()
+			{
+				$A($("optionFileTypeList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+					        $("optionFileValueList").options[$("optionFileTypeList").selectedIndex] = null;
+						$("optionFileTypeList").removeChild (option);
+						
+					}
+				}.bind (this));
+				 
+			}
+			function AddComboOption(combo, optionText, optionValue, documentObject, index)
+			{
+				var option;
+				
+				if (documentObject)
+					option = documentObject.createElement("OPTION") ;
+				else
+					option = document.createElement("OPTION") ;
+			
+				if (index != null)
+					combo.options.add(option, index);
+				else
+					combo.options.add(option);
+				option.innerHTML = optionText.length > 0 ? HTMLEncode(optionText) : '&nbsp;';
+				option.value = optionValue ;
+			
+				return option;
+			}
+			function HTMLEncode( text )
+			{
+				if ( !text )
+					return '' ;
+			
+				text = text.replace( /&/g, '&amp;' ) ;
+				text = text.replace( /</g, '&lt;' ) ;
+				text = text.replace( />/g, '&gt;' ) ;
+			
+				return text ;
+			}
+			
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+			<td valign="top">
+			<div id="basicView">
+			<input type="hidden" id="buttonScriptTypeField" value="0" />
+					<input type="radio" id="textTypeRadio" name="buttonTypeRadio" value="text" onclick="document.getElementById ('buttonScriptTypeField').value = 0" checked="checked" />
+	<span>站点树</span>&nbsp;
+	<input type="radio" id="menuRadio" name="buttonTypeRadio" value ="menu" onclick="document.getElementById ('buttonScriptTypeField').value = 2" />
+	<span>栏目树</span>&nbsp;
+	<input type="radio" id="iconTypeRadio" name="buttonTypeRadio" value ="icon" onclick="document.getElementById ('buttonScriptTypeField').value = 1" />
+	<span>自定义</span>&nbsp;
+	<br />
+	<br />
+	<div id="textView" style="display:block;">
+						<span>选择一级栏目：</span>
+						<br />
+						<input type="text" id="channelValueField" style="display:none" />
+						<input id="channelTextField" style="width:55%" type="text" />
+						<input id="popupImg" type="button" value="选择"/>
+						<input onclick="Add();" type="button" value="添加"/>
+						<input onclick="Delete();" type="button" value="移除"/>
+						<select id="optionFileTypeList" style="WIDTH:95%" size="5" name="cmbText"></select>
+						<select id="optionFileValueList" style="WIDTH:55%" size="5" name="cmbValue" style="display:none"></select>
+						<br />
+                                     <br />
+			<!--span fckLang="DlgUserIsdynamic">动态加载树：</span>
+			<br />
+ 		        <select id="isdynamicField" style="width:100%" >
+ 		             <option value="0" selected="selected">否</option>
+ 			     <option value="1">是</option> 			     
+			</select>
+			
+			<br /-->						
+			<span fckLang="DlgUserDefaultOpenStyle">默认展开方式：</span>
+			<br />
+			
+ 		        <select id="deployStyleField" style="width:100%" >
+ 			 <option value="dropDown" selected="selected">横向下拉</option>
+ 			 <option value="side">纵向展开</option>
+ 			 <option value="collapse">点击展开</option>
+			</select>
+			<br />
+			<div style="display:none">
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="menu_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="menu_style1">Style1</option>
+							<option value="menu_style2">Style2</option>
+						</select>
+						</div>
+			<br />
+			<span fckLang="DlgClickDescribe" >点击栏目事件：</span>
+			<br />
+			<textarea id="LinkField" style="width: 100%" rows="6" cols="20"></textarea>	
+			</div>
+			
+			<div id="iconView" style="display:none">	
+<span>脚本代码：</span>
+<br />
+<textarea id="valueField" cols="54" rows="17"></textarea>
+<br />
+<div>
+<button  onclick="writeMenuScriptValue(0)">站点树脚本</button>
+<button onclick="writeMenuScriptValue(1)">菜单树脚本</button>
+
+</div>
+			</div>	
+			</div> 			
+	               
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+<SCRIPT LANGUAGE="JavaScript">
+function writeMenuScriptValue(siteOrMenu)
+{
+var siteid = oEditor.parent.document.getElementById ("siteField").value;
+if(siteOrMenu == 0)
+{
+document.getElementById ("valueField").value = "var str ='<ul id=\"dropDown\" class=\"dbMenu\">';var datas=SITESERVICE.getChannelsBySiteid('"+oEditor.parent.document.getElementById ("siteField").value+"');if(datas!=null && datas.size()>0){var iter=datas.iterator();while(iter.hasNext()){var obj=iter.next();str+='<li><a href=/'+obj.getChannelPath()+'>'+obj.getName()+'</a>';var children=SITESERVICE.getChannelsByParent(obj.getId());if(children!=null && children.size()>0){str +='<ul>';var childIter=children.iterator();while(childIter.hasNext()){var childObj = childIter.next();str+='<li><a href=/'+childObj.getChannelPath()+'>'+childObj.getName()+'</a>';str+='</li>';}str +='</ul>';}str+='</li>';}}str+='</ul>';$HTML.print(str);";
+}
+
+else
+{
+document.getElementById ("valueField").value = "var str ='<ul id=\"dropDown\" class=\"dbMenu\">';var datas=MENUSERVICE.getMenusByPortalid("+oEditor.parent.portalid+");if(datas!=null && datas.size()>0){var iter=datas.iterator();while(iter.hasNext()){var obj=iter.next();str+='<li><a href='+obj.getUrl()+'>'+obj.getMenuname()+'</a>';var children=MENUSERVICE.getMenusBypmip(obj.getOid());if(children!=null && children.size()>0){str +='<ul>';var childIter=children.iterator();while(childIter.hasNext()){var childObj = childIter.next();str+='<li><a href=/'+childObj.getUrl()+'>'+childObj.getMenuname()+'</a>';str+='</li>';}str +='</ul>';}str+='</li>';}}str+='</ul>';$HTML.print(str);";
+}
+}
+
+	document.getElementById ("buttonScriptTypeField").onpropertychange = function ()
+	{
+		if (event.propertyName == "value")
+		{
+			if (document.getElementById ("buttonScriptTypeField").value == "0")
+			{
+				document.getElementById ("textTypeRadio").checked = true;
+				switchView ("textView");
+			}
+			else if (document.getElementById ("buttonScriptTypeField").value == "2")
+			{
+			        document.getElementById ("menuRadio").checked = true;
+				switchView("textView");
+			}
+			else
+			{
+				document.getElementById ("iconTypeRadio").checked = true;
+				switchView("iconView");
+			}
+		}
+	}
+	
+	
+function switchView (view)
+	{
+		document.getElementById ("textView").style.display = "none";
+		document.getElementById ("iconView").style.display = "none";
+		document.getElementById (view).style.display = "";
+	}
+</SCRIPT>

@@ -1,0 +1,15 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cyberway.weixin.business.suite.domain.Suite" table="WX_SUITE">
+        <id name="id" type="java.lang.Long" column="ID">
+            <generator class="native" />
+        </id>
+        <property name="suiteId" type="java.lang.String" column="SUITE_ID"/>
+        <property name="suiteTicket"  type="java.lang.String" column="SUITE_TICKET" />
+        <property name="infoType"  type="java.lang.String" column="INFO_TYPE"/>    
+        <property name="timeStamp"  type="java.lang.String" column="TIME_STAMP"/>
+        <property name="createDate" type="java.util.Date" column="CREATE_DATE" />
+    </class>
+</hibernate-mapping>

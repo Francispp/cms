@@ -1,0 +1,24 @@
+cache.memory=false
+
+# CACHE KEY
+cache.key=__oscache_cachefilter
+
+cache.use.host.domain.in.key=true
+
+# CACHE LISTENERS
+cache.event.listeners=com.opensymphony.oscache.extra.ScopeEventListenerImpl
+
+# CACHE SIZE
+cache.capacity=10
+
+
+ache.blocking=true
+
+cache.path=/cms/oscache
+
+
+cache.persistence.class=com.cyberway.cms.component.oscache.plugins.DiskPersistenceListener
+#cache.persistence.class=com.opensymphony.oscache.plugins.diskpersistence.DiskPersistenceListener
+# cache.event.listeners=com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener
+cache.persistence.overflow.only=false
+

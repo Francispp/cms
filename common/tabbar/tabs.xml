@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tabbar  hrefmode="iframe">
+    <row>
+       <tab id="b1" width='100px' selected="1" href="/cms/site!edit.action">基本信息</tab>
+       <tab id="b2" width='100px' href="/cms/site!edit.action">首页模板</tab>
+       <tab id="b2" width='100px' href="/cms/site!edit.action">桌面模板</tab>
+       <tab id="b2" width='100px' href="/cms/site!edit.action">静态资源</tab>
+    </row>
+</tabbar>

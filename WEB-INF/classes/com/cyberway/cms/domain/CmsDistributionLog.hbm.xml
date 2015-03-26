@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.cyberway.cms.domain.CmsDistributionLog" table="CMS_DISTRIBUTION_LOG">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+        <property name="ftpId" type="java.lang.Long"/>
+        <property name="name" />
+		<property name="path"/>
+		<property name="ftpPath"/>
+		<property name="lastTime"/>
+		<property name="status"/>
+		<property name="type"/>
+		<property name="siteId" />
+		
+    </class>
+</hibernate-mapping >

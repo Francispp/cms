@@ -1,0 +1,108 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/upload.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Upload ().handleDialog ();
+			function Add()
+			{
+				AddComboOption($("optionFileTypeList"), $("fileTypeField").getValue (), $("fileTypeField").getValue ());
+				$("optionFileTypeList").selectedIndex = $("optionFileTypeList").options.length - 1 ;
+				$("fileTypeField").value = "";
+				$("fileTypeField").focus();
+			}
+			function Delete ()
+			{
+				$A($("optionFileTypeList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+						$("optionFileTypeList").removeChild (option);
+					}
+				}.bind (this));
+				 
+			}
+			function AddComboOption(combo, optionText, optionValue, documentObject, index)
+			{
+				var option;
+				
+				if (documentObject)
+					option = documentObject.createElement("OPTION") ;
+				else
+					option = document.createElement("OPTION") ;
+			
+				if (index != null)
+					combo.options.add(option, index);
+				else
+					combo.options.add(option);
+				option.innerHTML = optionText.length > 0 ? HTMLEncode(optionText) : '&nbsp;';
+				option.value = optionValue ;
+			
+				return option;
+			}
+			function HTMLEncode( text )
+			{
+				if ( !text )
+					return '' ;
+			
+				text = text.replace( /&/g, '&amp;' ) ;
+				text = text.replace( /</g, '&lt;' ) ;
+				text = text.replace( />/g, '&gt;' ) ;
+			
+				return text ;
+			}
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+					<span fckLang="DlgUserName">名称：</span>
+						<br />
+						<input id="nameField" style="width:100%" type="text" />
+						<br />
+						<span>附件大小：</span>
+						<br />
+						<input id="fileSizeField" style="width:90%" type="text" /> M
+						<br />
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="attachment_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="attachment_style1">Style1</option>
+							<option value="attachment_style2">Style2</option>
+						</select>
+						<br />
+						<span>附件类型：</span>
+						<br />
+						<input id="fileTypeField" style="width:70%" type="text" />
+						<input onclick="Add();" type="button" value="添加"/>
+						<input onclick="Delete();" type="button" value="移除"/>
+						<select id="optionFileTypeList" style="WIDTH:70%" size="3" name="cmbText"></select>
+						<br />
+						<br />
+						<span fckLang="DlgUserDescribe" >描述：</span>
+						<br />
+						<textarea id="descriptionField" style="width: 100%" rows="3" cols="20"></textarea>
+						<br />
+					</div>
+
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

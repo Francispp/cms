@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.email.domain.CoreEmailLog" 
+    table="CORE_EMAIL_LOG"
+>
+
+    <id
+        name="oid"
+        type="java.lang.Long"
+        column="OID"
+    >
+        <generator class="native" />
+    </id>
+
+    <property
+        name="to"
+        type="java.lang.String"
+        column="SENDTO"
+        length="250"
+    />
+    <property
+        name="cc"
+        type="java.lang.String"
+        column="CC"
+        length="250"
+    />
+    <property
+        name="contentURL"
+        type="java.lang.String"
+        column="contentURL"
+        length="250"
+    />
+    
+     <property
+        name="setFrom"
+        type="java.lang.String"
+        column="SETFROM"
+        length="250"
+    />
+     <property
+        name="attach"
+        type="java.lang.String"
+        column="ATTACH"
+        length="250"
+    />
+    <property
+        name="status"
+        type="java.lang.Integer"
+        column="STATUS"
+        length="10"
+    />
+    <property
+        name="emailSubject"
+        type="java.lang.String"
+        column="EMAILSUBJECT"
+        length="250"
+    />
+    <property
+        name="emailContent"
+        type="java.lang.String"
+        column="EMAILCONTENT"
+        length="5000"
+    />        
+    <property
+        name="createtime"
+        type="java.util.Date"
+        column="CREATETIME"
+    />
+    <property
+        name="reSendtime"
+        type="java.util.Date"
+        column="RESENDTIME"
+    />
+    <many-to-one
+        name="coreEmail"
+        class="com.cyberway.common.email.domain.CoreEmail"
+        not-null="true" lazy="false"
+    >
+        <column name="TEMPLATE_ID" />
+    </many-to-one>
+</class>
+</hibernate-mapping>

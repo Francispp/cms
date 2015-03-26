@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	<!-- Created by the Middlegen Hibernate plugin 2.1 http://boss.bekk.no/boss/middlegen/ http://www.hibernate.org/ -->
+
+	<class name="com.cyberway.common.domain.CoreRole" table="CORE_ROLE">
+
+		<id name="oid" type="java.lang.Long" column="OID">
+			<generator class="native" />
+		</id>
+
+		<property name="rolename" type="java.lang.String" column="ROLENAME" length="100" />
+		<property name="rolecode" type="java.lang.String" column="ROLECODE" length="50" />
+
+		<property name="roleIdentity" type="java.lang.String" column="ROLEIDENTITY" length="50" />
+		<property name="gradeId" type="java.lang.Long" column="GRADEID" length="18" />
+		<property name="identityGradeString" type="java.lang.String" length="1000" />
+		<property name="identityGradeText" type="java.lang.String" length="2000" />
+		<property name="roleGrade" type="java.lang.String" column="ROLEGRADE" length="200" />
+
+		<property name="roleType" type="java.lang.Long" column="ROLETYPE" length="18" />
+		<property name="relationContent" type="java.lang.String" column="RELATIONCONTENT" length="1000" />
+		<property name="managerUserIds" type="java.lang.String" column="MANAGERUSERIDS" length="500" />
+		<property name="managerUserNames" type="java.lang.String" column="MANAGERUSERNAMES" length="1000" />
+		<property name="remark" type="java.lang.String" column="REMARK" length="1000" />
+		<property name="state" type="java.lang.Long" column="STATE" length="18" />
+		<property name="siteId" type="java.lang.Long" column="SITEID" length="18" />
+		<!-- Associations -->
+
+		<!-- bi-directional one-to-many association to coreUserRole -->
+		<set name="coreUserRole" lazy="true" inverse="true" cascade="delete">
+			<key>
+				<column name="ROLEID" />
+			</key>
+			<one-to-many class="com.cyberway.common.domain.CoreUserRole" />
+		</set>
+		<set name="CoreADUserRole" lazy="true" inverse="true" cascade="delete">
+			<key>
+				<column name="ROLEID" />
+			</key>
+			<one-to-many class="com.cyberway.common.domain.CoreADUserRole" />
+		</set>
+		<!-- bi-directional many-to-one association to CoreRole -->
+		<many-to-one name="coreOrg" class="com.cyberway.common.domain.CoreOrg" not-null="true" lazy="false">
+			<column name="ORG_ID" />
+		</many-to-one>
+		<property
+	        name="portal_id"
+	        type="java.lang.Long"
+	        column="PORTAL_ID"
+	        length="18"
+	    />
+	</class>
+</hibernate-mapping>

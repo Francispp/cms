@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.distribution.domain.Distribution" 
+    table="CORE_Distribution"
+>
+
+    <id
+        name="disId"
+        type="java.lang.Long"
+        column="DISID"
+    >
+        <generator class="native" />
+    </id>
+ 
+ <property
+        name="disName"
+        type="java.lang.String"
+        column="DISNAME"
+        length="200"
+    />
+    <property
+        name="disTime"
+        type="java.util.Date"
+        column="DISTIME"
+        length="23"
+    />
+    <property
+        name="disProple"
+        type="java.lang.String"
+        column="DISPROPLE"
+        length="30"
+    />
+    
+     <property
+        name="disType"
+        type="java.lang.Integer"
+        column="DISTYPE"
+        length="2"
+    />
+    
+    <property
+        name="status"
+        type="java.lang.Integer"
+        column="STATUS"
+        length="2"
+    />
+  
+</class>
+</hibernate-mapping>

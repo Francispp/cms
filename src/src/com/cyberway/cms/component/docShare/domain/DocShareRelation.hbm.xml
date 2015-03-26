@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.component.docShare.domain.DocShareRelation" table="CMS_DOCSHARERELATION" lazy="false">
+        <id name="oid" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+     	<property name="userId" />
+		<property name="userName" length="100"/>
+		<property name="updateTime" />		
+		<property name="remark" length="1000"/> 
+		<property name="baseSiteId" />
+		<property name="baseSiteName" />
+		<property name="baseChannelId" />
+		<property name="baseChannelName" />
+		<property name="targetSiteId" />
+		<property name="targetSiteName" />
+		<property name="targetChannelId" />
+		<property name="targetChannelName" />
+		<property name="isDefault" />
+		<property name="isDelete" />
+		 
+    </class>
+</hibernate-mapping >

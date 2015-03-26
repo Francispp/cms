@@ -1,0 +1,24 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cyberway.weixin.business.attendance.domain.Attendance" table="WX_ATTENDANCE">
+        <id name="id" type="java.lang.Long" column="ID">
+            <generator class="native" />
+        </id>
+            <property name="userId"  type="java.lang.String" column="USER_ID" />
+            <property name="userName"  type="java.lang.String" column="USER_NAME" />
+            <property name="signinTime"  type="java.util.Date" column="SIGNIN_TIME" />
+            <property name="signOutTime"  type="java.util.Date" column="SIGNOUT_TIME" />
+            <property name="latitude"  type="java.lang.String" column="LATITUDE" />
+            <property name="longitude"  type="java.lang.String" column="LONGITUDE" />
+            <property name="precision"  type="java.lang.String" column="PRECISIONS" />
+            
+             <property name="signinTxt"  type="java.lang.String" column="SIGNIN_TXT" />
+             <property name="signInPic"  type="java.lang.String" column="SIGNIN_PIC" />
+             <property name="score"  type="java.lang.Integer" column="SCORE" />
+             <property name="isSignIn"  type="java.lang.Boolean" column="IS_SIGNIN" />
+             <property name="signinId"  type="java.lang.Long" column="SIGNIN_ID" />
+	
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+	<class name="com.cyberway.common.temLibrary.domain.TemLibrary" table="CORE_TEMLIBRARY">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+		<property name="name" length="200" />
+		<property name="remark" length="1000" />
+		<property name="parentid" type="java.lang.Long" />
+		<set name="subTypes" lazy="true" inverse="true" cascade="none" order-by="id asc" >
+			<key>
+				<column name="parentid" />
+			</key>
+			<one-to-many class="com.cyberway.common.temLibrary.domain.TemLibrary" />
+		</set>
+	</class>
+</hibernate-mapping>

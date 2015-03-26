@@ -1,0 +1,146 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/navigation.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Navigation ().handleDialog ();
+			
+		 function getTarget(){ 
+			   if(directField.checked && navigationField.options[1].selected){
+			   	  tgdiv.style.visibility = "visible";
+				  tgdiv.style.position  = ""; 
+				  if(targetField.options[2].selected)
+			   	  	numField.style.visibility = "visible"; 
+			   	  	
+			   }else{
+			   	  tgdiv.style.visibility = "hidden";
+				  tgdiv.style.position = "absolute";
+				  numField.style.visibility = "hidden"; 
+			   }
+			}
+			
+			function getNum(){
+				if(targetField.options[2].selected){
+			   	  numField.style.visibility = "visible"; 
+			   }else{
+			   	  numField.style.visibility = "hidden";  
+			   }
+			}
+			
+			function addItem(){ 
+			   var level  = $("chnLevel").getValue();
+			   var target = $("targetField").getValue();
+			   var num  = $("numField").getValue();
+			   
+			   if(level.length <= 0 || target.length <=0){
+			   	   return false;
+			   } 
+			   
+			   //判断是否已经添加
+			   for (var i=0; i<levelTargetList.options.length; i++){
+				 if((levelTargetList[i].value.split("-"))[0] == level){
+		      	    return false;
+		      	 }
+			   }
+			   
+			   levelTargetList.options.add(new Option(level+"-"+target+"-"+num, level+"-"+target+"-"+num));
+			   selctedNext(chnLevel);
+			   
+			}
+
+			function selctedNext(sel){
+			   for (var i=0; i<sel.options.length; i++){
+	  			  if(sel.options[i].selected && i < sel.options.length-1){
+	  			  	 sel.options[i+1].selected = true;
+	  			  	 break;
+	  			  }
+	  		   } 
+			}
+			
+			function delItem(){
+				for (var i=0; i<levelTargetList.options.length; i++){
+	  			  if(levelTargetList.options[i].selected){
+	  			  	   levelTargetList.options[i].removeNode(true);	
+	  			  	   if(levelTargetList.options[i] != null)
+						  levelTargetList.options[i].selected = true; 
+	  			  	   return false;		  
+	  			  }
+	  			} 
+			}
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<span>导航选择：</span>
+						<br />
+						<select id="navigationField" style="width:100%" onchange="getTarget()">
+							<option value="current" selected="selected">当前频道</option>
+							<option value="all">包括上级频道</option>
+						</select>
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="navigation_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="navigation_style1">Style1</option>
+							<option value="navigation_style2">Style2</option>
+						</select>
+						<br />
+						附带地址：
+						<br />
+						<a href="#" ></a>
+						<input type="checkbox" id="directField"  onClick="getTarget()" />
+						<div id="tgdiv" style="visibility:hidden; position:absolute;">
+						<table cellSpacing="0" cellPadding="0" width="280" border="0"><tr>
+						<tr><td colspan="3" >级别目标:</td></tr>
+						<tr>
+						<td>级别: <select id="chnLevel" style="width:50px;">
+							<option value="0" selected="selected">首页</option>
+							<option value="1">1级</option>
+							<option value="2">2级</option>
+							<option value="3">3级</option>
+							<option value="4">4级</option>
+							<option value="5">5级</option>
+						</select>
+						</td>
+						<td>目标: <select id="targetField" onChange="getNum()" style="width:60px;">
+							<option value="_self" selected="selected">_self</option>
+							<option value="_blank">_blank</option>
+							<option value="parentn">父N级</option>
+						</select>
+						</td><td>
+							<input type="text" id="numField" style="visibility : hidden; width:50px;" onKeyPress="javaScript: if(event.keyCode <48 || event.keyCode>57) return false;" />
+						</td></tr>
+						<tr><td colspan="2"> <select id="levelTargetList" style="WIDTH:100%" size="3" ></select> </td>
+							<td><input type="button"  value="添加"  onclick="addItem()"/> <input type="button"  value="移除"  onclick="delItem()"/>  </td>
+						</tr>
+						</table>
+						</div>
+						<br />						
+						<span fckLang="DlgUserDescribe" >描述：</span>
+						<br />
+						<textarea id="descriptionField" style="width: 100%" rows="3" cols="16"></textarea>
+						<br />
+					</div>
+
+
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table> 
+	</body>
+</html>

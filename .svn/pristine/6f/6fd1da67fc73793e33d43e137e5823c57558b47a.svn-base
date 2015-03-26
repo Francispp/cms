@@ -1,0 +1,146 @@
+package com.cyberway.weixin.business.field.controller;
+
+import java.util.Date;
+
+import org.hibernate.criterion.Order;
+
+import com.cyberway.core.dao.EntityDao;
+import com.cyberway.core.dao.support.CriteriaSetup;
+import com.cyberway.core.dao.support.Page;
+import com.cyberway.core.web.BaseBizController;
+import com.cyberway.weixin.business.field.domain.Field;
+import com.cyberway.weixin.business.field.service.FieldService;
+
+public class FieldController extends BaseBizController<Field>{
+	FieldService service = (FieldService) this.getServiceById("fieldService");
+	@Override
+	protected EntityDao<Field> getService() {
+		return service;
+	}
+	//页面传来的外勤ID
+	private Long fieldId;
+	
+	public Long getFieldId() {
+		return fieldId;
+	}
+
+	public void setFieldId(Long fieldId) {
+		this.fieldId = fieldId;
+	}
+
+	/**
+	 * 用户查询自己已经创建好的外勤计划
+	 * @return
+	 * @throws Exception
+	 */
+	public String doList() throws Exception {
+		CriteriaSetup criteria = new CriteriaSetup();
+		criteria.addFilter("userId", domain.getUserId());
+		criteria.setInOrder(Order.desc("createTime"));
+		doListEntity(criteria, getTableId(), Page.DEFAULT_PAGE_SIZE);
+		return LIST_RESULT;
+	}
+	
+	/**
+	 * 查询外勤计划
+	 * @return
+	 * @throws Exception
+	 */
+	public String list() throws Exception {
+		CriteriaSetup criteria = new CriteriaSetup();
+		if(domain.getStartDate() !=null) {
+			criteria.addFilter("startDate", domain.getStartDate());
+		}
+		if(domain.getEndDate() !=null) {
+			criteria.addFilter("endDate", domain.getEndDate());
+		}
+		criteria.setInOrder(Order.desc("createTime"));
+		doListEntity(criteria, getTableId(), Page.DEFAULT_PAGE_SIZE);
+		return LIST_RESULT;
+	}
+	
+	/**
+	 * 实时查岗
+	 * @return
+	 * @throws Exception
+	 */
+	public String nowList() throws Exception {
+		CriteriaSetup criteria = new CriteriaSetup();
+		if(domain.getStartDate() !=null) {
+			criteria.addFilter("startDate", domain.getStartDate());
+		}
+		if(domain.getEndDate() !=null) {
+			criteria.addFilter("endDate", domain.getEndDate());
+		}
+		criteria.setInOrder(Order.desc("createTime"));
+		doListEntity(criteria, getTableId(), Page.DEFAULT_PAGE_SIZE);
+		return LIST_RESULT;
+	}
+	
+	public String edit() throws Exception {
+		return super.edit();
+	}
+	
+	/**
+	 * 提交：保存新建外勤计划
+	 * @return
+	 * @throws Exception
+	 */
+	public String saveOrUpdate() throws Exception {
+		if(domain.getStartDate() !=null) {
+			if(null != domain.getFieldPlace() 
+				 && !"".equals(domain.getFieldPlace().trim())) {
+				domain = getService().saveOrUpdate(domain);
+				addActionMessage("保存成功!");
+				return doList();
+			}else{
+				addActionMessage("外出地点不能为空!");
+				return super.edit();	
+			}
+		}else {
+			addActionMessage("开始时间不能为空!");
+			return super.edit();
+		}
+	}
+	
+	/**
+	 * 提交并签到：保存新建外勤计划并跳转到外勤签到页面
+	 * @return
+	 * @throws Exception
+	 */
+	public String saveToSignIn() throws Exception {
+		domain = getService().saveOrUpdate(domain);
+		return "signIn";
+	}
+	
+	/**
+	 * 签到
+	 * @return
+	 * @throws Exception
+	 */
+	public String signIn() throws Exception {
+		domain = service.get(fieldId);
+		String place = domain.getSignInPlace();
+		Date time = domain.getSignInTime();
+		String text = domain.getSignInTxt();
+		String picture = domain.getSignInPic();
+		service.signIn(id, place, time, text, picture);
+		return "success";
+	}
+	
+	/**
+	 * 签退
+	 * @return
+	 * @throws Exception
+	 */
+	public String signOut() throws Exception {
+		domain = service.get(fieldId);
+		String place = domain.getSignOutPlace();
+		Date time = domain.getSignOutTime();
+		String text = domain.getSignOutTxt();
+		String picture = domain.getSignOutPic();
+		service.signOut(id, place, time, text, picture);
+		return "success";
+	}
+
+}

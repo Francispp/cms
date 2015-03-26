@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="cms" namespace="/cms" extends="default">
+		<interceptors>
+			<interceptor name="upload" class="org.apache.struts2.interceptor.FileUploadInterceptor"/>
+			
+			<interceptor-stack name="uploadStack">
+				<interceptor-ref name="upload"/>
+				<interceptor-ref name="defaultStack"/>
+			</interceptor-stack>
+		</interceptors>
+		<!--站点管理action配置-->
+		<action name="site" class="com.cyberway.cms.site.view.SiteController">
+			<result name="list">/WEB-INF/pages/cms/site/site_list.jsp</result>
+			<result name="success">/WEB-INF/pages/cms/site/site_edit.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/site/site_edit.jsp</result>
+			<result name="tree">/WEB-INF/pages/cms/site/site_menu.jsp</result>
+			<result name="itree">/WEB-INF/pages/cms/site/site_itree.jsp</result>
+			<result name="channeltree">/WEB-INF/pages/cms/site/channel_itree.jsp</result>
+			<result name="index" >/WEB-INF/pages/cms/site/redirect_index.jsp</result>
+		    <result name="index1" type="redirect">${ctx}/index.action</result>
+			<result name="public">/WEB-INF/pages/cms/site/public_itree.jsp</result>
+			<result name="tabbar">/WEB-INF/pages/cms/site/site_tabbar.jsp</result>
+			<result name="xml">/WEB-INF/pages/cms/site/tabxml.jsp</result>
+			<result name="permission">/WEB-INF/pages/cms/site/permission.jsp</result>
+			<result name="recycle">/WEB-INF/pages/cms/site/recycle.jsp</result>
+			<result name="recycletabbar">/WEB-INF/pages/cms/site/recycle_tabxml.jsp</result>
+			<result name="chuck" type="redirect">${ctx}/cms/site.action</result>
+			<result name="chuckto" type="redirect">${ctx}/cms/site!list.action</result>
+			<result name="recycle_list">/WEB-INF/pages/cms/site/recycle_list.jsp</result>
+			<result name="revivification">/WEB-INF/pages/cms/site/recycle_list.jsp</result>
+			<result name="revichannel">/WEB-INF/pages/cms/site/site_select.jsp</result>	
+			<result name="selectChannel">/WEB-INF/pages/cms/site/site_selectchannel_tree.jsp</result>	
+			<result name="close">/WEB-INF/pages/common/attachment/success.jsp</result>
+			<interceptor-ref name="fileUploadStack">
+            </interceptor-ref>		
+			<result name="export_download">/filedownload</result>
+			<result name="tree_form_tree">/WEB-INF/pages/cms/site/tree_form_menu.jsp</result>	
+			<result name="tree_permisson_tree">/WEB-INF/pages/cms/site/tree_permisson_menu.jsp</result>	
+			
+			<result name="comtabbar">/WEB-INF/pages/cms/site/site_com_tabbar.jsp</result>
+			<result name="comtabxml">/WEB-INF/pages/cms/site/site_com_tabxml.jsp</result>
+										
+		</action>
+		<!-- 模板管理配置-->
+		<action name="template" class="com.cyberway.cms.template.view.TemplateController">
+			<result name="list">/WEB-INF/pages/cms/template/list.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/template/edit.jsp</result>	
+			<result name="success">/WEB-INF/pages/cms/template/edit.jsp</result>
+			<result name="ask">/WEB-INF/pages/cms/template/ask.jsp</result>	
+			<result name="frame">/WEB-INF/pages/cms/template/frame.jsp</result>	
+			<result name="preview" type="redirect">${previewUrl}</result> 
+			<result name="export_data">/filedownload</result>
+			<result name="editscript">/WEB-INF/pages/cms/template/editscript.jsp</result>
+			<result name="close">/WEB-INF/pages/common/attachment/success.jsp</result>
+			<interceptor-ref name="fileUploadStack">
+            </interceptor-ref>		
+		</action>
+		<!-- 模板管理配置-->
+		<action name="templateGather" class="com.cyberway.cms.template.view.TemplateGatherController">
+			<result name="list">/WEB-INF/pages/cms/template/gather_list.jsp</result>
+			<result name="gathertree">/WEB-INF/pages/cms/template/gather_tree.jsp</result>		
+		</action>
+		
+		
+		<!-- 频道管理配置-->
+		<action name="channel" class="com.cyberway.cms.channel.view.ChannelController">
+			<result name="list">/WEB-INF/pages/cms/channel/list.jsp</result>
+			<result name="channel_picker">/WEB-INF/pages/cms/channel/channel_tree.jsp</result>
+			<result name="itree">/WEB-INF/pages/cms/channel/channels_tree.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/channel/edit.jsp</result>	
+			<result name="success">/WEB-INF/pages/cms/channel/edit.jsp</result>
+			<result name="tabbar">/WEB-INF/pages/cms/channel/channel_tabbar.jsp</result>
+			
+			<result name="xml">/WEB-INF/pages/cms/channel/tabxml.jsp</result>
+			<result name="chuck" type="redirect">${ctx}/cms/site.action</result>
+			<result name="recycle_list">/WEB-INF/pages/cms/channel/recycle_list.jsp</result>
+			<result name="revivification" type="redirect">/cms/channel!recycle.action?refresh=true</result>
+			<result name="success">/WEB-INF/pages/cms/template/edit.jsp</result>
+			<result name="close">/WEB-INF/pages/common/attachment/success.jsp</result>
+			<result name="site_recycle" type="redirect">${ctx}/cms/site!recyclelist.action</result>
+			<result name="export_download">/filedownload</result>
+			<result name="comtabbar">/WEB-INF/pages/cms/channel/channel_com_tabbar.jsp</result>
+			<result name="comtabxml">/WEB-INF/pages/cms/channel/channel_com_tabxml.jsp</result>
+			<interceptor-ref name="fileUploadStack">
+			</interceptor-ref>
+		</action>
+		<!--附件下载-->
+		<action name="filedownload" class="com.cyberway.common.attachment.view.AttachmentController">
+			<result name="file_download">/filedownload</result>
+			<result name="download_error">/errors/accessDenied.jsp</result>
+			<result name="listXml">/WEB-INF/pages/common/attachment/attachment_xml.jsp</result>
+			<result name="listJson">/WEB-INF/pages/json.jsp</result>
+			<result name="download" type="redirect">${fpath}</result>
+		</action>
+		<!--附件上传-->
+		<action name="attachment" class="com.cyberway.common.attachment.view.AttachmentController">
+			<result name="input">/WEB-INF/pages/common/attachment/edit_attachment.jsp</result>
+			<result name="load_file">/WEB-INF/pages/common/attachment/upload.jsp</result>
+			<result name="listXml">/WEB-INF/pages/common/attachment/attachment_xml.jsp</result>
+			<result name="listJson">/WEB-INF/pages/json.jsp</result>
+			<result name="file_download" type="redirect">/filedownload</result>
+			<result name="success">/WEB-INF/pages/common/attachment/success.jsp</result>
+			<result name="success1">/WEB-INF/pages/common/attachment/success1.jsp</result>	
+			<result name="ajax">/WEB-INF/pages/cms/document/ajax_result.jsp</result>
+			<interceptor-ref name="fileUploadStack">
+            </interceptor-ref>									
+		</action>
+		<!-- - 文件上传 - -->
+		<action name="uploadFile" class="com.cyberway.common.file.view.FileUploadController">
+			<result name="UPLOADCK">/WEB-INF/pages/common/file/uploadResultCK.jsp</result>
+			<result name="UPLOAD">/WEB-INF/pages/common/file/uploadResult.jsp</result>
+			<result name="SELECT">/WEB-INF/pages/common/file/upload.jsp</result>
+			<result name="JSON">/WEB-INF/pages/json.jsp</result>
+			<interceptor-ref name="fileUploadStack"></interceptor-ref>									
+		</action>
+		
+		
+		<!-- 前台信息管理配置-->
+		<action name="docInfo" class="com.cyberway.cms.document.view.DocInfoController">
+			<interceptor-ref name="uploadStack"/>
+			<result name="input">${templateUrl}</result>
+			<result name="view">${templateUrl}</result> 
+			<result name="list">${templateUrl}</result>	
+			<result name="input_redirect" type="redirect">${templateUrl}</result>	
+			<result name="success">/WEB-INF/pages/cms/document/edit.jsp</result>
+			<result name="frame">/WEB-INF/pages/cms/document/frame.jsp</result>			
+		</action>		
+		
+		<!-- 信息管理配置-->
+		
+		<action name="document" class="com.cyberway.cms.document.view.DocumentController">
+			<result name="input">${templateUrl}</result>
+			<result name="view">${templateUrl}</result> 
+			<result name="list">${templateUrl}</result>	
+			<result name="re_list" type="redirect">/cms/document!adminBaList.action?channelId=${channelId}</result>
+			<result name="success">/WEB-INF/pages/cms/document/edit.jsp</result>
+			<result name="frame">/WEB-INF/pages/cms/document/frame.jsp</result>
+			<result name="recycle_list">/WEB-INF/pages/cms/document/recycle_list.jsp</result>
+			<result name="revivification">/WEB-INF/pages/cms/document/recycle_list.jsp</result>
+			<result name="overdue_doc">/WEB-INF/pages/cms/document/overdue_doc_list.jsp</result>
+			<result name="share_doc">/WEB-INF/pages/cms/document/share_doc_list.jsp</result>
+			<result name="edit_office_item">/WEB-INF/pages/cms/document/office_item_iframe.jsp</result>	
+			<result name="tofrom" type="redirect">${fromUrl}</result>	
+			<result name="share_tree">/WEB-INF/pages/cms/document/share_doc_tree.jsp</result>
+			<result name="share_success">/WEB-INF/pages/cms/document/success.jsp</result>
+			<result name="close">/WEB-INF/pages/common/attachment/success.jsp</result>
+			<result name="ajax">/WEB-INF/pages/cms/document/ajax_result.jsp</result>
+			<interceptor-ref name="fileUploadStack">
+            </interceptor-ref>		
+			<result name="export_download">/filedownload</result>	
+			<!--<interceptor-ref name="setupScriptManager" />-->	
+		</action>
+		
+		<!-- 站点首页模板配置 -->
+		<action name="index" class="com.cyberway.cms.site.view.IndexController">
+			<result name="input">${templateUrl}</result>
+			<result name="view">${templateUrl}</result> 
+			<result name="success">${templateUrl}</result>	
+			<result name="input_redirect" type="redirect">${templateUrl}</result>		
+		</action>		
+		<!--静态资源action配置-->
+		<action name="staticResource" class="com.cyberway.cms.staticResource.view.StaticResourceController">
+			<result name="list">/WEB-INF/pages/cms/staticResource/staticResource_list.jsp</result>
+			<result name="success">/WEB-INF/pages/cms/staticResource/staticResource_edit.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/staticResource/staticResource_edit.jsp</result>	
+            <result name="multiUpload">/WEB-INF/pages/cms/staticResource/multiupload.jsp</result>
+            <result name="multiUpload1">/WEB-INF/pages/cms/staticResource/multiupload1.jsp</result>	
+            <result name="revivification">/WEB-INF/pages/cms/staticResource/recycle_list.jsp</result>
+            <result name="dellist" type="redirectAction">staticResource.action</result>
+            <result name="recycle_list">/WEB-INF/pages/cms/staticResource/recycle_list.jsp</result>
+			
+			<result name="input_file">/WEB-INF/pages/cms/staticResource/staticResource_editfile.jsp</result>
+			<result name="file_download">/filedownload</result>
+			<result name="download_error">/errors/accessDenied.jsp</result>	
+			<result name="close">/WEB-INF/pages/common/attachment/success.jsp</result>	
+			<result name="channelRe_list">/WEB-INF/pages/cms/staticResource/staticResource_channel_list.jsp</result>	
+			<result name="multiUploadChannelRes">/WEB-INF/pages/cms/staticResource/multiuploadChannelRes.jsp</result>
+		    <interceptor-ref name="fileUploadStack"/>
+		</action>
+		<!-- cms资源管理配置-->
+		<action name="resource" class="com.cyberway.cms.permission.view.CmsResourceController">
+			<result name="list">/WEB-INF/pages/cms/permission/resource_list.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/permission/resource_edit.jsp</result>	
+			<result name="success">/WEB-INF/pages/cms/permission/resource_edit.jsp</result>			   
+		</action>
+		<!-- cms站点分发管理配置-->
+		<action name="siteDistribution" class="com.cyberway.cms.siteDistribution.view.SiteDistributionController">
+			<result name="list">/WEB-INF/pages/cms/distribution/site_distribution.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/distribution/distribution_edit.jsp</result>
+			
+			<result name="ajax">/common/ec/ajax_result.jsp</result>	
+			<result name="deleted" type="redirectAction">
+				siteDistribution.action
+			</result>   
+		</action>
+		<!--站点分发记录配置-->
+		<action name="distributionLog" class="com.cyberway.cms.distributionlog.view.DistributionLogController">
+			<result name="list">/WEB-INF/pages/cms/distribution/distribution_log.jsp</result>
+	    </action>
+		<!-- cms站点分发管理服务器ip-->
+		<action name="cmsIpDistribution" class="com.cyberway.cms.CmsIpDistribution.view.CmsIpDistributionController">
+			   
+		</action>
+		<!-- cms权限管理配置-->
+		<action name="permission" class="com.cyberway.cms.permission.view.CmsPermissionController">
+			<result name="list">${pageUrl}</result>
+			<result name="input">/WEB-INF/pages/cms/permission/permission_edit.jsp</result>	
+			<result name="success">${pageUrl}</result>
+			<result name="permission">/WEB-INF/pages/cms/permission/permission.jsp</result>	
+			<result name="xml">/WEB-INF/pages/cms/permission/tabxml.jsp</result>		
+			<result name="docPerTree">/WEB-INF/pages/cms/permission/document_perm_resource_tree.jsp</result>		   
+		</action>
+               <!-- cms栏目管理配置-->
+		<action name="column" class="com.cyberway.cms.column.view.ColumnController">
+			<result name="list">/WEB-INF/pages/cms/column/list.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/column/edit.jsp</result>
+			<result name="success">/WEB-INF/pages/cms/column/edit.jsp</result>
+			<result name="frame">/WEB-INF/pages/cms/column/frame.jsp</result>
+			<result name="index">/WEB-INF/pages/cms/column/index.jsp</result>
+			<result name="tree">/WEB-INF/pages/cms/column/column_tree.jsp</result>					
+		</action>									
+		
+		<!-- 邮件发送 -->
+		<action name="email" class="com.cyberway.cms.email.view.EmailController">
+			<result name="input">/WEB-INF/pages/cms/email/edit.jsp</result>
+			<result name="success">/WEB-INF/pages/cms/email/success.jsp</result>
+			<result name="jump" type="redirect">${jumUrl}</result>
+		</action>
+		
+		
+		<!--站点角色信息管理配置-->
+		<action name="cmsrole" class="com.cyberway.common.role.view.RoleController">
+			<result name="extlist">/WEB-INF/pages/common/role/role_extlist.jsp</result>
+			<result name="list">/WEB-INF/pages/common/role/role_extlist.jsp</result>
+			<result name="input">/WEB-INF/pages/common/role/role_edit.jsp</result>	
+			<result name="success">/WEB-INF/pages/common/role/role_edit.jsp</result>
+			<result name="frame">/WEB-INF/pages/common/role/frame.jsp</result>
+			<result name="ajax">/common/ec/ajax_result.jsp</result>
+			<result name="deleted" type="redirectAction">role.action</result>
+			<result name="view_list">/WEB-INF/pages/common/role/role_view_list.jsp</result>
+			<result name="view_tree">/WEB-INF/pages/common/role/role_tree.jsp</result>
+			<result name="view_itree">/WEB-INF/pages/common/role/role_itree.jsp</result>
+			<result name="select_role">/WEB-INF/pages/common/role/selectRole.jsp</result>
+			<result name="search_role">/WEB-INF/pages/common/role/role_xml.jsp</result>
+			<result name="detail">/WEB-INF/pages/common/role/role_detail.jsp</result>										
+		</action>
+		
+		
+		<!--站点角色信息管理配置-->
+		<action name="role" class="com.cyberway.cms.component.webuser.view.WebRoleController">
+			<result name="extlist">/WEB-INF/pages/common/role/role_extlist.jsp</result>
+			<result name="input">/WEB-INF/pages/common/role/role_edit.jsp</result>
+			<result name="view_list">/WEB-INF/pages/cms/component/user/role_view_list.jsp</result>			
+			<result name="ajax">/common/ec/ajax_result.jsp</result>	
+			<result name="deleted" type="redirectAction">
+			</result>									
+		</action>
+		
+		<!-- os CacheURL管理 -->
+		<action name="cmscacheurl" class="com.cyberway.cms.component.oscache.view.CMSCacheURLController" >
+			<result name="input">/WEB-INF/pages/cms/component/oscacheManage/cmscacheurl_edit.jsp</result>
+			<result name="list">/WEB-INF/pages/cms/component/oscacheManage/cmscacheurl_list.jsp</result>
+		</action>
+		<action name="ebizlogon" class="com.cyberway.common.login.LoginController" method="ebizlogon">			
+			<result name="success" type="redirect">${indexUrl}</result>		
+			<result name="tofrom" type="redirect">${fromUrl}</result>															
+		</action>
+		
+		<!--安利教育网-->
+		<action name="eduLogin" class="com.cyberway.common.login.LoginController" method="loginEducationNet">					
+			<result name="tofrom" type="redirect">${fromUrl}</result>															
+		</action>
+		
+		<!-- 常用类型数据管理 -->
+		<action name="selectlist" class="com.cyberway.cms.component.selectlist.view.ListTitleController" >
+			<result name="input">/WEB-INF/pages/cms/component/selectlist/listTitle_edit.jsp</result>
+			<result name="list">/WEB-INF/pages/cms/component/selectlist/listTitle_list.jsp</result>
+			<result name="success">/WEB-INF/pages/cms/component/selectlist/listTitle_list.jsp</result>
+		</action>
+		
+		<!-- 缓存管理 -->
+		<action name="cmsCache" class="com.cyberway.cms.cache.view.CmsCacheController">
+			<result name="input">/WEB-INF/pages/cms/cache/cache_edit.jsp</result>
+			<result name="list">/WEB-INF/pages/cms/cache/cache_list.jsp</result>
+			<result name="viewAllCacheList">/WEB-INF/pages/cms/cache/viewAllCacheList.jsp</result>
+			<result name="viewCache">/WEB-INF/pages/cms/cache/viewCache.jsp</result>
+		</action>
+		<!-- 媒体文件上传管理 -->
+		<action name="mediaManager" class="com.cyberway.common.media.album.view.MediaManagerController">
+			<result name="tabbar">/WEB-INF/pages/common/media/medai_tabbar.jsp</result>
+			<result name="listXml">/WEB-INF/pages/common/media/media_xml.jsp</result>
+			<result name="xml">/WEB-INF/pages/common/media/tabxml.jsp</result>
+			<result name="uploadVideo">/WEB-INF/pages/common/media/video/uploadVideo.jsp</result>
+			<result name="uploadAudio">/WEB-INF/pages/common/media/audio/uploadAudio.jsp</result>
+			<result name="success">/WEB-INF/pages/common/media/success.jsp</result>
+		</action>
+		
+		<!-- 标签管理 -->
+		<action name="label" class="com.cyberway.cms.labels.view.LabelController">
+		    <result name="reload" type="redirect">label!list.action</result>
+		    <result name="input">/WEB-INF/pages/cms/labels/label_edit.jsp</result>
+			<result name="list">/WEB-INF/pages/cms/labels/label_list.jsp</result>
+			<result name="success">/WEB-INF/pages/cms/labels/label_list.jsp</result>
+			<result name="titleList">/WEB-INF/pages/cms/labels/label_title_list.jsp</result>
+			<result name="getContent">/WEB-INF/pages/cms/labels/label_content.jsp</result>
+		</action>
+		
+	</package>
+	
+	  
+</struts>

@@ -1,0 +1,36 @@
+package com.cyberway.weixin.util;
+
+import net.sf.json.JSONObject;
+
+import com.cyberway.weixin.api.API;
+import com.cyberway.weixin.entity.AccessToken;
+/**
+ * 
+ * @com.cyberway.weixin.util.AccessTokenUtil
+ * TODO : 获取企业token
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年01月27日 上午10:51:04
+ */
+public class AccessTokenUtil {
+
+	public static AccessToken getAccessToken(String corpID, String secret) {
+		AccessToken accessToken = null;
+		String requestUrl = API.COMPANY_ACCESS_TOKEN_URL.replace("CORPID", corpID).replace("CORPSECRET", secret);
+		JSONObject jsonObject = ConnectionUtil.getHttpRequest(requestUrl, "GET", null);
+		if (null != jsonObject) {
+			try {
+				accessToken = new AccessToken();
+				accessToken.setToken(jsonObject.getString("access_token"));
+				accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
+				System.out.println("获取token成功:"+ jsonObject.getString("access_token") + "->> "+ jsonObject.getInt("expires_in"));
+			} catch (Exception e) {
+				accessToken = null;
+				// 获取token失败
+				String error = String.format("获取token失败 errcode:{} errmsg:{}",jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+				System.out.println(error);
+			}
+		}
+		return accessToken;
+	}
+}

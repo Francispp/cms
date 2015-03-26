@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.domain.CorePermission" 
+    table="CORE_PERMISSION"
+>
+
+    <composite-id name="comp_id" class="com.cyberway.common.domain.CorePermissionPK">
+        <key-property 
+            name="targettype" 
+            column="TARGETTYPE" 
+            type="java.lang.Long"
+            length="10"
+        />
+        <key-property 
+            name="objectid" 
+            column="OBJECTID" 
+            type="java.lang.Long"
+            length="18"
+        />
+        <key-property 
+            name="resourceid" 
+            column="RESOURCEID" 
+            type="java.lang.Long"
+            length="18"
+        />
+    </composite-id>    
+
+
+    <!-- Associations -->
+    <!-- derived association(s) for compound key -->
+    <!-- bi-directional many-to-one association to CoreResource -->
+    <many-to-one
+        name="coreResource"
+	    class="com.cyberway.common.domain.CoreResource"
+	    update="false"
+	    insert="false"
+	>
+    	<column name="RESOURCEID" />
+	</many-to-one>
+	
+    <!-- end of derived association(s) -->
+  
+
+</class>
+</hibernate-mapping>

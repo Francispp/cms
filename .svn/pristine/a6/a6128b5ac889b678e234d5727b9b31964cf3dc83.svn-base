@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.domain.Channel" table="CMS_CHANNEL" lazy="true">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+        <property name="name" not-null="true" />
+		<property name="timeCreated" not-null="true"/>
+		<property name="timeDeleted"/>
+		<property name="sortOrder" />
+		<property name="channelPath" />
+		<property name="remark" />
+		<property name="infoSytle" />
+		<property name="ispublished" />
+		<property name="ispublicchannel" />
+		<property name="publicchannelid" />
+		<property name="iscopy" />
+		<property name="status"/>
+		<property name="isflow" />
+		<property name="createhtml" />
+		<property name="isOpenChannel"/>
+		<property name="isInheritPerm" />	
+		<property name="isInheritDocPerm" />	
+		<property name="flowname" />
+		<property name="numberOfClick" />
+		<property name="isSearch"/>
+		<property name="navigateImg"/>
+		<property name="bannerImg" />
+		<property name="redirect" />
+		<property name="descreble" length="1000"/>
+		<many-to-one name="parent" column="parent_id" class="com.cyberway.cms.domain.Channel" lazy="false"/>
+		<many-to-one name="site" column="site_id" class="com.cyberway.cms.domain.CmsSite" />
+		<many-to-one name="formTemplate" column="formTemplate_id"  class="com.cyberway.cms.domain.Template" />
+		<many-to-one name="detailsTemplate" column="detailsTemplate_id" class="com.cyberway.cms.domain.Template" />
+		<many-to-one name="summaryTemplate" column="summaryTemplate_id" class="com.cyberway.cms.domain.Template" />
+		
+		<many-to-one name="detailsTemplateWap" column="detailsTemplate_wap_id" class="com.cyberway.cms.domain.Template" />
+		<many-to-one name="summaryTemplateWap" column="summaryTemplate_wap_id" class="com.cyberway.cms.domain.Template" />
+		
+		<many-to-one name="adminSummaryTemplate" column="adminSummaryTemplate_id" class="com.cyberway.cms.domain.Template"/>
+		<bag name="children" inverse="true" order-by="sortOrder"  cascade="save-update">
+			<key column="parent_id"/>
+			<one-to-many class="com.cyberway.cms.domain.Channel" not-found="ignore"/>
+		</bag>
+		<!--bag name="templates" inverse="true" lazy="true" cascade="all">
+			<key column="channel_id"/>
+			<one-to-many class="com.cyberway.cms.domain.Template" not-found="ignore"/>
+		</bag-->
+    </class>
+</hibernate-mapping >

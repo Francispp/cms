@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.component.wsr.domain.Channelfee" table="CMS_CHANNELFEE" lazy="true">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>  
+		<property name="siteName" length="100"/><!--站点名称-->
+		<property name="siteId" length="20"/><!--站点编号-->
+		<property name="channelId" length="20"/><!--频道编号-->
+		<property name="channelName" length="100"/><!--频道名称--> 
+		<property name="createdTime" /><!--创建时间-->
+		<property name="fee" /><!--费用-->
+		<property name="isfee" length="10"/><!--是否收费-->
+   </class>
+</hibernate-mapping>

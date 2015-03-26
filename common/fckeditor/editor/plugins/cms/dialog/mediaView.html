@@ -1,0 +1,64 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/mediaView.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new MediaView ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+					<span fckLang="DlgUserName">名称：</span>
+						<br />
+						<input id="nameField" style="width:100%" type="text" />
+						<br />
+						<span>媒体类型：</span>
+						<select id="mediaType" name="mediaType" style="width:60%" >
+							<option value='video' >视频</option>
+							<option value='audio'>音频</option>
+						</select>
+						<br />
+						<span>媒体文件宽：</span>
+						<input id="mediaWidth" style="width:20%" type="text" />
+						<br />
+						<span>媒体文件高：</span>
+						<input id="mediaHeight" style="width:20%" type="text" />
+						
+						<br />
+						
+						
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="mediaview_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="mediaview_style1">Style1</option>
+							<option value="mediaview_style2">Style2</option>
+						</select>
+						
+						<br />
+						<span fckLang="DlgUserDescribe" >描述：</span>
+						<br />
+						<textarea id="descriptionField" style="width: 100%" rows="3" cols="20"></textarea>
+						<br />
+					</div>
+
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

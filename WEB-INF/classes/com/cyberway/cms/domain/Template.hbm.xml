@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+	<class name="com.cyberway.cms.domain.Template" table="CMS_TEMPLATE" lazy="false">
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property name="name" not-null="true" />
+		<property name="body" type="text" length="1000000" />
+		<property name="description" length="500" />
+		<property name="timeCreated" not-null="true" />
+		<property name="lastModified" />
+		<property name="issued" not-null="true" />
+		<property name="saveToDesigner" not-null="true" />
+		<property name="channel_id" type="java.lang.Long" />
+		<property name="site_id" type="java.lang.Long" />
+		<property name="type" />
+		<many-to-one name="form" column="form_id" class="com.cyberway.cms.form.domain.CoreForm" />
+		<property name="beforsavescript" type="text" length="10000" />
+		<property name="aftersavescript" type="text" length="10000" />
+		
+		<!-- 是否静态采集(只针对"首页","细览","概览"模板) -->
+		<property name="isPublishStatic" type="java.lang.Boolean" not-null="true" />
+	</class>
+</hibernate-mapping>

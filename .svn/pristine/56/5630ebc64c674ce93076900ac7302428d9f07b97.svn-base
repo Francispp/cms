@@ -1,0 +1,162 @@
+﻿<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../../dialog/common/fck_dialog_common.js"></script>
+		<link href="../../../../skins/office2003/fck_dialog.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden" class="PopupBody">
+	     <div id="innerContents"></div>
+			<div id="PopupButtons" class="PopupButtons">
+				<table border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="100%">&nbsp;</td>
+						<td nowrap="nowrap">
+							<input id="okButton"  type="button" value="确定" class="Button" fckLang="DlgBtnOK" />
+							&nbsp;
+							<input id="cancelButton" type="button" value="取消" class="Button" fckLang="DlgBtnCancel" />
+						</td>
+					</tr>
+				</table>
+			</div>
+		<table height="100%" cellSpacing="2" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">&nbsp;&nbsp;
+					<table border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="30%">&nbsp;<span fckLang="DlgUserName">标题：</span></td>
+						<td width="70%">
+							<textarea id="titleField" rows="3" style="width:100%" cols="20"/></textarea>
+						</td>
+					</tr>
+					<tr id="propertyHolder" style="display:none">
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >字段：</span></td>
+						<td width="70%">
+						<textarea id="propertyField" rows="3" style="width:100%" cols="20"/></textarea>
+				
+						</td>
+					</tr>
+					<tr id="customHolder" style="display:none">
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >自定义内容：</span></td>
+						<td width="70%">
+							<textarea id="customField" style="width:100%;height:150px;"></textarea>
+						</td>
+					</tr>
+					<tr id="maxLengthHolder">
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >最大显示字符数：</span></td>
+						<td width="70%">
+							<input id="maxLengthField" style="width:60%" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >类型：</span></td>
+						<td width="70%">
+							<select id="typeField">
+								<option value="text">文本</option>
+								<option value="link">链接</option>
+								<option value="date">日期</option>
+								<option value="news">最新新闻</option>
+								<option value="custom">自定义内容</option>
+							</select>
+						</td>
+					</tr>	
+					<tr id="formatDate" style="display:none">
+						<td width="30%">&nbsp;格式类型：</td>
+						<td nowrap="nowrap" width="70%">
+						<select id="formatField" style="width:100%" >
+							<option value="yyyy-MM-dd" selected="selected" >yyyy-MM-dd</option>
+							<option value="dd/MM/yyyy">dd/MM/yyyy</option>
+							<option value="yyyy年MM月dd日">yyyy年MM月dd日</option>
+							<option value="HH:mm:ss">HH:mm:ss</option>
+							<option value="HH时mm分ss秒">HH时mm分ss秒</option>
+							<option value="yyyy-MM-dd HH:mm:ss">yyyy-MM-dd HH:mm:ss</option>
+							<option value="yyyy年MM月dd日 HH时mm分ss秒">yyyy年MM月dd日 HH时mm分ss秒</option>
+						</select>
+						</td>
+					</tr>				
+					<tr id="pathHolder" style="display:none">
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >路径：</span></td>
+						<td nowrap="nowrap" width="70%">
+						<textarea id="pathField" rows="3" style="width:100%" cols="20"/></textarea>
+							<br>
+						<span>在新窗口打开：</span>
+						<input type="checkbox" id="linkOpenInNewWindowField" />	
+						</td>
+					</tr>																				
+				</table>	
+				</td>
+			</tr>
+		</table>
+	</body>
+	<script type="text/javascript">
+		function updateHolders ()
+		{
+			$("pathHolder").style.display = $("typeField").getValue () == "link" || $("typeField").getValue () == "news" ? "inline" : "none";
+			$("propertyHolder").style.display = $("typeField").getValue () != "custom" ? "inline" : "none";
+			$("customHolder").style.display = $("typeField").getValue () == "custom" ? "inline" : "none";
+			$("maxLengthHolder").style.display = $("typeField").getValue () != "custom" ? "inline" : "none";
+			$("formatDate").style.display = $("typeField").getValue () == "date" ? "inline" : "none";
+		}
+		
+		$("typeField").addEvent ("change", function ()
+		{
+			updateHolders ();
+		});
+		
+		var field = Json.evaluate (window.dialogArguments);
+		//处理标题事件
+		var t_title=field.title ? field.title : "";
+		if(t_title!=null && t_title.indexOf('<td')==0){
+		 t_title=t_title.replace('CUSTOMonclick=','onclick=');
+		 }
+		$("titleField").value = t_title;
+
+		$("propertyField").value = field.property ? field.property : "";
+		$("customField").value = field.custom ? field.custom : "";
+		$A($("typeField").options).each (function (option)
+		{
+			option.selected = option.value == field.type; 
+		});
+		$A($("formatField").options).each (function (option)
+		{
+			option.selected = option.value == field.formatType; 
+		});
+		$("maxLengthField").value = field.maxLength ? field.maxLength : "";
+		$("pathField").value = field.path ? field.path : "docInfo!view.action?id=${id}";
+		$("linkOpenInNewWindowField").checked = field.linkOpenInNewWindow ? true : false;
+		
+		$("okButton").addEvent ("click", function ()
+		{
+		   var t_title=$("titleField").value;
+		   if(t_title!=null && t_title.indexOf('<td')==0){
+		     t_title=t_title.replace('onclick=','CUSTOMonclick=');
+		   }
+		   if($("maxLengthField").value!='' && $("maxLengthField").value<4){
+		      alert('最大显示字符数必须大于4!');
+		      return ;
+		   }
+		      
+			window.returnValue = Json.toString ({ title : t_title, 
+				property : $("propertyField").value,
+				custom : $("customField").value, 
+				type : $("typeField").getValue (), 
+				path : $("pathField").value, 
+				maxLength : $("maxLengthField").value,
+				formatType : $("formatField").value,
+				linkOpenInNewWindow : $("linkOpenInNewWindowField").checked});
+				
+			window.close();
+		});
+		
+		$("cancelButton").addEvent ("click", function ()
+		{
+			window.returnValue = null;
+			window.close ();
+		});
+		
+		updateHolders ();		
+	
+	</script>
+</html>

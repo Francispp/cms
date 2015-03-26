@@ -1,0 +1,31 @@
+BODY {
+	MARGIN: 0px; SCROLLBAR-ARROW-COLOR: #000000; SCROLLBAR-BASE-COLOR: #F2F2F2; TEXT-ALIGN: center
+}
+.dtree {
+	FONT-SIZE: 12px; COLOR: #000000; WHITE-SPACE: nowrap
+}
+.dtree IMG {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; VERTICAL-ALIGN: middle; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px
+}
+.dtree A { FONT-SIZE: 12px; COLOR: #000000; TEXT-DECORATION: none
+}
+.dtree A.node {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-SIZE: 12px; PADDING-BOTTOM: 1px; COLOR: #000000; PADDING-TOP: 1px; WHITE-SPACE: nowrap
+}
+.dtree A.nodeSel {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px;FONT-SIZE: 12px; PADDING-BOTTOM: 1px; COLOR: #000000; PADDING-TOP: 1px; WHITE-SPACE: nowrap
+}
+.dtree A.node:hover {
+	FONT-SIZE: 12px; COLOR: #000000; TEXT-DECORATION: underline
+}
+.dtree A.nodeSel:hover { FONT-SIZE: 12px; COLOR: #000000; TEXT-DECORATION: underline
+}
+.dtree A.nodeSel {
+	BACKGROUND-COLOR: #cccccc
+}
+.dtree .clip {
+	OVERFLOW: hidden
+}
+.dtree .checkbox {
+	WIDTH: 16px; HEIGHT: 16px; align: center; valign: middle
+}

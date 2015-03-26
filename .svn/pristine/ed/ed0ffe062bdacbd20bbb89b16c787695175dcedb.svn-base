@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.cms.component.webuser.domain.WebUserRole" 
+    table="CMS_WEBUSER_ROLE"
+>
+
+    <id
+        name="oid"
+        type="java.lang.Long"
+        column="OID"
+    >
+        <generator class="native" />
+    </id>
+
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to CoreUser -->
+    <many-to-one
+        name="webUser"
+        class="com.cyberway.cms.component.webuser.domain.WebUser"
+        not-null="true"
+    >
+        <column name="USERID" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CoreRole -->
+    <many-to-one
+        name="coreRole"
+        class="com.cyberway.common.domain.CoreRole"
+        not-null="true"
+    >
+        <column name="ROLEID" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,128 @@
+package com.cyberway.weixin.controller;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.servlet.ServletInputStream;
+import javax.xml.parsers.ParserConfigurationException;
+
+import net.sf.json.JSONObject;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.junit.Test;
+import org.xml.sax.SAXException;
+
+import com.cyberway.core.dao.EntityDao;
+import com.cyberway.core.utils.ServiceLocator;
+import com.cyberway.core.web.BaseBizController;
+import com.cyberway.weixin.api.SuiteAPI;
+import com.cyberway.weixin.encrypt.AesException;
+import com.cyberway.weixin.encrypt.WXBizMsgCrypt;
+import com.cyberway.weixin.entity.Suite;
+import com.cyberway.weixin.service.SuiteService;
+import com.cyberway.weixin.suite.SuiteConfig;
+import com.cyberway.weixin.util.ConnectionUtil;
+
+/**
+ * 
+ * @com.cyberway.weixin.controller.SuiteController TODO :
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年2月6日 下午3:26:15
+ */
+public class SuiteController extends BaseBizController<Suite> {
+	private static final long serialVersionUID = 1L;
+	
+	SuiteService	   service	          = (SuiteService) this.getServiceById("suiteService");
+	/**
+	 * TODO 获得微信推送过来的suite_ticket
+	 * 
+	 * @return
+	 * @throws DocumentException
+	 * @throws IOException
+	 * @throws AesException 
+	 * @throws SAXException 
+	 * @throws ParserConfigurationException 
+	 */
+	public String getSuiteTicket() throws IOException, AesException, DocumentException, ParserConfigurationException, SAXException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(ServletInputStream) getRequest().getInputStream()));
+		String line = null;
+		StringBuilder sb = new StringBuilder();
+		while ((line = br.readLine()) != null) {
+			sb.append(line);
+		}
+		WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(SuiteConfig.SUITE_TOKEN, SuiteConfig.SUITE_EncodingAESKey, SuiteConfig.SUITE_ID);
+		String sReqMsgSig = getRequest().getParameter("msg_signature");   //微信加密签名  
+		String sReqTimeStamp = getRequest().getParameter("timestamp"); // 时间戳  
+		String sReqNonce = getRequest().getParameter("nonce");   // 随机数  
+		String decryptMsg = wxcpt.DecryptMsg(sReqMsgSig, sReqTimeStamp, sReqNonce, sb.toString());
+		System.out.println("after decrypt msg: " + decryptMsg);
+		service.parseXml(decryptMsg);
+//		String encryptMsg = wxcpt.EncryptMsg(decryptMsg, sReqTimeStamp, sReqNonce);
+//		System.out.println("after encrypt msg: " + encryptMsg);
+		return "success";
+	}
+	@Override
+	protected EntityDao getService() {
+		// TODO Auto-generated method stub 未完成 by yanruqian 2015年2月10日
+		return service;
+	}
+	public String test() {
+		SuiteService service = (SuiteService)this.getServiceById("suiteService");
+		Suite suite = service.getSuiteTicketValue();
+		String jsonData = SuiteService.getJsonObjectData(SuiteConfig.SUITE_ID,SuiteConfig.SUITE_SECRET, suite.getSuiteTicket());
+		JSONObject jsonobject = ConnectionUtil.getHttpRequest(SuiteAPI.GET_SUITE_ACCESS_TOKEN_URL, "POST", jsonData);
+		if (null != jsonobject) {
+			int expires_in = jsonobject.getInt("expires_in");
+			String suite_access_token = jsonobject.getString("suite_access_token");
+			System.out.println("suite_access_token :"+suite_access_token);
+			System.out.println("expires_in :"+expires_in);
+			
+			//预授权码
+			String jsonAppData = SuiteService.getJsonAppData(SuiteConfig.SUITE_ID,SuiteConfig.SUITE_APP_ID);
+			JSONObject jsonAppobject = ConnectionUtil.getHttpRequest(SuiteAPI.GET_PRE_AUTH_CODE_URL+suite_access_token, "POST", jsonAppData);
+			if(jsonAppobject!=null){
+				int errcode = jsonobject.getInt("errcode");
+				String errmsg = jsonobject.getString("errmsg");
+				if (0 != errcode) {
+					String error = String.format("操作失败 errcode:{%s} errmsg:{%s}",errcode, errmsg);
+					System.out.println(error);
+				}else{
+					String pre_auth_code = jsonobject.getString("pre_auth_code");
+					int expires = jsonobject.getInt("expires_in");
+					System.out.println(pre_auth_code+"------------------");
+					System.out.println(expires);
+					
+					
+					//永久授权码
+					String auth_code = pre_auth_code;
+					String jsonpermanmentData = SuiteService.getPermanmentData(SuiteConfig.SUITE_ID, auth_code);
+					JSONObject jsonpermanmentobject = ConnectionUtil.getHttpRequest(SuiteAPI.GET_PREMANENT_CODE_URL+auth_code, "POST", jsonpermanmentData);
+					if(jsonpermanmentobject != null){
+						int errcode1 = jsonobject.getInt("errcode");
+						String errmsg1 = jsonobject.getString("errmsg");
+						if (0 != errcode1) {
+							String error = String.format("操作失败 errcode:{%s} errmsg:{%s}",errcode1, errmsg1);
+							System.out.println(error);
+						}else{
+							System.out.println("suite_access_token :"+suite_access_token);
+							System.out.println(expires);
+							
+							
+						}
+					}
+					
+					
+				}
+			}
+		}
+		return "success";
+	}
+	
+	
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="weixin" namespace="/weixin" extends="default">
+		<action name="suite" class="com.cyberway.weixin.business.suite.controller.SuiteController">
+			<result name="success">/WEB-INF/success.jsp</result>
+			<result name="test">/WEB-INF/tset.jsp</result>
+		</action>
+		<action name="auth" class="com.cyberway.weixin.business.auth.controller.AuthController">
+			<result name="index">/WEB-INF/weixin/pages/auth/index.jsp</result>
+			<result name="list">/WEB-INF/weixin/pages/auth/list.jsp</result>
+		</action>
+		<action name="attendance" class="com.cyberway.weixin.business.attendance.controller.AttendanceController">
+		</action>
+	</package>
+</struts>

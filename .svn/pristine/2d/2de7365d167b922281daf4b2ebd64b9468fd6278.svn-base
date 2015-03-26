@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-lazy-init="true" default-autowire="byName">
+    
+    
+	<bean id="suiteService" class="com.cyberway.weixin.business.suite.service.SuiteService"></bean>	
+	<bean id="authService" class="com.cyberway.weixin.business.auth.service.AuthService"></bean>	
+	<bean id="attendanceService" class="com.cyberway.weixin.business.attendance.service.AttendanceService"></bean>	
+	<bean id="attendanceManageService" class="com.cyberway.weixin.business.attendance.service.AttendanceManageService"></bean>	
+</beans>

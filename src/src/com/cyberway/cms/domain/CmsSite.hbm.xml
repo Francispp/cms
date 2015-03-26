@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.cms.domain.CmsSite" 
+    table="CMS_SITE" lazy="false"
+>
+
+    <id
+        name="oid"
+        type="java.lang.Long"
+        column="OID"
+    >
+        <generator class="native" />
+    </id>
+
+    <property
+        name="sitename"
+        type="java.lang.String"
+        column="SITENAME"
+        length="200"
+    />
+    <property
+        name="sitehttp"
+        type="java.lang.String"
+        column="SITEHTTP"
+        length="100"
+    />
+    <property
+        name="siteport"
+        type="java.lang.Integer"
+        column="SITEPORT"
+        length="10"
+    />
+    <property
+        name="resourcepath"
+        type="java.lang.String"
+        column="RESOURCEPATH"
+        length="100"
+    />
+    <property
+        name="ispublished"
+        type="java.lang.Integer"
+        column="ISPUBLISHED"
+        length="10"
+    />
+    <property
+        name="status"
+        type="java.lang.Integer"
+        column="status"
+        length="10"
+    />
+     <property
+        name="ishtml"
+        column="ISHTML"
+    />  
+      <property
+        name="isdynamic"
+        column="ISDYNAMIC"
+    />     
+    <property
+        name="manager"
+        type="java.lang.String"
+        column="MANAGER"
+        length="1000"
+    />
+    <property
+        name="remark"
+        type="java.lang.String"
+        column="REMARK"
+        length="2000"
+    />
+    <property
+        name="createtime"
+        type="java.util.Date"
+        column="CREATETIME"       
+    />
+    <property
+        name="timeDeleted"
+        type="java.util.Date"
+        column="timeDeleted"        
+    />
+    <property
+        name="createuserid"
+        type="java.lang.Long"
+        column="CREATEUSERID"
+        length="18"
+    />
+    <property
+        name="createhtml"
+        column="CREATEHTML"
+    />    
+    <property
+        name="createusername"
+        type="java.lang.String"
+        column="CREATEUSERNAME"
+        length="50"
+    />       
+	 <property name="numberOfClick" type="java.lang.Long"  column="NUMBEROFCLICK" length="18"/>
+	 <property
+        name="isLogined"
+        type="java.lang.Integer"
+        column="ISLOGINED"
+        length="10"
+    />
+	 <property
+        name="loginUrl"
+        type="java.lang.String"
+        column="LOGINURL"
+        length="100"
+    />	 
+    
+     <property
+        name="domainNames"
+        type="java.lang.String"
+        column="DOMAINNAMES"
+        length="200"
+    />	 
+    
+	 <!-- 暂时屏蔽访问 -->
+    <property name="pingBiFangWen" type="java.lang.Boolean"/>
+    <!-- 屏蔽访问时显示的页面地址 -->
+    <property name="pingBiDiZhi" type="java.lang.String" length="255" />
+	<!-- 是否支持WAP -->
+	<property name="isSustainWap" type="java.lang.Boolean"/>
+	<many-to-one name="template" class="com.cyberway.cms.domain.Template" column="template_id"/>
+	<many-to-one name="templateWap" class="com.cyberway.cms.domain.Template" column="template_wap_id"/>
+	<bag name="channels" inverse="true" lazy="true" cascade="all" >
+		<key column="site_id"/>
+		<one-to-many class="com.cyberway.cms.domain.Channel" not-found="ignore"/>
+	</bag>
+	<!--bag name="templates" inverse="true" lazy="true" cascade="all">
+		<key column="site_id"/>
+		<one-to-many class="com.cyberway.cms.domain.Template" not-found="ignore"/>
+	</bag-->
+    <many-to-one
+        name="coreOrg"
+        class="com.cyberway.common.domain.CoreOrg"
+        not-null="true" 
+    >
+        <column name="ORG_ID" />
+    </many-to-one>
+    <property
+        name="portal_id"
+        type="java.lang.Long"
+        column="PORTAL_ID"
+        length="18"
+    />
+</class>
+</hibernate-mapping>

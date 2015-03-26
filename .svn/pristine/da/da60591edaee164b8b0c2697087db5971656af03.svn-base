@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.cyberway.weixin.business.field.domain.Field" table="wx_field">
+		<id name="id" type="java.lang.Long" column="id">
+			<generator class="native" />
+		</id>
+		<property name="userId" type="java.lang.Long" column="userId"/>
+		<property name="userName" type="java.lang.String" column="userName"/>
+		<property name="purpose" type="java.lang.String" column="purpose" length="200"/>
+		<property name="createTime" type="java.sql.Timestamp" column="createTime"/>
+		<property name="startDate" type="java.sql.Timestamp" column="startDate"/>
+		<property name="endDate" type="java.sql.Timestamp" column="endDate"/>
+		<property name="signInTime" type="java.sql.Timestamp" column="signInTime"/>
+		<property name="signOutTime" type="java.sql.Timestamp" column="signOutTime"/>
+		<property name="signInPlace" type="java.lang.String" column="signInPlace" />
+		<property name="signInPic" type="java.lang.String" column="signInPic" />
+		<property name="signInTxt" type="java.lang.String" column="signInTxt" length="280"/>
+		<property name="signOutPlace" type="java.lang.String" column="signOutPlace" />
+		<property name="signOutPic" type="java.lang.String" column="signOutPic" />
+		<property name="signOutTxt" type="java.lang.String" column="signOutTxt" length="200"/>
+		<property name="fieldPlace" type="java.lang.String" column="fieldPlace" />
+		<property name="fieldType" type="java.lang.Integer" column="fieldType" />
+		<property name="signType" type="java.lang.Integer" column="signType" />
+		<property name="signStatus" type="java.lang.Integer" column="signStatus" />
+		<property name="cause" type="java.lang.String" column="cause" />
+	</class>
+</hibernate-mapping >

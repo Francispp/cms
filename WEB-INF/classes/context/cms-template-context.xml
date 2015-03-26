@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"       
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:lang="http://www.springframework.org/schema/lang" 
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd"
+	default-lazy-init="true" default-autowire="byName">
+	
+	<!--模板服务-->
+	<bean id="templateService" class="com.cyberway.cms.template.service.TemplateService" lazy-init="false">
+		<property name="storeDir">
+			<bean class="com.cyberway.common.utils.ServletContextFileFactory">
+				<property name="path" value="@{template.path}"/>
+			</bean>
+		</property>
+		<property name="dynamicPageService" ref="dynamicPageService"/>
+		<property name="channelManagerService" ref="channelManagerService"/>
+		<property name="siteManagerService" ref="siteManagerService"/>
+		<property name="templateManager" ref="templateManagerService"/>
+		<property name="hibernateEventListener" ref="hibernateEventListener"/>
+		<property name="templateParserMap" ref="template.parsers" />
+	</bean>
+	
+	<bean id="template.parser.default" class="com.cyberway.cms.internal.template.DefaultTemplateParser"/>
+	<bean id="template.parser.details" class="com.cyberway.cms.internal.template.DynaFormTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_DETAILS"/>
+		</property>
+	</bean>
+	<bean id="template.parser.summary" class="com.cyberway.cms.internal.template.DefaultTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_SUMMARY"/>
+		</property>
+	</bean>
+	<bean id="template.parser.dynaForm" class="com.cyberway.cms.internal.template.DynaFormTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_FORM"/>
+		</property>
+	</bean>
+	<bean id="template.parser.admin" class="com.cyberway.cms.internal.template.DefaultTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_ADMIN_SUMMARY"/>
+		</property>
+	</bean>
+	
+	<bean id="template.parser.anyWap" class="com.cyberway.cms.internal.template.DefaultTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_ANY_WAP"/>
+		</property>
+	</bean>
+		<bean id="template.parser.indexWap" class="com.cyberway.cms.internal.template.DefaultTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_INDEX_WAP"/>
+		</property>
+	</bean>
+		<bean id="template.parser.detailsWap" class="com.cyberway.cms.internal.template.DefaultTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_DETAILS_WAP"/>
+		</property>
+	</bean>
+		<bean id="template.parser.summaryWap" class="com.cyberway.cms.internal.template.DefaultTemplateParser">
+		<property name="templateType">
+			<util:constant static-field="com.cyberway.cms.domain.Template.TYPE_SUMMARY_WAP"/>
+		</property>
+	</bean>
+	<!-- 模板解析器 -->
+	<util:map id="template.parsers" key-type="java.lang.Integer" value-type="com.cyberway.cms.template.TemplateParser">
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_ANY"/>
+            </key>
+			<ref bean="template.parser.default" />
+        </entry>    
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_INDEX"/>
+            </key>
+            <ref bean="template.parser.default" />
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_DETAILS"/>
+            </key>
+            <ref bean="template.parser.details" />
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_FORM"/>
+            </key>
+            <ref bean="template.parser.dynaForm" />
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_SUMMARY"/>
+            </key>
+            <ref bean="template.parser.summary" />
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_ADMIN_SUMMARY"/>
+            </key>
+            <ref bean="template.parser.admin" />
+        </entry> 
+        
+        
+             <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_ANY_WAP"/>
+            </key>
+            <ref bean="template.parser.anyWap" />
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_INDEX_WAP"/>
+            </key>
+            <ref bean="template.parser.indexWap" />
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_DETAILS_WAP"/>
+            </key>
+            <ref bean="template.parser.detailsWap" />
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_SUMMARY_WAP"/>
+            </key>
+            <ref bean="template.parser.summaryWap" />
+        </entry>
+         
+    </util:map>
+	
+	<!-- 模板向导库 -->
+	<bean id="templateLibrary" class="com.cyberway.cms.internal.template.TemplateLibraryImpl">
+		<constructor-arg>
+			<bean class="com.cyberway.common.utils.ServletContextFileFactory">
+				<property name="path" value="/common/template/library.xml"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 模板转换器-->
+	<util:map id="template.applies" key-type="java.lang.Integer" value-type="java.lang.String">
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_ANY"/>
+            </key>
+            <value>
+<![CDATA[<html>
+	<head>
+		<title>CMS</title>
+	</head>
+	<body>
+		请在这里输入内容
+	</body>
+</html>]]></value>
+        </entry>    
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_INDEX"/>
+            </key>
+            <value>
+<![CDATA[<html>
+	<head>
+		<title>首页</title>
+		<link href="css/base.css" rel="stylesheet"/>
+		<script type="text/javascript" src="scripts/jquery.min.js"></script>
+	</head>
+	<body>
+		请在这里输入内容
+	</body>
+</html>]]></value>
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_DETAILS"/>
+            </key>
+            <value>
+<![CDATA[<html>
+	<head>
+		<title>信息细览</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/k_logo.ico" media="screen" />
+		<%@ include file="/common/front.inc"%>
+	</head>
+	<body>							
+		<object t_type="Property" _name="body"></object>
+		<object t_type="Download" _name="attach" _style="attachment_default"></object>
+	</body>
+</html>]]></value>
+        </entry> 
+       
+          
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_FORM"/>
+            </key>
+           <value>
+<![CDATA[<html>
+	<head>
+		<title>信息表单</title>
+		<%@ include file="/common/cyber_taglibs.inc"%>
+		<script src="${ctx}/common/cybercms_js/global_ab.js"  type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="/styles/cybercms/css.css" />
+		<style type="text/css">
+			body{background:url('/images/cybercms/bg_artEdit_main.gif');}
+			.artEdit-frame-inField_ab{padding:20px 20px;}
+		</style>
+	</head>
+<body class="artEdit_ab" contentEditable="true">
+	<div file="/common/messages.inc" t_type="Include"></div>
+	<form class="artEdit-frame_ab" method="post" id="myform" name="myform" action="${ctx}/cms/document!adminSaveOrUpdate.action?id=${id}&amp;channelId=${channelId}">
+		<ww:hidden id="id" name="domain.id"></ww:hidden>
+		<div class="artEdit-frame-header_ab"><img class="artEdit-logo_ab" alt="cms" width="204" height="30" src="/images/cybercms/pic_artEdit_logo.jpg" />&nbsp; <img class="artEdit-imgShadow_ab" alt="cms" width="962" height="10" src="/images/cybercms/pic_artEdit_shadow.jpg" /></div>
+		<div class="artEdit-frame-border_ab artEdit-frame-tit_ab">文章编辑<img id="windowClose_ab" class="artEdit-frame-close_ab" alt="" src="/images/cybercms/btn_close.gif" /></div>
+		<ul class="artEdit-frame-border_ab artEdit-frame-editField_ab">
+			<li class="artEdit-frame-blankForIe67"><c:if test="isEdit"></c:if></li>
+			<li class="artEdit-btn_ab"><a class="artEdit-btn-in_ab" href="javascript:save();"><img class="ico_ab ico-004_ab" alt="" src="/images/cybercms/ico_004_floppy.gif" /> <span>保存草稿</span> </a></li>
+			<li class="artEdit-btn_ab"><a class="artEdit-btn-in_ab" href="javascript:PublicAndRefreshView();"><img class="ico_ab ico-004_ab" alt="" src="/images/cybercms/ico_004_floppy.gif" /> <span>直接发布</span> </a></li>
+			<li class="artEdit-btn_ab"><a class="artEdit-btn-in_ab" href="javascript:goBack()"><img class="ico_ab ico-009_ab" alt="" src="/images/cybercms/ico_009_order1.gif" /> <span>返回</span> </a></li>
+			<li class="fn-clear"></li>
+		</ul>
+		<div class="artEdit-frame-border_ab artEdit-frame-blank_ab"><img alt="" width="100%" height="6" src="/images/cybercms/pic_artEdit_lines.gif" /></div>
+		<ul style="padding-left: 0px; padding-right: 0px" class="artEdit-frame-border_ab artEdit-frame-inField_ab">
+			<div class="info-box">
+				<table class="myTab_ab" border="0" cellSpacing="0" cellPadding="0">
+					<tbody>
+						<tr>
+							<td height="30" width="150" align="right">标题<span style="color: #f00">*</span>：</td>
+							<td colSpan="3"><input t_type="TextField" validateScriptType="0" cssClass="textField_ab" cssStyle="width: 400px" systemValidate="max-length-70 required" _name="title" dpieagent_iecontroltype="2" type="text" /></td>
+						</tr>
+						<tr>
+							<td height="30" width="150" align="right"><span style="color: #f00"><font color="#000000">内容</font>*</span>：</td>
+							<td height="30" width="150" colSpan="3" align="right"></td>
+						</tr>
+						<tr>
+							<td colSpan="4"><object t_type="Html" _name="body" htmlEdit="CmsEdit"></object></td>
+						</tr>
+						<tr>
+							<td height="30" width="150" align="right">附件：</td>
+							<td colSpan="3"><object t_type="Upload" _name="attachs" _style="attachment_default" fileSizeField="50"></object></td>
+						</tr>
+						<tr>
+							<td height="30" align="left">发布人：</td>
+							<td><object t_type="Property" _name="authorCname" formatField="yyyy-MM-dd"></object></td>
+							<td align="left">发布日期：</td>
+							<td><object t_type="Property" _name="timeCreated" formatField="yyyy-MM-dd" dateField="1"></object></td>
+						</tr>
+						<tr>
+							<td vAlign="top" colSpan="4">
+								<table border="0" cellSpacing="0" cellPadding="0" width="100%">
+									<tbody>
+										<tr>
+											<td align="left">修改记录：</td>
+										</tr>
+										<tr>
+											<td vAlign="top">
+												<div t_type="History" _style="history" displayFields="[&quot;username&quot;,&quot;time&quot;]"></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</ul>
+		<div class="artEdit-frame-rights_ab">Copyright by Cyberway information Technology Co.,Ltd.All Rights Reserved.2014-2015 designed by cyberway</div>
+		<%@ include file="/common/foot.inc"%>
+	</form>
+	<script type="text/javascript">
+		var valid = new Validation('myform',{immediate:true});
+		setElementsDisabled(!${isEdit});
+		function whetherClose(){
+			var domainid="${domain.id}";
+			var isCloseWindow="${isCloseWindow}";
+			if(domainid!=""&&isCloseWindow!=""){
+				try {
+					window.opener.ECSideUtil.reload('myTable');
+				}catch(e){
+					window.close();
+				}
+				window.close();
+			}
+		}
+		whetherClose();
+	</script>
+	<script type="text/javascript">
+		global_ab.init.btnAct_forIe6("li");
+		global_ab.init.btnAct_forIe6("div");
+		
+		(function(){
+			document.getElementById("windowClose_ab").onclick = function(){
+				window.close();
+			}
+		})();
+	</script>
+</body>
+</html>]]></value>
+        </entry>   
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_SUMMARY"/>
+            </key>
+            <value>
+<![CDATA[<html>
+	<head>
+		<title>信息概览</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/k_logo.ico" media="screen" />
+		<%@ include file="/common/front.inc"%>
+	</head>
+	<body>
+		<object texthtml="&lt;li class=&quot;investlist&quot;&gt;
+        &lt;span&gt;&lt;a href=&quot;/cms/docInfo!view.action?channelId=${channel.id}&amp;id=${id}&quot;&gt;${title}&lt;/a&gt;&lt;/span&gt;
+        &lt;!-- &lt;i class=&quot;inDown&quot;&gt;&lt;/i&gt; --&gt;
+        &lt;/li&gt;" sortOrder="descending" orderBy="timeCreated" infotype="0" page="&lt;/ul&gt;&lt;/div&gt;&lt;cms:tablePager style='tablePager' pageIndex='_data.currentPageNo' pageSize='_data.pageSize' recordCount='_data.totalCount'&gt;&lt;/cms:tablePager&gt;" titleEnd="&lt;/div&gt;&lt;/div&gt;" titleHead="&lt;div class=&quot;mainlist&quot;&gt;
+        &lt;div class=&quot;commainCon&quot;&gt;
+        &lt;div&gt;
+        &lt;ul class=&quot;investor&quot;&gt;" pathField="docInfo!view.action?id=${id}" formatField="yyyy-MM-dd" typeField="link" pagination="true" pageSize="20" t_type="Homelist"></object>
+	</body>
+</html>]]></value>
+        </entry>
+        
+        
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_ANY_WAP"/>
+            </key>
+            <value>
+<![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>WAP 通用页面</title>
+	</head>
+	<body>
+		请在这里输入内容
+	</body>
+</html>]]></value>
+        </entry>
+        
+        
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_INDEX_WAP"/>
+            </key>
+            <value>
+<![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>WAP 首页</title>
+	</head>
+	<body>
+		请在这里输入内容
+	</body>
+</html>]]></value>
+        </entry>
+        
+        
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_DETAILS_WAP"/>
+            </key>
+            <value>
+<![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>wap 概览</title>
+	</head>
+	<body>
+		请在这里输入内容
+	</body>
+</html>]]></value>
+        </entry>
+        
+        <entry>
+            <key>
+                <util:constant static-field="com.cyberway.cms.domain.Template.TYPE_SUMMARY_WAP"/>
+            </key>
+            <value>
+<![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>wap 概览</title>
+	</head>
+	<body>
+		请在这里输入内容
+	</body>
+</html>]]></value>
+        </entry>
+    </util:map>
+
+	<util:map id="tag.specificationMap" key-type="java.lang.String" value-type="org.dom4j.Document">
+        <entry key="cms">  
+			<bean class="com.cyberway.common.utils.ServletContextDocumentFactory">
+				<property name="path" value="/WEB-INF/template_tld/cms.tld"/>
+			</bean>
+		</entry>
+		<entry key="ww">  
+			<bean class="com.cyberway.common.utils.ServletContextDocumentFactory">
+				<property name="path" value="/WEB-INF/template_tld/struts-tags.tld"/>
+			</bean>
+		</entry>
+		<entry key="fck">  
+			<bean class="com.cyberway.common.utils.ServletContextDocumentFactory">
+				<property name="path" value="/WEB-INF/template_tld/FCKeditor.tld"/>
+			</bean>
+		</entry>
+		<entry key="ec">  
+			<bean class="com.cyberway.common.utils.ServletContextDocumentFactory">
+				<property name="path" value="/WEB-INF/template_tld/ecside.tld"/>
+			</bean>
+		</entry>
+		<entry key="c">  
+			<bean class="com.cyberway.common.utils.ServletContextDocumentFactory">
+				<property name="path" value="/WEB-INF/template_tld/c.tld"/>
+			</bean>
+		</entry>
+    </util:map>
+	
+	<bean id="template.token.writers" class="org.springframework.beans.factory.config.ListFactoryBean" scope="prototype">
+		<property name="singleton" value="false"/>
+		<property name="sourceList">
+			<list>
+				<bean class="com.cyberway.cms.internal.template.token.HeadWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.TextFieldWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.TextAreaWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.DatePickerWriter">
+					<property name="specificationMap" ref="tag.specificationMap" />
+				</bean>
+				<bean class="com.cyberway.cms.internal.template.token.RadioWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.CheckboxWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.CheckboxListWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.SelectWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.PropertyWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.ListWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.StaticListWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.HistoryWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.SearchWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.HtmlEditWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.WordEditWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.ExcelEditWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.PptEditWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.UploadWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.DownloadWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.FileWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.PhotoWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.ButWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.NavigationWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.MenuWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.RssWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.LoginWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.RegisterWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.OperationWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.HomelistWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.IndexListWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.IndexListItemsWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.IndexListPagerWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.HomewaplistWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.UserWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.MessageWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.ButtonWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.ClickCountWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.ActivateXWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.BeanShellScriptWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.EmailWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.TreeWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.FlowWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.IncludeWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.AdvertisementWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.MediaUploadWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.MediaViewWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.WdatePickerWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.VisableWriter"/>
+				<bean class="com.cyberway.cms.internal.template.token.TagWriter">
+					<property name="specificationMap" ref="tag.specificationMap" />
+				</bean>
+				<bean class="com.cyberway.cms.internal.template.token.TemplateIncludeWriter">
+					<property name="templateManagerService" ref="templateManagerService"/>
+					<property name="templateParserMap" ref="template.parsers"/>
+					<property name="pageWriterBeanName" value="template.nestPageWriter" />
+				</bean>
+				<bean class="com.cyberway.cms.internal.template.token.JSPWriter"/>
+				
+			</list>
+		</property>
+	</bean>
+	<bean id="template.tokenWriter" class="com.cyberway.cms.internal.template.token.TokenWriterImpl" scope="prototype">
+		<property name="filters" ref="template.token.writers"/>
+	</bean>
+	
+	<bean id="template.pageWriter" class="com.cyberway.cms.internal.template.PageWriterImpl" scope="prototype">
+		<property name="tokenWriter" ref="template.tokenWriter"/>
+		<property name="prefix">
+			<value>
+<![CDATA[<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="/common/template/public.inc"%>
+<!DOCTYPE html>]]>
+			</value>
+		</property>
+		<property name="sitefix">
+			<value>
+<![CDATA[<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="/common/template/public.inc"%>
+<!DOCTYPE html>]]>
+			</value>
+		</property>
+		<property name="sitefixWap">
+			<value>
+<![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<%@ include file="/common/template/public_wap.inc"%>]]>
+			</value>
+		</property>
+	</bean>
+	<bean id="template.nestPageWriter" class="com.cyberway.cms.internal.template.NestPageWriter" scope="prototype">
+		<property name="tokenWriter" ref="template.tokenWriter"/>
+	</bean>
+	<bean id="template.emailPageWriter" class="com.cyberway.cms.internal.template.EmailPageWriter" scope="prototype">
+		<property name="tokenWriter" ref="template.tokenWriter"/>
+	</bean>
+	
+	<!--模板转换器-->
+	<bean id="template.convert.detailsToSummary" class="com.cyberway.cms.internal.template.convert.DetailsToSummary">
+		<property name="prefix">
+			<value>
+<![CDATA[<html>
+	<head>
+		<title>信息管理</title>
+		<%@ include file="/common/cyber_taglibs.inc"%>
+		<script src="${ctx}/common/cybercms_js/global_ab.js"  type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="/styles/cybercms/css.css" />
+	</head>
+	<body contentEditable="true" leftMargin="0" topMargin="0">
+		<div t_type="Include" file="/common/messages.inc"></div>
+		<div class="system-header">
+			<div class="edit-header-lion">
+				<ul id="lion-ul">
+					<dir t_type="cms:CmsAuth" objectId="${channelId}" objectType="2" resCode="CMS_DOCUMENT_ADD">
+						<li class="artEdit-btn_ab artEdit-btn-w3letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:insertItem('',1);">
+								<img class="ico_ab ico-013_ab" alt="" src="/images/cybercms/ico_013_plus.gif" />
+								<span>新增</span>
+							</a>
+						</li>
+					</dir>
+					<dir t_type="cms:CmsAuth" resCode="CMS_DOCUMENT_MODI" objectType="2" objectId="${channelId}">
+						<li class="artEdit-btn_ab artEdit-btn-w4letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:editItems('','',1);">
+								<img class="ico_ab ico-014_ab" alt="" src="/images/cybercms/ico_014_textEdit.gif" />
+								<span>编辑</span>
+							</a>
+						</li>
+					</dir>
+					<dir t_type="cms:CmsAuth" objectId="${channelId}" objectType="2" resCode="CMS_DOCUMENT_DELETE||CMS_DOCUMENT_DELETE_AUTHOR">
+						<li class="artEdit-btn_ab artEdit-btn-w3letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:deleteItem();">
+								<img class="ico_ab ico-017_ab" alt="" src="/images/cybercms/ico_017_trashFull.gif" />
+								<span>删除</span>
+							</a>
+						</li>
+					</dir>
+					<dir t_type="cms:CmsAuth" objectId="${channelId}" objectType="2" resCode="CMS_DOCUMENT_ISSUE">
+						<li class="artEdit-btn_ab artEdit-btn-w3letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:issueItem();">
+								<img class="ico_ab ico-006_ab" alt="" src="/images/cybercms/ico_006_world.gif" />
+								<span>发布</span>
+							</a>
+						</li>
+					</dir>
+					<dir t_type="cms:CmsAuth" objectId="${channelId}" objectType="2" resCode="CMS_DOCUMENT_ISSUE">
+						<li class="artEdit-btn_ab artEdit-btn-w5letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:issueStaticItem();">
+								<img class="ico_ab ico-092_ab" alt="" src="/images/cybercms/ico_092_doneSquare.gif" />
+								<span>重新分发</span>
+							</a>
+						</li>
+					</dir>
+					<dir t_type="cms:CmsAuth" objectId="${channelId}" objectType="2" resCode="CMS_DOCUMENT_UNISSUE">
+						<li class="artEdit-btn_ab artEdit-btn-w5letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:unIssueItem();">
+								<img class="ico_ab ico-097_ab" alt="" src="/images/cybercms/ico_097_closeSquare.gif" />
+								<span>撤消发布</span>
+							</a>
+						</li>
+					</dir>
+					
+					<dir t_type="cms:CmsAuth" objectId="${channelId}" objectType="2" resCode="CMS_DOCUMENT_EXPORT">
+						<li class="artEdit-btn_ab artEdit-btn-w3letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:exportData();">
+								<img class="ico_ab ico-020_ab" alt="" src="/images/cybercms/ico_020_upcomingWork1.gif" />
+								<span>导出</span>
+							</a>
+						</li>
+					</dir>
+					
+					<dir t_type="cms:CmsAuth" objectId="${channelId}" objectType="2" resCode="CMS_DOCUMENT_IMPORT">
+						<li class="artEdit-btn_ab artEdit-btn-w3letters_ab">
+							<a class="artEdit-btn-in_ab" href="javascript:importData(${channelId});">
+								<img class="ico_ab ico-020_ab" alt="" src="/images/cybercms/ico_020_upcomingWork.gif" />
+								<span>导入</span>
+							</a>
+						</li>
+					</dir>
+					<li class="artEdit-btn_ab artEdit-btn-w3letters_ab">
+						<a class="artEdit-btn-in_ab" href="${ctx}/cms/document!adminList.action?channelId=${channelId}&time=new Date()">
+							<img src="/images/cybercms/ico_019_refresh.gif" class="ico_ab ico-019_ab" />
+							<span>刷新</span> 
+						</a>
+					</li>
+					        
+					       
+					<li class="fn-clear"></li>
+				</ul>
+			</div>
+		</div>
+		<div class="content">
+			<div class="info-box">
+				<table minColWidth="80" filterable="true" sortable="true" t_type="ec:table" retrieveRowsCallback="limit" sortRowsCallback="limit" filterRowsCallback="limit" resizeColWidth="true" showPrint="true" tableId="${tableId}" rowsDisplayed="10" listWidth="100%" classic="true" generateScript="true" csvFileName="信息.csv" xlsFileName="信息.xls" batchUpdate="false" useAjax="false" editable="false" action="${ctx}/cms/document!adminList.action" var="item" items="items">
+					<tbody>
+						<tr recordKey="${item.id}" t_type="ec:row"  rowId="rowid_${GLOBALROWCOUNT}">
+							<td title="&lt;input type=checkbox name=allbox onclick=checkAll(this) &gt;全选" style="text-align: center" width="45" filterable="false" sortable="false" t_type="ec:column" viewsDenied="xls" property="id"><input type="checkbox" ondblclick="checkOne(allbox);" name="_selectitem" value="${item.id}" /></td>
+							<td title="序号" style="text-align: center" filterable="false" sortable="false" t_type="ec:column" property="_1" value="${GLOBALROWCOUNT}"></td>
+]]>
+			</value>
+		</property>
+		<property name="suffix"> 
+			<value>
+<![CDATA[
+							<td title="状态" filterable="true" t_type="ec:column" property="issued" value="${item.stateName}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<textarea id="ecs_t_input" style="display: none">								&lt;input type=&quot;text&quot; class=&quot;inputtext&quot; value=&quot;&quot; onblur_fckprotectedatt=&quot;%20onblur%3D%22ECSideUtil.updateEditCell(this)%22&quot; style=&quot;width:100%;&quot; name=&quot;&quot; /&gt;
+				</textarea>
+			</div>
+		</div>
+		<div t_type="Include" file="/common/foot.inc"></div>
+		<script>
+			function refreshs(){
+				location.reload();
+			}
+		</script>
+	</body>
+</html>]]>
+			</value>
+		</property>
+		<property name="templateParser" ref="template.parser.default"/>
+	</bean>
+</beans>

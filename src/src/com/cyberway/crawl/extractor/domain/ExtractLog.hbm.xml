@@ -1,0 +1,18 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cyberway.crawl.extractor.domain" default-lazy="true">
+    <class name="com.cyberway.crawl.extractor.domain.ExtractLog" table="CRAWL_EXTRACTLOG">
+        <id name="oid" type="java.lang.Long" column="OID">
+            <generator class="native" />
+        </id>
+        <property name="keyField"  type="java.lang.String" column="keyField" length="500"/>
+        <property name="channelId"  type="java.lang.Long" column="channelId" />
+        <property name="channelName"  type="java.lang.String" column="channelName" length="255"/>
+        <property name="createTime"  type="java.util.Date" column="createTime" />
+        <property name="author" type="java.lang.String" column="author" length="100"/>
+        <many-to-one name="job" class="com.cyberway.crawl.jobs.object.Jobs" lazy="false">
+        <column name="JOB_ID" />
+        </many-to-one>    
+    </class>
+</hibernate-mapping>

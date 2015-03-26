@@ -1,0 +1,162 @@
+package com.cyberway.weixin.business.attendance.controller;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.servlet.ServletInputStream;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import com.cyberway.core.dao.EntityDao;
+import com.cyberway.core.web.BaseBizController;
+import com.cyberway.weixin.business.attendance.domain.Attendance;
+import com.cyberway.weixin.business.attendance.domain.AttendanceManage;
+import com.cyberway.weixin.business.attendance.service.AttendanceManageService;
+import com.cyberway.weixin.business.attendance.service.AttendanceService;
+import com.cyberway.weixin.encrypt.AesException;
+import com.cyberway.weixin.encrypt.WXBizMsgCrypt;
+import com.cyberway.weixin.util.Constants;
+import com.cyberway.weixin.util.JSSDKUtil;
+/**
+ * 
+ * @com.cyberway.weixin.business.attendance.controller.AttendanceController
+ * TODO :微信考勤控制器
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年2月16日 下午1:58:26
+ */
+public class AttendanceController extends BaseBizController<Attendance>{
+	
+	/**  
+	* serialVersionUID:TODO（用一句话描述这个变量表示什么）
+	*/  
+	private static final long serialVersionUID = 1L;
+	
+	AttendanceService service = (AttendanceService) this.getServiceById("attendanceService");
+	AttendanceManageService attendanceManageservice = (AttendanceManageService) this.getServiceById("attendanceManageService");
+	
+	private String config;
+	private AttendanceManage am;
+	
+	@Override
+	protected EntityDao getService() {
+		// TODO Auto-generated method stub 未完成 by yanruqian 2015年2月16日
+		return service;
+	}
+	/**
+	 * 
+	*  <p>TODO 回调地址</p>
+	 * @return http://120.197.42.141:8084/weixin/attendance!index.action
+	 * @throws IOException
+	 * @throws SAXException 
+	 * @throws ParserConfigurationException 
+	 * @throws DocumentException 
+	 */
+	public String doIndex() throws IOException, ParserConfigurationException, SAXException{
+		// 微信加密签名  
+        String msg_signature = getRequest().getParameter("msg_signature");  
+        // 时间戳  
+        String timestamp = getRequest().getParameter("timestamp");  
+        // 随机数  
+        String nonce = getRequest().getParameter("nonce");  
+        //加密的随机字符串
+        String echostr = getRequest().getParameter("echostr");  
+        // 打印请求地址
+        System.out.println("request=" + getRequest().getRequestURL());  
+        String result = null;
+        try {  
+        	WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(Constants.TOKEN,Constants.encodingAESKey,Constants.CORPID);  
+	        if(null!=echostr){
+	        	// 验证URL函数
+	        	 result = wxcpt.VerifyURL(msg_signature, timestamp, nonce, echostr);  
+	        }else{
+	        	BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) getRequest().getInputStream()));
+	    		String line = null;
+	    		StringBuilder sb = new StringBuilder();
+	    		while ((line = br.readLine()) != null) {
+	    			sb.append(line);
+	    		}
+	    		result = wxcpt.DecryptMsg(msg_signature, timestamp, nonce, sb.toString());  
+	        	service.parseXml(result);
+	        }
+	        System.out.println("result:"+result);
+        } catch (AesException e) {  
+            e.printStackTrace();  
+        }  
+        outWrite(result);
+		return null;
+	}
+	/**
+	 * 
+	*  <p>TODO 签到跳转页面</p>
+	 * @return
+	 */
+	public String signIn(){
+		config = JSSDKUtil.getJsConfig(getRequest().getRequestURL().toString());
+		am = attendanceManageservice.getAttendance();
+		return "signin_medi";
+	}
+	
+	/**
+	 * 
+	*  <p>TODO 签退跳转页面</p>
+	 * @return
+	 */
+	public String signOut(){
+		
+		return "signout";
+	}
+	/**
+	 * 
+	 *  <p>TODO 外勤签/退跳转页面</p>
+	 * @return
+	 */
+	public String legwork(){
+		
+		return "legwork";
+	}
+	
+	/**
+	 * 
+	 *  <p>TODO 外勤计划跳转页面</p>
+	 * @return
+	 */
+	public String legworkPlan(){
+		
+		return "legwork_plan";
+	}
+	
+	/**
+	 * 
+	 *  <p>TODO 外勤记录跳转页面</p>
+	 * @return
+	 */
+	public String wRecord(){
+		
+		return "wRecord";
+	}
+	/**
+	 * 
+	 *  <p>TODO 考勤记录跳转页面</p>
+	 * @return
+	 */
+	public String kRecord(){
+		
+		return "kRecord";
+	}
+	public String getConfig() {
+		return config;
+	}
+	public void setConfig(String config) {
+		this.config = config;
+	}
+	public AttendanceManage getAm() {
+		return am;
+	}
+	public void setAm(AttendanceManage am) {
+		this.am = am;
+	}
+	
+}

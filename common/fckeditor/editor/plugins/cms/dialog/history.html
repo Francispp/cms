@@ -1,0 +1,67 @@
+﻿<html>
+	<head>
+	<title>Placeholder Properties</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="noindex, nofollow" name="robots">
+	<link href="../../../../../ext-2.0.2/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../../../../../mootools.js"></script>
+	<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+	<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+	<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+	<script type="text/javascript" src="../component.js"></script>
+	<script type="text/javascript" src="../js/history.js"></script>	
+	<script language="javascript">
+		new History ().handleDialog ();
+	</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		
+			<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+				<tr>
+					<td valign="top">
+					<div id="basicView">
+						<table width="100%">
+							<tr>
+								<td nowrap="nowrap">
+									<span>显示的内容：</span>
+								</td>
+								<td width="100%" colspan="2" hight="30">
+									<select id="fieldInput">
+										<option value="username">用户名</option>
+										<option value="department">部门</option>
+										<option value="time">时间</option>
+										<option value="operation">操作</option>
+									</select>
+									<button id="insertFieldButton">添加</button>
+									<button id="removeFieldButton">移除</button>
+									<br />
+									<br />
+									<select id="displayField" multiple="multiple" size="6" style="width:100%">
+										<option value="username">用户名</option>
+										<option value="department">部门</option>
+										<option value="time">时间</option>
+										<option value="operation">操作</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">
+									<span>样式选择：</span>
+								</td>
+								<td width="100%" colspan="2">
+									<select id="styleField" style="width: 50%">
+										<option value="history" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+										<option value="history_style1">Style1</option>
+										<option value="history_style2">Style2</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+						</div>
+						<div id="privilegeScriptView" style="display: none"></div>
+					</td>
+				</tr>
+			</table>
+		
+	</body>
+</html>

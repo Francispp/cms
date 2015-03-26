@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-lazy-init="true">
+    <!-- core -->
+    <!--import resource="classpath:com/cyberway/core/core-context.xml"/-->
+    <!-- cache -->
+    <!--import resource="classpath:com/cyberway/core/cache/cache-context.xml"/-->
+    <!-- Email -->
+    <!--import resource="classpath:com/cyberway/core/mail/mail-context.xml"/-->
+
+</beans>

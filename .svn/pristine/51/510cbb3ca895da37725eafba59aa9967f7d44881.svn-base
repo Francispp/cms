@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"       
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:lang="http://www.springframework.org/schema/lang" 
+       xmlns:tool="http://www.springframework.org/schema/tool"  
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+    http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+	default-lazy-init="true" default-autowire="byName">
+	
+	<!-- 页面静态化 -->
+	<bean id="cms.staticer.compositeFTPClient" class="com.cyberway.staticer.ftp.CompositeFTPClient">
+	</bean>
+			<!--内容分发管理Bean-->
+	<bean id="distributionService" class="com.cyberway.common.distribution.service.DistributionService">
+	</bean>
+	<bean id="cms.staticer.cache" class="com.cyberway.staticer.cache.file.FileCache">
+		<property name="storePath" value="/WEB-INF/statics/" />
+		<property name="eventListener">
+			<bean class="com.cyberway.staticer.cache.FileDispatcherListener">
+				<property name="defaultRoot" value="/cyberway_net_site/WEB-INF/statics/"/> 
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="cms.staticer.threadPoolExecutor" class="java.util.concurrent.ThreadPoolExecutor">
+		<constructor-arg value="5"/>
+		<constructor-arg value="50000"/>
+		<constructor-arg value="600"/>
+		<constructor-arg>
+			<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS"/>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="java.util.concurrent.ArrayBlockingQueue">
+				<constructor-arg value="10"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="cms.staticer.schedulerFactory" class="org.springframework.beans.factory.config.PropertyPathFactoryBean">
+		<property name="targetBeanName" value="SchedulerServices"/>
+		<property name="propertyPath" value="schedulerFactory"/>
+	</bean>
+	
+	<bean id="cms.staticer.scheduler" class="org.springframework.beans.factory.config.PropertyPathFactoryBean">
+		<property name="targetBeanName" value="cms.staticer.schedulerFactory"/>
+		<property name="propertyPath" value="scheduler"/>
+	</bean>
+	<!--站点分发管理Bean -->
+	<bean id="siteDistributionService"
+		class="com.cyberway.cms.siteDistribution.service.SiteDistributionService">
+	</bean>
+	<!--站点分发管理Bean -->
+	<bean id="distributionLogService"
+		class="com.cyberway.cms.distributionlog.service.DistributionLogService">
+	</bean>
+	<bean id="cms.staticer.pagePublisher" class="com.cyberway.staticer.gather.PagePublisherImpl">
+		<property name="cache" ref="cms.staticer.cache"/>
+		<property name="threadPoolExecutor" ref="cms.staticer.threadPoolExecutor"/>
+		<property name="scheduler" ref="cms.staticer.scheduler"/>
+	</bean>
+	
+	<bean id="cms.staticer.pageFilter" class="com.cyberway.staticer.web.PageFilter">
+		<property name="pageCache" ref="cms.staticer.cache"/>
+		<property name="siteCache" ref="siteCache"/>
+	</bean>
+	
+	<bean id="cms.staticer.gatherEventListener" class="com.cyberway.staticer.gather.EmptyEventListener"/>
+	
+	<bean id="siteEventListener" class="com.cyberway.staticer.ftp.EmptyEventListener" />
+	
+	<bean id="pagePublisherLogService" class="com.cyberway.cms.template.service.PagePublisherLogService" />
+	
+	<!--站点管理Bean-->
+	<bean id="siteManagerService" class="com.cyberway.cms.site.service.SiteManagerService" init-method="init" lazy-init="false">
+	  <property name="siteCache" ref="siteCache"/>
+	  <property name="permService" ref="cmsPermissionService"/>
+	</bean>
+	<bean id="siteQuartzService" class="com.cyberway.cms.site.service.SiteQuartzService" />
+	<bean id="siteCommonService" class="com.cyberway.cms.site.service.SiteCommonService" />
+	<bean id="xmlDataManagerService" class="com.cyberway.cms.xml.service.XmlDataManagerService" />
+	<!--静态资源Bean-->
+	<bean id="staticResourceService" class="com.cyberway.cms.staticResource.service.StaticResourceService" init-method="init" lazy-init="false">
+	 <property name="siteCache" ref="siteCache"/>
+	</bean>	
+	<!--模板管理Bean-->
+	<bean id="templateManagerService" class="com.cyberway.cms.template.service.TemplateManagerService" init-method="init" lazy-init="false">
+		 <property name="siteCache" ref="siteCache"/>
+	</bean>
+	<!-- 内容采集 -->	
+	<bean id="templateGatherService" class="com.cyberway.cms.template.service.TemplateGatherService" init-method="init" lazy-init="false">
+  		<property name="siteCache" ref="siteCache" /> 
+  	</bean>
+  	<!-- 站点分发 服务器ip -->	
+    <bean id="cmsIpDistributionService" class="com.cyberway.cms.CmsIpDistribution.service.CmsIpDistributionService">
+  	</bean>
+	<!--频道管理Bean-->
+	<bean id="channelManagerService" class="com.cyberway.cms.channel.service.ChannelManagerService" init-method="init" lazy-init="false">
+		  <property name="siteCache" ref="siteCache"/>
+	</bean>
+	<!--信息管理Bean-->
+	<bean id="documentManagerService" class="com.cyberway.cms.document.service.DocumentManagerService">			
+	 <property name="htmlService" ref="siteHtmlHelp" />
+	 <property name="channelService" ref="channelManagerService" />
+	</bean>
+	<!--信息公用管理Bean-->	
+	<bean id="documentCommonService" class="com.cyberway.cms.document.service.DocumentCommonService">			
+	 <property name="channelService" ref="channelManagerService" />
+	 <property name="siteCache" ref="siteCache"/>
+	</bean>
+	<!-- 记录管理Bean-->
+	<bean id="logManagerService" class="com.cyberway.cms.log.service.LogManagerService"/>
+	<!--站点生成HTML管理Bean-->
+	<bean id="siteHtmlHelp" class="com.cyberway.cms.site.service.SiteHtmlHelp">
+		  <property name="siteCache" ref="siteCache"/>
+		  <property name="storeDir">
+			<bean class="com.cyberway.common.utils.ServletContextFileFactory">
+				<property name="path" value="/staticHtml/"/>
+			</bean>
+		</property>
+	</bean>	 
+	
+	<!-- 全文检索 --> 
+	<bean id="fulltext.directory" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.apache.lucene.store.FSDirectory"/>
+		<property name="staticMethod" value="org.apache.lucene.store.FSDirectory.getDirectory"/>
+		<property name="arguments">
+			<bean class="com.cyberway.common.utils.ServletContextFileFactory">
+				<property name="path" value="@{cms.document.lucenePath}"/>
+				<property name="isRealPath" value="@{cms.document.lucenePath.isReal}"/>
+			</bean>
+		</property> 
+	</bean>
+	<bean id="fulltext.analyzer" class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
+	
+	<bean id="documentSearchService" class="com.cyberway.common.lucene.SearchService">
+		<property name="directory" ref="fulltext.directory"/>
+		<property name="analyzer" ref="fulltext.analyzer"/>
+	</bean>
+
+	<!--站点缓存 -->
+	<bean id="siteCache"
+		class="com.cyberway.cms.site.cache.EhCacheBasedSiteCache"
+		autowire="byName" lazy-init="false">
+		<property name="coreAreaCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="coreAreaCache" />
+			</bean>
+		</property>
+		<property name="coreCommonInfoCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="coreCommonInfoCache" />
+			</bean>
+		</property>
+		<property name="coreCommonTypeCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="coreCommonTypeCache" />
+			</bean>
+		</property>
+		<property name="cache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="cmsSiteCache" />
+			</bean>
+		</property>
+		<property name="channelCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="cmsChannelCache" />
+			</bean>
+		</property>	
+		<property name="permissionCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="cmsPermissionCache" />
+			</bean>
+		</property>
+		<property name="resourceCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="resourceCache" />
+			</bean>
+		</property>
+		<property name="templateFormCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="templateFormCache" />
+			</bean>
+		</property>	
+		<property name="templateUrlCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="templateUrlCache" />
+			</bean>
+		</property>
+		
+		<property name="templateGatherCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="templateGatherCache" />
+			</bean>
+		</property>
+		
+		<property name="luceneCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="luceneCache" />
+			</bean>
+		</property>
+		<property name="mediaCache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="mediaCache" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="fulltext.synchronizer" class="com.cyberway.cms.document.service.HibernateSynchronizer" lazy-init="false" depends-on="areaService,commonInfoService,commonTypeService,channelManagerService">
+		<property name="directory" ref="fulltext.directory"/>
+		<property name="analyzer" ref="fulltext.analyzer"/>
+		<property name="entityDao" ref="documentCommonService"/>
+		<property name="siteCache" ref="siteCache"/>
+		<property name="sync" value="@{cms.document.buildIndex}" />
+	</bean>
+	<!--栏目管理Bean-->
+	<bean id="columnManagerService" class="com.cyberway.cms.column.service.ColumnManagerService"></bean>	
+    <!--其他连接管理Bean-->
+	<bean id="otherJdbcManager" class="com.cyberway.cms.login.service.OtherJdbcManager">
+		<property name="otherJdbcTemplate" ref="otherJdbcTemplate" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	<bean id="otherJdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="otherDataSource" />
+	</bean>
+	<!-- 定时重建索引-->	
+	   <bean id="docBuildIndexJobDetail"        
+    	class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+          <property name="targetObject"><ref bean="fulltext.synchronizer"/></property>     
+          <property name="targetMethod"><value>run</value></property>  
+    </bean>
+    <bean id="cronDocBuildTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">   
+         <property name="jobDetail">        
+             <ref bean="docBuildIndexJobDetail"/> 
+         </property>   
+         <property name="cronExpression">
+         <value>0 26 23 * * ?</value>        
+         </property> 
+     </bean>
+     
+     <bean id="simpleDocBuildTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+      <property name="jobDetail">
+        <ref bean="docBuildIndexJobDetail"/>
+      </property>
+      <property name="repeatInterval">
+        <value>600000</value>
+      </property>
+   </bean>    
+     
+   <!--bean id="docBuildScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+      <property name="triggers">
+      <list><ref local="cronDocBuildTrigger"/></list>      
+       </property>  
+    </bean-->
+    <!-- 分发记录
+	<bean id="distributeRecordService" class="com.cyberway.cms.record.service.DistributeRecordService">
+	</bean>
+	 -->
+    <!-- JS组件管理 -->
+	<bean id="JSFunctionService" class="com.cyberway.cms.component.function.service.JSFunctionService">
+	</bean>
+	<!-- 组件 前台用户管理 -->
+	<bean id="WebRoleService" class="com.cyberway.cms.component.webuser.service.WebRoleService">
+		
+	</bean>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="@{mail.host}"/>
+		<property name="username" value="@{mail.username}"/>
+		<property name="password" value="@{mail.password}"/>
+		<property name="javaMailProperties">  
+             <props>  
+                 <prop key="mail.smtp.auth">true</prop>  
+               <prop key="mail.smtp.timeout">25000</prop>  
+            </props>  
+         </property>
+	</bean>
+	<bean id="WebUserService" class="com.cyberway.cms.component.webuser.service.WebUserService">
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="mailSender" ref="mailSender"></property>
+		<property name="siteUrl" value="@{mail.company.siteUrl}"/>
+	</bean>
+	<!-- 组件 缓存URL 管理 -->
+	<bean id="CMSCacheURLService" class="com.cyberway.cms.component.oscache.service.CMSCacheURLService">
+		<property name="cacheAdmin" ref="oscacheAdministrator">
+		</property>
+	</bean>
+	<bean id="oscacheAdministrator" class="com.opensymphony.oscache.general.GeneralCacheAdministrator"
+		destroy-method="destroy">
+		<constructor-arg index="0">
+			<props>
+				<prop key="cache.memory">true</prop>
+			</props>
+		</constructor-arg>
+	</bean>
+	<!-- 根据模板生成word -->
+	<bean id="genWord" class="com.cyberway.cms.component.genoffice.GenWordForSimple" init-method="init" destroy-method="destroy"/>
+	
+
+	<!--问卷调查Bean-->	
+	<bean id="QuestionnaireService" class="com.cyberway.cms.survey.service.QuestionnaireService"/>
+	<bean id="QuestionnaireAnswerService" class="com.cyberway.cms.survey.service.QuestionnaireAnswerService"/>
+	<bean id="QuestionService" class="com.cyberway.cms.survey.service.QuestionService"/>
+	<bean id="SelectOptionService" class="com.cyberway.cms.survey.service.SelectOptionService"/>
+	<bean id="questionReplyService" class="com.cyberway.cms.survey.service.QuestionReplyService"/>
+	
+	
+	
+	<!--留言管理Bean -->
+	<bean id="leaveWordService" class="com.cyberway.cms.component.leaveword.service.LeaveWordService"/>
+	<bean id="answerLeaveWordService" class="com.cyberway.cms.component.leaveword.service.AnswerLeaveWordService"/>
+	
+	<!--信息订阅管理Bean -->
+	<bean id="SubcreibeService" class="com.cyberway.cms.component.wsr.service.SubcreibeService"/>
+	<bean id="EmailcfgService" class="com.cyberway.cms.component.wsr.service.EmailcfgService"/>
+	<bean id="ChannelfeeService" class="com.cyberway.cms.component.wsr.service.ChannelfeeService"/>
+	
+	<!--文档共享管理Bean -->
+	<bean id="docShareRelationService" class="com.cyberway.cms.component.docShare.service.DocShareRelationService"/>
+	<bean id="docShareRecordService" class="com.cyberway.cms.component.docShare.service.DocShareRecordService"/>
+	<!-- 缓存同步线程池 -->
+	<bean id="cms.synchroism.threadPoolExecutor" class="java.util.concurrent.ThreadPoolExecutor">
+		<constructor-arg value="5"/>
+		<constructor-arg value="1000"/>
+		<constructor-arg value="60"/>
+		<constructor-arg>
+			<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS"/>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="java.util.concurrent.ArrayBlockingQueue">
+				<constructor-arg value="10"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	
+	<!-- 缓存同步 -->
+	<bean id="cacheSynchroismService" class="com.cyberway.cms.webservice.service.CacheSynchroismService">
+		<property name="threadPoolExecutor" ref="cms.synchroism.threadPoolExecutor"/>
+	</bean>
+	<!-- lucene同步-->
+	<bean id="luceneSynchroismService" class="com.cyberway.cms.webservice.service.LuceneSynchroismService">
+		<property name="threadPoolExecutor" ref="cms.synchroism.threadPoolExecutor"/>
+	</bean>
+	<!-- html同步 -->
+	<bean id="htmlSynchroismService" class="com.cyberway.cms.webservice.service.HtmlSynchroismService">
+		<property name="threadPoolExecutor" ref="cms.synchroism.threadPoolExecutor"/>
+	</bean>
+	
+	<!-- 常用类型数据 -->
+	<bean id="ListTitleService" class="com.cyberway.cms.component.selectlist.service.ListTitleService">
+		<property name="selectListCache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="selectListCache" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="listOptionService" class="com.cyberway.cms.component.selectlist.service.ListOptionService"/>
+	
+	<!-- ftp分发执行的线程池 -->
+	<bean id="cms.FTPClient.threadPoolExecutor" class="java.util.concurrent.ThreadPoolExecutor">
+		<constructor-arg value="5"/>
+		<constructor-arg value="1000"/>
+		<constructor-arg value="60"/>
+		<constructor-arg>
+			<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS"/>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="java.util.concurrent.ArrayBlockingQueue">
+				<constructor-arg value="10"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 复合的SiteFTPClient，用于透明的同时对多个FTP服务端进行文件的上传与删除 -->
+	<bean id="siteCompositeFTPClient" class="com.cyberway.staticer.ftp.SiteCompositeFTPClient" />
+	
+	<!-- 缓存管理 -->
+	<bean id="cmsCacheService" class="com.cyberway.cms.cache.service.CmsCacheService"></bean>
+	
+	<!-- 标签管理 -->
+	<bean id="labelService" class="com.cyberway.cms.labels.service.LabelService" />
+	
+</beans>

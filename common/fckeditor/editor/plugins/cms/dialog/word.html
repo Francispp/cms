@@ -1,0 +1,52 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>		
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/word.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/attachment.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/xml.js"></script>	
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>	
+		<script language="javascript">
+			new Word ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+			<td valign="top">
+			<div id="basicView">
+			<span fckLang="DlgUserName">名称：</span>
+			<br />
+			<input id="nameField" style="width:100%" type="text" />
+			<br />
+			<!--
+			<span fckLang="DlgUserStyle">样式选择：</span>
+			<br />
+ 		        <select id="styleField" style="width:100%" >
+ 			 <option value="" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+ 			 <option value="Style1">Style1</option>
+ 			 <option value="Style2">Style2</option>
+			</select>
+			-->
+			<br />
+			<span fckLang="DlgUserDescribe" >描述：</span>
+			<br />
+			<textarea id="descriptionField" style="width: 100%" rows="3" cols="20"></textarea>			
+			</div> 
+			<div id="templatesView" style="display: none">
+			<span fckLang="DlgTemplateUrl">模板URL：</span>
+			<br />
+			<input id="templateUrlField" style="width:70%" type="text" /><button fckLang="DlgUserUploadTemplate" onclick='selectAttachment(document.getElementById("templateUrlField"),DEFUALT_TEMPLATE_ATTACHMENT_PATH,"0")'>上传模板</button>
+			</div>
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

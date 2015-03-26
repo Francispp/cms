@@ -1,0 +1,32 @@
+package com.cyberway.weixin.test;
+
+import net.sf.json.JSONObject;
+
+import com.cyberway.core.utils.ServiceLocator;
+import com.cyberway.weixin.api.SuiteAPI;
+import com.cyberway.weixin.entity.Suite;
+import com.cyberway.weixin.service.SuiteService;
+import com.cyberway.weixin.suite.SuiteConfig;
+import com.cyberway.weixin.util.ConnectionUtil;
+
+public class Test6 {
+	public static void main(String[] args) {
+		SuiteService service = (SuiteService) ServiceLocator.getBean("suiteService");
+		Suite suite = service.getSuiteTicketValue();
+		String jsonData = SuiteService.getJsonObjectData(SuiteConfig.SUITE_ID,SuiteConfig.SUITE_SECRET, suite.getSuiteTicket());
+		JSONObject jsonobject = ConnectionUtil.getHttpRequest(
+				SuiteAPI.GET_SUITE_ACCESS_TOKEN_URL, "POST", jsonData);
+		if (null != jsonobject) {
+			int errcode = jsonobject.getInt("errcode");
+			String errmsg = jsonobject.getString("errmsg");
+			if (0 != errcode) {
+				String error = String.format("操作失败 errcode:{%s} errmsg:{%s}",errcode, errmsg);
+				System.out.println(error);
+			} else {
+				System.out.println(jsonobject+"---------------jsonobject");
+			}
+		}
+	}
+
+
+}

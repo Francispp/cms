@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.domain.Log" table="CMS_LOG" lazy="false">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+        <property name="action" />
+		<property name="operator"/>
+		<property name="operatorId"/>
+		<property name="operatorDepartment"/>
+		<property name="operatorDepartmentId"/>
+		<property name="target" />
+		<property name="targetType" />
+		<property name="description" type="text" />
+		<property name="time"/>
+    </class>
+</hibernate-mapping >

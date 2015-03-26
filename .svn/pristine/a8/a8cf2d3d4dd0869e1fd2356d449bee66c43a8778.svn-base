@@ -1,0 +1,30 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<link href="../../../../../ext-2.0.2/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script src="../../../../../../dwr/interface/SiteManagerService.js" type="text/javascript"></script>
+		<script src="../../../../../../dwr/interface/ChannelManagerService.js" type="text/javascript"></script>
+		<script src="../../../../../../dwr/interface/TemplateManagerService.js" type="text/javascript"></script>
+		<script src="../../../../../../dwr/engine.js" type="text/javascript"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/templateInclude.js"></script>
+		<script language="javascript">
+			new TemplateInclude ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<input type="radio" id="insertActionField" name="includeActionField" value="0" checked="checked"/>插入
+		<input type="radio" id="referenceActionField" name="includeActionField" value="1"/>引用
+		<input type="hidden" id="templateField" />
+		<input type="hidden" id="templateNameField" />
+		<input type="hidden" id="siteField" />
+		<br />&nbsp;
+		<div id="treePanel"></div>
+	</body>
+</html>

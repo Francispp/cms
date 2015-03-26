@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cyberway.common.file.domain.ServerFile" table="CMS_SERVER_FILE">
+        <id name="id" type="java.lang.Long" column="ID">
+            <generator class="native" />
+        </id>
+        <property name="channelId" />
+        <property name="docId" />
+        <property name="sourceName" />
+        <property name="path" />
+        <property name="url" />
+        <property name="updateTime" />
+        <property name="fileType" />
+        <property name="fieldName" />
+        <property name="fileExt" />
+        <property name="hasSend" />
+        <property name="uploaderId" />
+    </class>
+</hibernate-mapping>

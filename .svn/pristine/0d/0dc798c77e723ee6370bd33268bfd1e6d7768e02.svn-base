@@ -1,0 +1,24 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.cyberway.common.visit.domain.VcmsVisitCount" table="V_CMS_VISIT_COUNT">
+	 <composite-id>
+		 <key-property name="oid" type="java.lang.Long" />
+		<key-property name="siteId" type="java.lang.Long" />
+		<key-property name="docId" type="java.lang.Long" />
+		<key-property name="channelId" type="java.lang.Long" />
+		<key-property name="userId" type="java.lang.Long" />
+		<key-property name="userName" type="java.lang.String" />
+		<key-property name="loginId" type="java.lang.String" />
+		<key-property name="path" type="java.lang.String" />
+		<key-property name="visitIp" type="java.lang.String" />
+		<key-property name="visitDate" type="java.util.Date" />
+		<key-property name="parentId" type="java.lang.Long" />
+		<key-property name="channelName"  type="java.lang.String" />
+		<key-property name="siteName" type="java.lang.String" />
+		<key-property name="title" type="java.lang.String" />
+		
+		</composite-id>
+	</class>
+</hibernate-mapping>

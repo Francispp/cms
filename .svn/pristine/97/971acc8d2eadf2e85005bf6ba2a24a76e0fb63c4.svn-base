@@ -1,0 +1,85 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/messageBoard.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new MessageBoard ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<table width="100%">
+							<tr>
+								<td nowrap="nowrap">列表显示字段：</td>
+								<td width="50%" nowrap="nowrap">
+									<select id="availDisplayContentList">
+										<option value="publisher">发布人</option>
+										<option value="department">部门</option>
+										<option value="timePublished">发布时间</option>
+										<option value="subject">主题</option>
+										<option value="body">内容</option>
+									</select>
+								</td>
+								<td width="50%">
+									<button id="addDisplayContentButton">添加</button>
+									<button id="removeDisplayContentButton">移除</button>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td colspan="2">
+									<select id="displayContentList" multiple="multiple" size="8" style="width:100%">
+										<option value="publisher">发布人</option>
+										<option value="department">部门</option>
+										<option value="timePublished">发布时间</option>
+										<option value="subject">主题</option>
+										<option value="body">内容</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">每页显示的条数：</td>
+								<td width="100%" colspan="2">
+									<input id="pageSizeField" style="width: 50%" type="text" value="10" />
+								</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">允许删除</td>
+								<td width="100%" colspan="2">
+									<input type="checkbox" id="deleteAbleField" checked="checked" />
+								</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap"><span fckLang="DlgUserStyle">样式选择：</span></td>
+								<td width="100%" colspan="2">
+									<select id="styleList" style="width: 50%">
+										<option value="" selected="selected">系统默认</option>
+										<option value="Style1">Style1</option>
+										<option value="Style2">Style2</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+	                <div id="valueScriptView" style="display: none"></div>
+	                <div id="hiddenScriptView" style="display: none"></div>
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE project [<!ENTITY buildfile SYSTEM "file:./build-user.xml">]>
+<project default="final" name="CMS">
+	<property name="PRJ.SRC" value="src" />
+	<property name="PRJ.CLASS" value="WEB-INF\\classes" />
+	<property name="PRJ.LIB" value="WEB-INF\\lib" />
+	<target name="build" depends="configuration">
+		<echo message="Building... " />
+		<javac srcdir="${PRJ.SRC}/" destdir="${PRJ.CLASS}/" debug="true" encoding="UTF-8" fork="true" memoryMaximumSize="512m">
+			<classpath>
+				<fileset dir="${PRJ.LIB}">
+					<include name="**/*.jar" />
+				</fileset>
+				<fileset dir="..\\..\\..\\..\\lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	<target name="configuration" depends="resource">
+		<copy todir="${PRJ.CLASS}">
+			<fileset dir="${PRJ.SRC}/resources">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/*.ftl" />
+				<include name="**/*.xls" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="resource">
+		<copy todir="${PRJ.CLASS}">
+			<fileset dir="${PRJ.SRC}/src">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/*.ftl" />
+				<include name="**/*.xls" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="final" depends="build">
+		<echo message="Deleting..."/>
+		<delete dir="${PRJ.CLASS}/resources"/>
+		<delete dir="${PRJ.CLASS}/src"/>
+	</target> 
+</project>

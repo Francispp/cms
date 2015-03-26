@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-lazy-init="true" default-autowire="byName">
+	<!--表单管理-->
+	<bean id="coreFormService" class="com.cyberway.cms.form.service.CoreFormService">
+	</bean>	
+	<!--表单字段管理-->
+	<bean id="coreFormFieldService" class="com.cyberway.cms.form.service.CoreFormFieldService">	
+	</bean>	
+	<!--流程公共信息管理-->
+	<!--bean id="documentService" class="com.cyberway.workflow.common.service.DocumentService">
+	</bean-->				   
+</beans>

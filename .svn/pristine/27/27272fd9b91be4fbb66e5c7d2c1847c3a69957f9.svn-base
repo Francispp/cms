@@ -1,0 +1,5 @@
+package com.cyberway.weixin.business.attendance.domain;
+
+public class Attendance {
+
+}

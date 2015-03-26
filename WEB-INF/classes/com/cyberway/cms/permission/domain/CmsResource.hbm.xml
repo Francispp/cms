@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.permission.domain.CmsResource" table="CMS_RESOURCE">
+        <id name="oid" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+        <property name="resourceName" not-null="true" />
+		<property name="resourceCode" not-null="true"/>
+		<property name="objectType" />
+		<property name="orderNo" />
+		<property name="levelIsView" />
+		<property name="levelNo" />
+		<property name="remark" />
+		<bag name="permResources" inverse="true" cascade="delete">
+			<key column="resource_id"/>
+			<one-to-many class="com.cyberway.cms.permission.domain.CmsPermResource" not-found="ignore"/>
+		</bag>					
+    </class>
+</hibernate-mapping >

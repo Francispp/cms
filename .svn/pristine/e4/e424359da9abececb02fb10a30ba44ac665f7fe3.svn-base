@@ -1,0 +1,23 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cyberway.crawl.extractor.domain" default-lazy="true">
+    <class name="com.cyberway.crawl.extractor.domain.Extract" table="CRAWL_EXTRACT">
+        <id name="oid" type="java.lang.Long" column="OID">
+            <generator class="native" />
+        </id>
+        <property name="tagName"  type="java.lang.String" column="tagName" length="255"/>
+        <property name="attributeName"  type="java.lang.String" column="attributeName" length="255"/>
+        <property name="attributeValue"  type="java.lang.String" column="attributeValue" length="255"/>
+        <property name="fieldType"  type="java.lang.String" column="fieldType" length="255"/>
+        <many-to-one name="job" class="com.cyberway.crawl.jobs.object.Jobs" lazy="false">
+        <column name="JOB_ID" />
+        </many-to-one>    
+        <many-to-one name="formField" class="com.cyberway.cms.form.domain.CoreFormField" lazy="false">
+        <column name="FIELD_ID" />
+        </many-to-one>  
+        <many-to-one name="regular" class="com.cyberway.crawl.regular.domain.Regular" lazy="false">
+        <column name="REGULAR_ID" />
+        </many-to-one>  
+    </class>
+</hibernate-mapping>

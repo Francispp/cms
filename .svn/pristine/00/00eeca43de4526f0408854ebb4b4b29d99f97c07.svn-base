@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+	
+    <class name="com.cyberway.cms.form.domain.BasicDocument" table="CMS_BASIC_DOCUMENT">
+        <id name="id" type="java.lang.Long">
+            <generator class="assigned" />
+        </id>
+		<property name="title" length="500"/>
+		<property name="issued" not-null="true"/>
+		<property name="docType" />
+		<property name="isHeadline"/>
+		<property name="toped" />
+		<property name="newsed" />
+		<property name="firstpage" />
+        <property name="timeCreated"/>
+        <property name="timeLastUpdated" />
+        		
+		<property name="body" type="text" length="50000"/>
+        <property name="timeIssued"/>
+        <property name="status" />
+		<property name="authorCname"/>
+		<property name="authorId" column="author_id"/>
+		<property name="fieldString1" length="500"/>
+		<property name="fieldString2" length="500"/>
+		<property name="fieldString3" length="500"/>
+		<property name="fieldString4" length="500"/>
+		<property name="fieldString5" length="500"/>
+		<property name="fieldString6" length="500"/>
+		<property name="fieldString7" length="500"/>
+		<property name="fieldString8" length="500"/>
+		<property name="fieldString9" length="500"/>
+		<property name="fieldString10" length="500"/>
+		<property name="fieldString11" length="500"/>
+		<property name="fieldString12" length="500"/>
+		<property name="fieldString13" length="500"/>
+
+
+		
+		<property name="fieldLong1"/>
+		<property name="fieldLong2"/>
+		<property name="fieldFloat1"/>
+		<property name="fieldFloat2"/>
+		<property name="fieldDate1"/>	
+		<property name="fieldDate2"/>		
+		<property name="orderNumber"/>	
+		<many-to-one name="channel" class="com.cyberway.cms.domain.Channel" column="channel_id"/>
+		<many-to-one name="site" class="com.cyberway.cms.domain.CmsSite" column="site_id"/>
+		
+		<!--many-to-one name="author" class="com.cyberway.common.domain.CoreUser" column="author_id"/-->
+		<!--many-to-one name="flowinfo" class="com.cyberway.workflow.engine.domain.CoreFlow" column="flow_id"/-->		
+
+    </class>
+</hibernate-mapping >

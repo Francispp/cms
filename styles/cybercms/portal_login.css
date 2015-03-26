@@ -1,0 +1,79 @@
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; SCROLLBAR-FACE-COLOR: #f0ece8; FONT-SIZE: 11px; PADDING-BOTTOM: 0px; MARGIN: 2px 0px 0px; SCROLLBAR-HIGHLIGHT-COLOR: #f0ece8; SCROLLBAR-SHADOW-COLOR: #f0ece8; SCROLLBAR-3DLIGHT-COLOR: #ffffff; SCROLLBAR-ARROW-COLOR: #e9a654; PADDING-TOP: 0px; SCROLLBAR-TRACK-COLOR: #fefefe; SCROLLBAR-DARKSHADOW-COLOR: #dad0c7; BACKGROUND-COLOR: #fff
+}
+TABLE {
+	FONT-SIZE: 11px;
+}
+INPUT {
+	FONT-SIZE: 12px;
+}
+
+TEXTAREA {
+	FONT-SIZE: 11px; BACKGROUND-COLOR: #fff
+}
+BUTTON {
+	FONT-SIZE: 11px; BACKGROUND-COLOR: #fff
+}
+SELECT {
+	FONT-SIZE: 11px
+}
+PRE {
+	FONT-SIZE: 11px; FONT-FAMILY: monospace
+}
+.wpsLogoText {
+	FONT-WEIGHT: normal; FONT-SIZE: small; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: sans-serif
+}
+.content {
+	FONT-SIZE: 11px; WORD-SPACING: 1px; COLOR: #4d4d4d; LINE-HEIGHT: 15px; TEXT-DECORATION: none
+}
+.underline {
+	BACKGROUND-POSITION: 50% bottom; BACKGROUND-ATTACHMENT: fixed; BACKGROUND-IMAGE: url(underline_gray_01.gif); BACKGROUND-REPEAT: repeat-x
+}
+A:hover {
+	WORD-SPACING: 1px; COLOR: #a91905; TEXT-DECORATION: none
+}
+.more2 {
+	FONT-SIZE: 12px; WORD-SPACING: 1px; COLOR: #4d4d4d; LINE-HEIGHT: 15px; TEXT-DECORATION: none
+}
+A:link:unknown {
+	FONT-SIZE: 12px; WORD-SPACING: 1px; COLOR: #4d71b8; LINE-HEIGHT: 20px; TEXT-DECORATION: none
+}
+A:visited:unknown {
+	FONT-SIZE: 12px; WORD-SPACING: 1px; COLOR: #4d4d4d; LINE-HEIGHT: 20px; TEXT-DECORATION: none
+}
+A:hover:unknown {
+	FONT-SIZE: 12px; WORD-SPACING: 1px; COLOR: #a91905; LINE-HEIGHT: 20px; TEXT-DECORATION: none
+}
+.wpsButtonText {
+	BORDER-RIGHT: #405380 1px solid; PADDING-RIGHT: 4px; BACKGROUND-POSITION: left center; BORDER-TOP: #405380 1px solid; PADDING-LEFT: 4px; FONT-WEIGHT: bold; BACKGROUND-IMAGE: url(); PADDING-BOTTOM: 2px; MARGIN: 0px; BORDER-LEFT: #405380 1px solid; COLOR: #001f66; PADDING-TOP: 2px; BORDER-BOTTOM: #405380 1px solid; BACKGROUND-REPEAT: repeat-x; BACKGROUND-COLOR: #c3d3e6; TEXT-ALIGN: center
+}
+.portlet-form-button {
+	BORDER-RIGHT: #405380 1px solid; PADDING-RIGHT: 4px; BACKGROUND-POSITION: left center; BORDER-TOP: #405380 1px solid; PADDING-LEFT: 4px; FONT-WEIGHT: bold; BACKGROUND-IMAGE: url(); PADDING-BOTTOM: 2px; MARGIN: 0px; BORDER-LEFT: #405380 1px solid; COLOR: #001f66; PADDING-TOP: 2px; BORDER-BOTTOM: #405380 1px solid; BACKGROUND-REPEAT: repeat-x; BACKGROUND-COLOR: #c3d3e6; TEXT-ALIGN: center
+}
+.wpsButtonDisabledText {
+	BORDER-RIGHT: #99a7bf 1px solid; PADDING-RIGHT: 4px; BACKGROUND-POSITION: left center; BORDER-TOP: #99a7bf 1px solid; PADDING-LEFT: 4px; FONT-WEIGHT: bold; BACKGROUND-IMAGE: url(); PADDING-BOTTOM: 2px; MARGIN: 0px; BORDER-LEFT: #99a7bf 1px solid; COLOR: #99a7bf; PADDING-TOP: 2px; BORDER-BOTTOM: #99a7bf 1px solid; BACKGROUND-REPEAT: repeat-x; BACKGROUND-COLOR: #c1d1e2; TEXT-ALIGN: center
+}
+.wpsBrowseButton {
+	
+}
+.wpsLabelText {
+	COLOR: #333333
+}
+.portlet-form-field {
+	COLOR: #333333
+}
+.portlet-form-field-label {
+	COLOR: #333333
+}
+wpsRequiredLabelText {
+	COLOR: #333333
+}
+.wpsRequiredLabelText STRONG {
+	COLOR: #ff0000
+}
+.wpsDescriptionText {
+	COLOR: #808080
+}
+.border-gray {
+	BORDER-RIGHT: #9c9c9c 1px solid; BORDER-TOP: #9c9c9c 1px solid; BORDER-LEFT: #9c9c9c 1px solid; BORDER-BOTTOM: #9c9c9c 1px solid
+}

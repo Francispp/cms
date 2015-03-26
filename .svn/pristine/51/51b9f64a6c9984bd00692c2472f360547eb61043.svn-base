@@ -1,0 +1,49 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>签到</title>
+	<meta http-equiv="description" content="This is my page">
+	<script language="javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+${config}
+wx.ready(function(){
+	wx.getLocation({
+	    success: function (res) { 
+	       var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+	       var latitude = res.latitude; //纬度，浮点数，范围为90 ~ -90
+	       var speed = res.speed; // 速度，以米/每秒计
+	       var accuracy = res.accuracy; // 位置精度
+	       var longt = '${am.longitude}';
+	       var lat = '${am.latitude}';
+	       var ranges = '${am.range}';
+	       var distance = getDistance(latitude,longitude,lat,longt);
+	       if(distance < ranges){
+	    	   alert("这里面进行签到代码");
+	       }
+	    }
+	});
+});
+
+function getDistance(wd1, jd1, wd2, jd2){
+// 	alert(wd1);//23.1675
+// 	alert(jd1);//113.4316
+// 	alert(wd2);//113.430603
+// 	alert(jd2);//23.167
+	var x,y,out;
+//     double PI=3.14159265;
+    var PI=Math.PI;
+    var R=6.371229*1e6;
+    x=(jd2-jd1)*PI*R*Math.cos( ((parseFloat(wd1)+parseFloat(wd2))/2) *PI/180)/180;
+    y=(wd2-wd1)*PI*R/180;
+    out=Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+    return out;
+}
+
+</script>
+  </head>
+  <body>
+  页面制作中....
+  </body>
+</html>

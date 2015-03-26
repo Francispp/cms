@@ -1,0 +1,16 @@
+package com.cyberway.weixin.service;
+/**
+ * 
+ * @com.cyberway.weixin.service.SuiteService
+ * TODO : 套件处理类
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年2月9日 上午10:49:48
+ */
+public class SuiteService {
+
+	public static String getJsonObjectData(String suiteId,String suiteSecret,String suiteTicket){
+		String jsonData = "{\"suite_id\": \"%s\",\"suite_secret\": \"%s\",\"suite_ticket\": \"%s\"}";
+		return String.format(jsonData,suiteId,suiteSecret,suiteTicket);
+	}
+}

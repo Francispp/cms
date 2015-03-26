@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.cms.domain.StaticResource" 
+    table="CMS_STATIC"
+>
+
+    <id
+        name="id"
+        type="java.lang.Long"
+        column="ID"
+    >
+        <generator class="native" />
+    </id>
+
+    <property
+        name="type"
+        type="java.lang.String"
+        column="TYPE"
+        length="50"
+    />
+    <property
+        name="name"
+        type="java.lang.String"
+        column="NAME"
+        length="200"
+    />
+    <property
+        name="serverpath"
+        type="java.lang.String"
+        column="SERVERPATH"
+        length="200"
+    />
+    <property
+        name="uploadman"
+        type="java.lang.String"
+        column="UPLOADMAN"
+        length="100"
+    />
+    <property
+        name="uploadtime"
+        type="java.util.Date"
+        column="UPLOADTIME"
+        length="23"
+    />
+     <property
+        name="timeDeleted"
+        type="java.util.Date"
+        column="timedeleted"
+        length="23"
+    />
+    <property
+        name="status"
+        type="java.lang.Integer"
+        column="status"
+        length="10"
+    />
+    <property
+        name="siteid"
+        type="java.lang.Long"
+        column="SITEID"
+        length="18"
+    />
+    <property
+        name="channelid"
+        type="java.lang.Long"
+        column="CHANNELID"
+        length="18"
+    />
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="2000"
+    />
+    <property
+        name="owner"
+        type="java.lang.String"
+        column="OWNER"
+        length="50"
+    />       
+</class>
+</hibernate-mapping>

@@ -1,0 +1,162 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript">
+			ctx = "";
+		</script>
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/userManagerService.js"></script>
+		<script src="../../../../../../common/cms_js/util.js"  type="text/javascript"></script>
+		<script src="../../../../../../dwr/interface/StaticResourceService.js" type="text/javascript"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/email.js"></script>
+		<script src="../../../../../../common/cms_js/util.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Email ().handleDialog (); 
+var oEditor		= window.parent.InnerDialogLoaded() ;
+var FCK			= oEditor.FCK ;
+var FCKLang		= oEditor.FCKLang ;
+var FCKConfig	= oEditor.FCKConfig ;
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<table width="100%" cellpadding="3" cellspacing="1">
+							<tr>
+								<td nowrap="nowrap" width="1%">直接发送：</td>
+								<td><input type="checkbox" id="directField" checked="true" /></td>
+							</tr>
+							<tr id="basicView:addresseeView">
+								<td nowrap="nowrap">收件人：</td>
+								<td>
+									<input type="hidden" id="toValueField" />
+									<input type="text" id="toField" />
+									<input type="button" name="button"
+							onclick="selectUser(document.getElementById('toValueField'),document.getElementById('toField'))"
+							value="选择用户"/>
+								</td>
+							</tr>
+								<tr id="basicView:addresseeView1">
+								<td nowrap="nowrap">抄送：</td>
+								<td>
+									<input type="hidden" id="ccValueField" />
+									<input type="text" id="ccField" />
+									<input type="button" name="button"
+							onclick="selectUser(document.getElementById('ccValueField'),document.getElementById('ccField'))"
+							value="选择用户"/>
+								</td>
+							</tr>
+							<tr>
+							<td nowrap="nowrap">图标选择:</td>
+							<td><table border=0><tr><td><input id="iconField" type="text" style="width:120px" /></td>
+								<td><button id="addIconButton">添加</button>
+								<button id="removeIconButton">移除</button></td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+						<td nowrap="nowrap">&nbsp;</td>
+							<td>
+								<select id="iconList" size="2" style="width:200px" style="margin-top:5px" multiple="multiple"></select>
+							<br/>
+							</td>
+						</tr>
+							<tr id="basicView:titleView">
+								<td nowrap="nowrap">主题：</td>
+								<td><input type="text" id="subjectField" style="width:200px"/></td>
+							</tr>
+							<tr id="basicView:bodyView">
+								<td>内容：</td>
+								<td><textarea type="text" id="bodyField" style="width:200px"></textarea></td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">附带文档地址：</td>
+								<td><input type="checkbox" id="addressField" checked="true"/></td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">标签样式：</td>
+								<td>
+									<select id="styleField" style="width:100%" >
+										<option value="" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+										<option value="email_style1">Style1</option>
+										<option value="email_style2">Style2</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+	                <div id="hiddenScriptView" style="display: none"></div>
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+
+<SCRIPT LANGUAGE="JavaScript">
+	
+	Ext.onReady (function ()
+	{
+		
+		
+		StaticResourceService.findByType (oEditor.parent.document.getElementById ("siteField").value, "image", function (result)
+		{
+			var store = new Ext.data.SimpleStore({fields : ["name", "value"], data : $A(result).map (function (item)
+			{
+				return [item.name, item.name];
+			})});
+			
+			var comboBox = new Ext.form.ComboBox ({id : "iconField", applyTo : "iconField", mode : "local", store : store, width : 122, displayField : "name", valueField : "value", triggerAction : "all", forceSelection : true});
+			
+			
+			
+			$("addIconButton").addEvent ("click", function ()
+			{
+				if (comboBox.getValue ())
+				{
+					var exists = $A($("iconList").options).some (function (item)
+					{
+						return item.value = comboBox.getValue ();
+					});
+					
+					if (!exists)
+					{
+						var option = document.createElement ("OPTION");
+						option.value = comboBox.getValue ();
+						option.innerText =comboBox.getRawValue ();
+						
+						$("iconList").appendChild (option);
+					}
+				}
+			});
+			
+			$("removeIconButton").addEvent ("click", function ()
+			{
+				$A($("iconList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+						$("iconList").removeChild (option);
+					}
+				});
+			});
+			
+			
+		});
+	});
+	
+	
+</SCRIPT>

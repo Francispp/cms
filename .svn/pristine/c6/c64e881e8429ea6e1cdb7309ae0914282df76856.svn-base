@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+    <!-- Mapping exception to the handler view -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="/errors/error.jsp"/>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.acegisecurity.AccessDeniedException">/errors/403.jsp</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- MultipartResolver for parsing file uploads, implementation for Commons FileUpload -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- maximum file size in bytes -->
+        <property name="maxUploadSize" value="2000000"/>
+    </bean>
+
+    <!-- Multi-Action 用来标识method的变量名定义 -->
+    <bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+        <property name="paramName" value="method"/>
+        <property name="defaultMethodName" value="index"/>
+    </bean>
+    
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value=""/>
+    </bean>
+</beans>

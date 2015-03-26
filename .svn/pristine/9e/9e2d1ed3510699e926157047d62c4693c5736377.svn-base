@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.domain.VcorePermission" 
+    table="v_core_permission"
+>
+
+    <composite-id>
+        <key-property 
+            name="targettype" 
+            column="targettype" 
+            type="java.lang.Long"
+            length="10"
+        />
+        <key-property 
+            name="typename" 
+            column="typename" 
+            type="java.lang.String"
+            length="6"
+        />
+        <key-property 
+            name="objectid" 
+            column="objectid" 
+            type="java.lang.Long"
+            length="18"
+        />
+        <key-property 
+            name="resourceid" 
+            column="resourceid" 
+            type="java.lang.Long"
+            length="18"
+        />
+        <key-property 
+            name="objectname" 
+            column="objectname" 
+            type="java.lang.String"
+            length="50"
+        />
+        <key-property 
+            name="resourcename" 
+            column="resourcename" 
+            type="java.lang.String"
+            length="300"
+        />
+        <key-property 
+            name="resourcekey" 
+            column="RESOURCEKEY" 
+            type="java.lang.String"
+            length="200"
+        />
+    </composite-id>    
+
+
+    <!-- Associations -->
+    <!-- derived association(s) for compound key -->
+    <!-- end of derived association(s) -->
+  
+
+</class>
+</hibernate-mapping>

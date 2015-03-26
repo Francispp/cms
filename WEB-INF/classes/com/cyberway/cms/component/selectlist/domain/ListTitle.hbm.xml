@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.cyberway.cms.component.selectlist.domain.ListTitle" table="CMS_LISTTITLE">
+
+		<id name="oid" column="oid" type="java.lang.Long">
+			<generator class="native">
+			</generator>
+		</id>
+
+		<property name="title" type="java.lang.String" column="title" />
+
+		<property name="remark" type="java.lang.String" column="remark" />
+
+		<property name="key" type="java.lang.String" column="t_key" unique="true" not-null="true" />
+
+		<property name="type" type="java.lang.String" column="t_type" />
+
+		<set name="options" inverse="false" cascade="save-update" sort="unsorted" order-by="pos">
+			<key column="listTitleId">
+			</key>
+			<one-to-many class="com.cyberway.cms.component.selectlist.domain.ListOption" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

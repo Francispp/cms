@@ -1,0 +1,27 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cyberway.crawl.jobs.object" default-lazy="true">
+    <class name="com.cyberway.crawl.jobs.object.Jobs" table="CRAWL_JOBS">
+        <id name="oid" type="java.lang.Long" column="OID">
+            <generator class="native" />
+        </id>
+        <property name="metaName"  type="java.lang.String" column="metaName" length="255"/>
+        <property name="recovery"  type="java.lang.String" column="recovery" length="255"/>
+        <property name="seeds"  type="java.lang.String" column="seeds" length="255"/>
+        <property name="jobUID"  type="java.lang.String" column="jobUID" length="255"/>
+        <property name="status"  type="java.lang.String" column="status" length="255"/>
+        <property name="profile"  type="java.lang.Boolean" column="profile"/>
+        <property name="jobDescription" type="java.lang.String" column="jobDescription" length="1000"/>
+    <set name="extracts" lazy="true" inverse="true" cascade="none">
+        <key>
+            <column name="JOB_ID" />
+        </key>
+        <one-to-many class="com.cyberway.crawl.extractor.domain.Extract"/>      
+    </set>
+        <many-to-one name="channel" class="com.cyberway.cms.domain.Channel" lazy="false">
+        <column name="channelId" />
+        </many-to-one>    
+        <many-to-one name="keyFiledExtract" column="keyFiledExtract_id" class="com.cyberway.crawl.extractor.domain.Extract" />
+    </class>
+</hibernate-mapping>

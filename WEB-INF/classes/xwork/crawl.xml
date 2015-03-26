@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="crawl" namespace="/crawl" extends="default">
+		<action name="console"
+			class="com.cyberway.crawl.console.view.ConsoleController">
+			<result name="index">/crawl/console/index.jsp
+			</result>
+			<result name="tabbar">/crawl/console/crawl_tabbar.jsp
+			</result>
+			<result name="xml">/crawl/console/tabxml.jsp
+			</result>
+		</action>
+		<action name="jobs" class="com.cyberway.crawl.jobs.view.JobsController">
+			<result name="jobs_list">/crawl/jobs/jobs_list.jsp
+			</result>
+			<result name="input">/crawl/jobs/job_edit.jsp
+			</result>
+			<result name="job_edit">/crawl/jobs/job_edit.jsp
+			</result>
+			<result name="view_order">/crawl/jobs/jobs_xml.jsp
+			</result>
+			<result name="new_job">/crawl/jobs/jobs_new.jsp
+			</result>
+			<result name="modules">/crawl/jobs/jobs_modules.jsp
+			</result>
+			<result name="list">/crawl/jobs/job_list.jsp
+			</result>
+			<result name="reStart">/crawl/console/crawl_tabbar.jsp
+			</result>
+		</action>
+		<action name="extract"
+			class="com.cyberway.crawl.extractor.view.ExtractController">
+			<result name="success">/crawl/extract/extract_list.jsp
+			</result>
+			<result name="list">/crawl/extract/extract_list.jsp
+			</result>
+			<result name="extract_info">/crawl/extract/extract_info.jsp
+			</result>
+		</action>
+		<action name="extractLog"
+			class="com.cyberway.crawl.extractor.view.ExtractLogController">
+			<result name="list">/crawl/extract/extract_log_list.jsp
+			</result>
+		</action>
+		<action name="regular"
+			class="com.cyberway.crawl.regular.view.RegularController">
+			<result name="list">/crawl/regular/regular_list.jsp
+			</result>
+			<result name="input">/crawl/regular/edit_regular.jsp
+			</result>
+		</action>
+	</package>
+</struts>

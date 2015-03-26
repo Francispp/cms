@@ -1,0 +1,81 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/register.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Register().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+					<span>注册显示字段：</span>
+						<br />
+						<select id="availDisplayContentList" style="width:200px">
+						
+						   <option value="r_name">用户名</option>
+						   <option value="r_loginname">登录名</option>
+						   <option value="r_loginpwd">密码</option>
+						   <option value="r_memberengname">英文名</option>
+						   <option value="r_oldloginpwd">旧密码</option>
+						   <option value="r_uloginpwd">修改密码</option>
+						   <option value="r_phone">电话</option>
+						   <option value="r_mobilephone">移动电话</option>
+						   <option value="r_sex">性别</option>
+						   <option value="r_email">电子邮件</option>
+						   <option value="r_qq">QQ号码</option>
+						</select>
+						<input id="addDisplayContentButton" type="button" value="添加"/>
+						<input id="removeDisplayContentButton" type="button" value="移除"/>
+						<select id="displayContentList" multiple="multiple" size="6" style="width:200px">
+						     <option value="r_name">用户名</option>
+						   <option value="r_loginname">登录名</option>
+						   <option value="r_loginpwd">密码</option>
+						   <option value="r_uloginpwd">修改密码</option>
+						   <option value="r_oldloginpwd">旧密码</option>
+						   <option value="r_phone">电话</option>
+						   <option value="r_mobilephone">移动电话</option>
+						     <option value="r_email">电子邮件</option>
+						      <option value="r_qq">QQ号码</option>
+						</select>
+						<br />
+						<br />
+					
+						<span>注册成功后跳转地址：</span>
+						<br />
+						<input id="jumppath" style="width:100%" type="text" />
+					
+						
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="register_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="register_style1">Style1</option>
+							<option value="register_style2">Style2</option>
+						</select>
+						<br />
+						
+						
+						
+					</div>
+
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

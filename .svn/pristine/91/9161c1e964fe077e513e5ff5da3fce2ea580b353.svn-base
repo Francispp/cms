@@ -1,0 +1,322 @@
+﻿	<html >
+	<head>
+	<title>Placeholder Properties</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="noindex, nofollow" name="robots">
+	<link href="../../../../../ext-2.0.2/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../../../../../mootools.js"></script>
+	<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+	<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+	<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+	<script src="../../../../../../dwr/interface/ChannelManagerService.js" type="text/javascript"></script>
+	<script src="../../../../../../dwr/engine.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../component.js"></script>
+	<script type="text/javascript" src="../js/list.js"></script>
+	<script type="text/javascript" src="../../../../../attachment/attachment.js"></script>
+	<script type="text/javascript" src="../../../../../attachment/xml.js"></script>	
+	<script language="javascript">
+		var dialog	= window.parent;
+		var oEditor = dialog.InnerDialogLoaded();
+		new List ().handleDialog (oEditor);
+		
+		
+		function Add(){ 
+			if($("optionField").getValue() == "" || $("optionSort").getValue() == "")
+				return false; 
+			 
+			AddComboOption($("orderFields"), $("optionField").getValue (), $("optionField").getValue ());
+			AddComboOption($("sortFields"), $("optionSort").getValue (), $("optionSort").getValue ());
+		
+			$("orderFields").selectedIndex = $("orderFields").options.length - 1 ;
+			$("sortFields").selectedIndex = $("sortFields").options.length - 1 ; 
+		}
+			
+		function AddComboOption(combo, optionText, optionValue, documentObject, index)
+		{
+			var option;
+			
+			if (documentObject)
+				option = documentObject.createElement("OPTION") ;
+			else
+				option = document.createElement("OPTION") ;
+		
+			if (index != null)
+				combo.options.add(option, index);
+			else
+				combo.options.add(option);
+			
+			if(optionText == ""){ 
+				return false;
+			}
+			option.innerHTML = HTMLEncode(optionText);
+			option.value = optionValue ;
+		
+			return option;
+		}
+		
+		function Delete ()
+		{
+			$A($("orderFields").options).each (function (option)
+			{
+				if (option.selected)
+				{
+					$("orderFields").removeChild (option);
+				}
+			}.bind (this));
+			 
+			$A($("sortFields").options).each (function (option)
+			{
+				if (option.selected)
+				{
+					$("sortFields").removeChild (option);
+				}
+			}.bind (this));
+		}
+		function HTMLEncode( text )
+		{
+			if ( !text )
+				return '' ;
+		
+			text = text.replace( /&/g, '&amp;' ) ;
+			text = text.replace( /</g, '&lt;' ) ;
+			text = text.replace( />/g, '&gt;' ) ;
+		
+			return text ;
+		}
+		
+		
+		function HTMLDecode( text )
+		{
+			if ( !text )
+				return '' ;
+		
+			text = text.replace( /&gt;/g, '>' ) ;
+			text = text.replace( /&lt;/g, '<' ) ;
+			text = text.replace( /&amp;/g, '&' ) ;
+		
+			return text ;
+		}
+	</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<form>
+			<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+				<tr>
+					<td valign="top">
+						<div id="basicView">
+							<table width="100%">
+							    <tr>
+									<td nowrap="nowrap"><span fckLang="DlgSiteIsPagination">单条信息直接显示：</span></td>
+									<td nowrap="nowrap" colspan="2">
+										<input type="checkbox" id="isViewOnly" value="1"/>
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgSiteIsPagination">显示信息类型：</span></td>
+									<td nowrap="nowrap" colspan="2"> 
+									<select id="infotype" style="width: 50%">
+										<option value="0" selected="selected">当前频道</option>
+										<option value="1" >子频道</option>
+										<option value="2" >站点所有</option> 
+									</select>
+									</td> 
+								</tr>
+								
+								
+								<tr>
+									<td nowrap="nowrap">
+										<span fckLang="DlgChannelName">频道名称：</span>
+									</td>
+									<td width="100%" colspan="2">
+										<input type="text" id="channelValueField" style="display:none" />
+										<input type="text" id="channelTextField" style="width: 50%" readonly="readonly" />
+										<img id="popupImg" src="../images/popup.png" style="cursor: pointer" />
+										
+									</td>
+								</tr>
+					
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserIsPagination">是否分页：</span></td>
+									<td width="100%" colspan="2">
+										<select id="paginationField" style="width: 50%">
+											<option value="true" selected="selected">是</option>
+											<option value="false">否</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserIsPagination">是否显示头部：</span></td>
+									<td width="100%" colspan="2">
+										<select id="showHeaderField" style="width: 50%">
+											<option value="true" selected="selected">是</option>
+											<option value="false">否</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserIsPagination">是否显示搜索栏：</span></td>
+									<td width="100%" colspan="2">
+										<select id="showSearchBarField" style="width: 50%">
+											<option value="true">是</option>
+											<option value="false" selected="selected">否</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserPageViewNumber">每页显示的条数：</span></td>
+									<td width="100%" colspan="2">
+										<input id="pageSizeField" style="width: 50%" type="text" value="10" />
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserSearchString">查询条件：</span></td>
+									<td width="100%" colspan="2">
+										<input id="whereField" style="width: 50%" type="text" />
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserViewFields">排序字段：</span></td>
+									<td width="100%" nowrap="nowrap" colspan="2" >
+										<table>
+											<tr><td><input id="optionField" style="WIDTH: 100px;" type="text" name="txtText" readonly="readonly"/></td>
+											<td><select id="optionSort" style="width: 60px;">
+											<option value="ascending" selected="selected">升序</option>
+											<option value="descending">降序</option> </select> 
+											<input onclick="Add();" type="button" value="添加"/>
+											<input onclick="Delete()" type="button" value="删除"/></td></tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td colspan="2"> 
+										<select id="orderFields" 
+											style="WIDTH: 115px;" 
+											onchange="GetE('cmbValue').selectedIndex = this.selectedIndex; "
+											size="3" 
+											name="cmbText">
+										</select>
+										<select id="sortFields" 
+												style="WIDTH: 60px;" 
+											onchange="GetE('cmbText').selectedIndex = this.selectedIndex; "
+											size="3" 
+											name="cmbValue">
+										</select> 
+									</td>
+								</tr>  
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserViewFields">列表显示字段：</span></td>
+									<td width="50%" nowrap="nowrap">
+										<input id="availableDisplayFieldInput" type="text" />
+									</td>
+									<td width="50%">
+										<button id="addFieldButton">添加</button>
+										<button id="removeFieldButton">移除</button>
+									</td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td colspan="2">
+										<select id="displayFieldSelect" multiple="multiple" size="8" style="width:90%" />
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span fckLang="DlgUserStyle">样式选择：</span></td>
+									<td width="100%" colspan="2">
+										<select id="styleField" style="width: 50%">
+											<option value="" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+											<option value="list_style1">Style1</option>
+											<option value="list_style2">Style2</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div id="extendView" style="display: none">
+							<table width="100%">
+								<tr>
+									<td nowrap="nowrap"><span>最新行条件：</span></td>
+									<td width="100%" colspan="2">
+										<textarea id="newsConditionField" style="width: 100%" rows="6" cols="20"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span>最新图标：</span></td>
+									<td width="100%" colspan="2">
+										<input type="text" id="newsImageField" style="width: 50%" />
+										<!--button id="imageBrowseButton">选择图片
+										</button-->
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span>图标显示在最后：</span></td>
+									<td width="100%" colspan="2">
+										<input type="checkbox" id="isNewsImagePlace" value="1"/>
+										
+									</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap"><span>动态查询条件：</span></td>
+									<td width="100%" colspan="2">
+										<textarea id="dynaConditionField" style="width: 100%" rows="5" cols="20"></textarea>
+									</td>
+								</tr>								
+							</table>
+						</div>
+						<div id="privilegeScriptView" style="display: none"></div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>
+<script language="javascript">
+		$("displayFieldSelect").onkeydown=function(){ 
+		 switch(event.keyCode){   
+		 case 38:
+		         Up($("displayFieldSelect"));
+		         break;
+		 case 40:
+		        Down($("displayFieldSelect"));
+		        break;
+		      } 
+		}
+		
+   function Up(sel) 
+     { 
+        var nIndex = sel.selectedIndex; 
+        var nLen = sel.length;
+        if ((nLen<1)||(nIndex==0)) return; 
+        if (nIndex<0) 
+          { 
+            alert("请选择一个要移动的已选按钮！"); 
+            return; 
+          } 
+        var sValue=sel.options[nIndex].value; 
+        var sHTML=sel.options[nIndex].innerHTML; 
+        sel.options[nIndex].value=sel.options[nIndex-1].value; 
+        sel.options[nIndex].innerHTML=sel.options[nIndex-1].innerHTML; 
+        sel.options[nIndex-1].value=sValue; 
+        sel.options[nIndex-1].innerHTML=sHTML; 
+        sel.selectedIndex=nIndex-1; 
+} 
+    function Down(sel) 
+      { 
+       var nIndex = sel.selectedIndex; 
+       var nLen = sel.length; 
+       if ((nLen<1)||(nIndex==nLen-1)) return; 
+       if (nIndex<0) 
+       { 
+        alert("请选择一个要移动的已选按钮！"); 
+        return; 
+       } 
+        var sValue=sel.options[nIndex].value; 
+        var sHTML=sel.options[nIndex].innerHTML; 
+        sel.options[nIndex].value=sel.options[nIndex+1].value; 
+        sel.options[nIndex].innerHTML=sel.options[nIndex+1].innerHTML; 
+        sel.options[nIndex+1].value=sValue; 
+        sel.options[nIndex+1].innerHTML=sHTML; 
+        sel.selectedIndex=nIndex+1; 
+       } 
+       
+	</script>

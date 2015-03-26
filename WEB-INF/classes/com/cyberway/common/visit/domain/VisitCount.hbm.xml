@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.cyberway.common.visit.domain.VisitCount" table="CMS_VISIT_COUNT">
+		<id name="oid" type="java.lang.Long" column="OID">
+			<generator class="native" />
+		</id>
+		<property name="docId" type="java.lang.Long" />
+		<property name="siteId" type="java.lang.Long" />
+		<property name="channelId" type="java.lang.Long" />
+		<property name="userId" type="java.lang.Long" />
+		<property name="userName" type="java.lang.String" />
+		<property name="loginId" type="java.lang.String" />
+		<property name="parentId" type="java.lang.Long"></property>
+		<property name="path" type="java.lang.String" />
+		<property name="visitIp" type="java.lang.String" />
+		<property name="visitDate" type="java.util.Date" />
+	</class>
+</hibernate-mapping>

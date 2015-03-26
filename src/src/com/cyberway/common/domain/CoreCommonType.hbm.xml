@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+	<class name="com.cyberway.common.domain.CoreCommonType" table="CORE_COMMONTYPE">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+		<property name="name" length="200" />
+		<property name="keyword" length="200" />
+		<property name="content" length="1000" />
+		<property name="remark" length="1000" />
+		<property name="siteid" type="java.lang.Long" />
+		<property name="parentid" type="java.lang.Long" />
+		
+		<set name="commonInfos" lazy="true" inverse="true" cascade="none" order-by="sortOrder asc">
+			<key>
+				<column name="typeid" />
+			</key>
+			<one-to-many class="com.cyberway.common.domain.CoreCommonInfo"/>
+		</set>
+		<set name="subTypes" lazy="true" inverse="true" cascade="none" order-by="id asc" >
+			<key>
+				<column name="parentid" />
+			</key>
+			<one-to-many class="com.cyberway.common.domain.CoreCommonType" />
+		</set>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,81 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/message.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Message().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+					<span>列表显示字段：</span>
+						<br />
+						<select id="availDisplayContentList" style="width:70%">
+						   <option value="username">发布人</option>
+						   <option value="deptname">部门</option>
+						   <option value="createtime">发布时间</option>
+						   <option value="face">表情</option>
+						   <option value="title">主题</option>
+						   <option value="content">内容</option>
+						</select>
+						<input id="addDisplayContentButton" type="button" value="添加"/>
+						<input id="removeDisplayContentButton" type="button" value="移除"/>
+						<select id="displayContentList" multiple="multiple" size="6" style="width:70%">
+						     <option value="username">发布人</option>
+						   <option value="deptname">部门</option>
+						   <option value="createtime">发布时间</option>
+						   <option value="face">表情</option>
+						   <option value="title">主题</option>
+						   <option value="content">内容</option>
+						</select>
+						<br />
+						<br />
+					
+						<span>每页显示条数：</span>
+						<br />
+						<input id="listSize" style="width:100%" type="text" />
+						<br />
+						<span>允许删除：</span>
+					
+						<input type="checkbox" id="deleteMessage" checked="checked" />
+						<br />
+						<br />
+						<span>删除权限</span>
+                                                <br />
+                                                <select style="width:100%" id="delete_choose">
+                                                <option value="" ></option>
+                                                </select>
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="message_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="message_style1">Style1</option>
+							<option value="message_style2">Style2</option>
+						</select>
+						<br />
+						
+						
+						
+					</div>
+
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

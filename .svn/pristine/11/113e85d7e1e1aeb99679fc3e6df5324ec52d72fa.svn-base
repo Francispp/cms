@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN" "http://www.getahead.ltd.uk/dwr/dwr10.dtd">
+
+<dwr>
+    <allow>
+        <create creator="new" javascript="validator">
+            <param name="class" value="org.apache.struts2.validators.DWRValidator"/>
+        </create>
+        <convert converter="bean" match="com.opensymphony.xwork2.ValidationAwareSupport"/>
+        <convert converter="bean" match="com.cyberway.cms.component.wsr.domain.Subcreibe"/>
+		<convert converter="bean" match="com.cyberway.cms.domain.CmsSite">
+			<param name="include" value="oid,sitename"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.cms.domain.Channel">
+			<param name="include" value="id,name,channelPath,ispublished"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.common.domain.CoreMenu">
+			<param name="include" value="oid,menuname,url"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.cms.form.object.BaseDocument">
+			<param name="include" value="id,title,fieldString1"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.cms.domain.Template">
+			<param name="include" value="id,name,body"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.cms.form.domain.CoreForm"/>
+		<convert converter="bean" match="com.cyberway.cms.form.domain.CoreFormField"/>
+		<convert converter="bean" match="com.cyberway.cms.domain.StaticResource">
+			<param name="include" value="name,serverpath"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.common.domain.CoreCommonInfo">
+			<param name="include" value="id,code,type,content"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.common.domain.CoreArea">
+			<param name="include" value="id,name,code,area_code,zip_code,detail"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.dbwork.core.objects.CMS2Site">
+			<param name="include" value="id,name"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.dbwork.core.objects.CMS2Channel">
+			<param name="include" value="id,name,siteid,superchannel"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.dbwork.core.objects.CMS2Form">
+			<param name="include" value="id,name,channelid"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.dbwork.core.objects.CMS2Item">
+			<param name="include" value="id,name"/>
+		</convert>
+		<convert converter="bean" match="com.cyberway.common.wordtemplate.domain.CoreWordTemplate" >
+			<param name="include" value="id,name,code,savepath,trackRevisions,readOnly"/>
+		</convert>
+		
+		<create creator="spring" javascript="TemplateLibrary">
+			<param name="beanName" value="templateLibrary"/>
+		</create>
+				
+		<create creator="spring" javascript="ChannelManagerService">
+			<param name="beanName" value="channelManagerService"/>
+		</create>
+		
+		<create creator="spring" javascript="TemplateManagerService">
+			<param name="beanName" value="templateManagerService"/>
+		</create>
+		<create creator="spring" javascript="DocumentCommonService">
+			<param name="beanName" value="documentCommonService"/>
+		</create>
+		
+		<create creator="spring" javascript="CoreFormService">
+			<param name="beanName" value="coreFormService"/>
+		</create>
+		
+		<create creator="spring" javascript="ScriptService">
+			<param name="beanName" value="scriptService"/>
+		</create>
+		
+		<create creator="spring" javascript="StaticResourceService">
+			<param name="beanName" value="staticResourceService"/>
+		</create>
+	
+		
+        <!--用户设置状态调用manager -->
+        <create javascript="userManagerService" creator="spring">
+			<param name="beanName">userManagerService</param>
+			<include method="setUserStatus" />
+			<include method="empclassList" />
+			<include method="modifyUsersPassword" />
+		</create>
+	
+		
+        <!--外部用户管理调用 -->
+        <create javascript="webUserService" creator="spring">
+			<param name="beanName">WebUserService</param>
+		</create>
+		
+		<create javascript="SiteManagerService" creator="spring">
+			<param name="beanName">siteManagerService</param>
+			<include method="getAllSites"/>
+			<include method="getSiteFromCache"/>
+			<include method="getChannelBySite"/>
+			<include method="getChannelByIds"/>
+			<include method="getChannelsBySiteid"/>
+			<include method="getChannelsByParent"/>
+			<include method="getListCmsSite"/>
+			<include method="getExistCmsSite"/>
+			<include method="realmNameIsUnique"/>
+		</create>
+		<create javascript="MenuManagerService" creator="spring">
+			<param name="beanName">menuManagerService</param>
+			<include method="getAllMenusByPortalid"/>
+			<include method="getAllChildrenByMenus"/>
+			<include method="getAllChildrenByMenu"/>
+			<include method="getMenusByPortalid"/>
+			<include method="getMenusBypmip"/>
+		</create>
+		
+		<create javascript="commonInfoService" creator="spring">
+			<param name="beanName">commonInfoService</param>
+			<include method="getCoreCommonInfos" />
+			<include method="dwrCoreCommonInfosByCommonTypeId" />
+		</create>
+		
+		<create javascript="areaService" creator="spring">
+			<param name="beanName">areaService</param>
+			<include method="getCounties" />
+			<include method="getCities" />
+			<include method="getProvinces" />
+			<include method="get" />
+		</create>
+		
+		<create javascript="rssManagerService" creator="spring">
+			<param name="beanName">SubcreibeService</param>
+			<include method="getRssByUser" />
+		</create> 
+		<create javascript="templateManagerService" creator="spring">
+			<param name="beanName">templateManagerService</param>
+			<include method="summaryTemplateStatic" />
+			<include method="indexTemplateStatic" />
+			<include method="tPubStaDetails" />
+		</create>
+		
+		
+		
+		<create javascript="mediaIntermediateService" creator="spring">
+			<param name="beanName">mediaIntermediateService</param>
+			<include method="del" />
+			<include method="beforsave" />
+		</create>
+		
+		<!-- 系统菜单 -->
+		<create javascript="menuResourceService" creator="spring">
+			<param name="beanName">menuResourceService</param>
+			<include method="menuCodeIsUnique" />
+		</create>
+		
+		<!-- 组织 -->
+		<create javascript="orgManagerService" creator="spring">
+			<param name="beanName">orgManagerService</param>
+			<include method="orgCodeIsUnique" />
+		</create>
+		
+		<!-- 身份 -->
+		<create javascript="identityManagerService" creator="spring">
+			<param name="beanName">identityManagerService</param>
+			<include method="identityCodeIsUnique" />
+		</create>
+		
+		<!-- 级别 -->
+		<create javascript="gradeManagerService" creator="spring">
+			<param name="beanName">gradeManagerService</param>
+			<include method="gradeCodeIsUnique" />
+		</create>
+		
+		<!-- 权限资源 -->
+		<create javascript="cmsResourceService" creator="spring">
+			<param name="beanName">cmsResourceService</param>
+			<include method="resourceCodeIsUnique" />
+		</create>
+
+		<!--@remark add by liaozhiyong 2012-03-13-->
+		<create javascript="CommonTypeService" creator="spring">
+			<param name="beanName">commonTypeService</param>
+			<include method="dwrCoreCommonTypeValidateKeywordUnique" />
+		</create>
+		<!--@remark add by liaozhiyong 2012-03-21-->
+		<create javascript="RoleManagerService" creator="spring">
+			<param name="beanName">roleManagerService</param>
+			<include method="dwrCoreRoleValidateRolecodeUnique" />
+		</create>
+		<!--@remark add by liaozhiyong 2012-03-24-->
+		<create javascript="CmsPermissionService" creator="spring">
+			<param name="beanName">cmsPermissionService</param>
+			<include method="dwrCoreRoleValidateHaveCmsPermission" />
+		</create>
+ 
+ 		<!-- 分发资源类型 -->
+		<create javascript="siteDistributionService" creator="spring">
+			<param name="beanName">siteDistributionService</param>
+			<include method="resTypeIsUnique" />
+		</create>
+		
+		<!-- ftp服务器配置 -->
+		<create javascript="ftpServiceService" creator="spring">
+			<param name="beanName">ftpServiceService</param>
+			<include method="checkFtpConnect" />
+		</create>
+		
+		
+		<create javascript="LabelService" creator="spring">
+			<param name="beanName">labelService</param>
+			<include method="dwrLabelType" />
+			<include method="dwrLabelsBylabelId" />
+			<include method="getLabelsBylabelId" />
+		</create>
+		<create javascript="TemLibraryService" creator="spring">
+			<param name="beanName">temLibraryService</param>
+			<include method="dwrTemLibraryValidateKeywordUnique" />
+		</create>
+		
+		
+		<!-- 共用模板类 -->
+		<create javascript="ComTemplateManagerService"  creator="spring">
+			<param name="beanName">comtemplateManagerService</param>
+			<include method="dwrComTemplateType" />
+		</create>
+    </allow>
+
+    <signatures>
+        <![CDATA[
+        import java.util.Map;
+        import org.apache.struts2.validators.DWRValidator;
+
+        DWRValidator.doPost(String, String, Map<String, String>);
+		TemplateLibrary.getTemplate (String, Map<String,String>); 
+        ]]>
+    </signatures>
+
+</dwr>

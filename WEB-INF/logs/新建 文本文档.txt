@@ -1,0 +1,312 @@
+ 
+				
+					
+					 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+					
+			<html>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script src="/common/prototype/prototype.js" type="text/javascript"></script>
+<script src="/common/validation/prototype.js" type="text/javascript"></script>
+<script src="/common/validation/validation.js" type="text/javascript"></script>
+<script src="/dwr/engine.js" type="text/javascript"></script>
+<script src="/dwr/util.js" type="text/javascript"></script>
+<script src="/common/frame_js/select.js" type="text/javascript"></script>
+<script src="/common/jstemplate/template.js" type="text/javascript"></script>
+<script src="/common/core_js/checkall.js" type="text/javascript"></script>
+<script src="/common/core_js/common.js" type="text/javascript"></script>
+<script src="/common/core_js/core.js" type="text/javascript"></script>
+<script src="/common/fckeditor/fckeditor.js" type="text/javascript"></script>
+<script src="/common/tag/tag.js" type="text/javascript"></script>
+<script src="/common/ec/js/ecside.js" type="text/javascript"></script>
+<script src="/common/ec/js/ecside_msg_utf8_cn.js" type="text/javascript"></script>
+<link href="/styles/kms/style.css" rel="stylesheet" type="text/css"></link>
+<link rel="stylesheet" type="text/css" href="/common/validation/style.css"></link>
+<link rel="stylesheet" type="text/css" href="/common/ec/css/ecside_style.css" />
+<link rel="stylesheet" type="text/css" href="/styles/demo.css" />
+<script src="/common/cms_js/cms.js" type="text/javascript"></script>
+<script src="/common/attachment/attachment.js" type="text/javascript"></script>
+<script src="/common/attachment/xml.js" type="text/javascript"></script>
+<script src="/common/cms_js/util.js" type="text/javascript"></script>
+<script src="/common/menu/dbMenu.js" type="text/javascript"></script>
+<script type="text/javascript">	
+ var ctx='';
+ var siteId='446'
+ var channelId='1121';	
+ var Id = '120105222800839';
+ var BeforsaveExeJS=new Array;
+    //DWREngine.setErrorHandler(errorHandler);	
+    function errorHandler(errorString, exception)
+    {
+        alert(errorString);
+    }
+    function getExt(){
+    	return top.Ext;
+    	}  
+    function getExtMessageBox(){
+    	if(getExt())
+    	 return getExt().MessageBox;
+    	else 
+    	 return null;
+    	}						 
+</script>
+<xml id="myXML"></xml>
+<link rel="stylesheet" href="/webwork/css_xhtml/styles.css" type="text/css"/>
+<link rel="stylesheet" href="/webwork/jscalendar/calendar-blue.css" type="text/css"/>
+<head>
+        <title>信息表单</title>
+    </head>
+    <body>
+        
+ 
+ 
+ 
+ 
+ 
+ 
+        <table border="0" cellPadding="0" cellSpacing="0" style="background-color: #dfedef" width="100%">
+            <tbody>
+                <tr>
+                    <td height="100%" vAlign="top">
+                    <table bgColor="#ffffff" border="0" cellPadding="0" cellSpacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                <div id="titel2">
+                                <div id="titel2_left">
+                                <div id="titel2_right">
+                                <div id="nav2">
+                                <div>
+                                <ul>
+                                    <li id="button"><a href="javascript:save()">保存</a></li>
+                                    
+                                    <li id="button"><a href="javascript:goBack()">返回</a></li>
+                                </ul>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" vAlign="top">
+                    <form action="/cms/document!adminSaveOrUpdate.action?id=120105222800839&channelId=1121" method="post" name="myform">
+                        <input type="hidden" name="domain.id" value="120105222800839" id="id"/>
+ 
+                        <table align="center" border="0" cellPadding="0" cellSpacing="0" width="98%">
+                            <tbody>
+                                <tr>
+                                    <td colSpan="4" height="14"></td>
+                                </tr>
+                                <tr>
+                                    <td align="right" height="30" width="120">标　题(20个字符)<span style="color: #f00">*</span>：</td>
+                                    <td><div id="wwgrp_TextField_8421008109" class="wwgrp">
+<div id="wwctrl_TextField_8421008109" class="wwctrl">
+<input type="text" name="domain.title" value="测试33" id="TextField_8421008109" class="max-length-17 required" style="width: 400px"/>
+</div> </div>
+</td>
+                                    <td align="right" height="30">来　源(20个字符)：&nbsp;</td>
+                                    <td align="left">&nbsp;<div id="wwgrp_TextField_0142708262" class="wwgrp">
+<div id="wwctrl_TextField_0142708262" class="wwctrl">
+<input type="text" name="domain.fieldString4" value="" id="TextField_0142708262" class="max-length-20"/>
+</div> </div>
+</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" height="30">排 序<span style="color: #f00">*</span>：</td>
+                                    <td colSpan="3" height="30"><div id="wwgrp_TextField_2755750562" class="wwgrp">
+<div id="wwctrl_TextField_2755750562" class="wwctrl">
+<input type="text" name="domain.orderNumber" value="3" id="TextField_2755750562" class="required validate-integer max-value-1000000"/>
+</div> </div>
+</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" height="30">发布人：</td>
+                                    <td>admin</td>
+                                    <td align="right">发布日期：</td>
+                                    <td>2012-01-05</td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="4" height="30">正　文：</td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="4" style="height: 400px"><div id="wwgrp_Html_5728855142" class="wwgrp">
+<div id="wwctrl_Html_5728855142" class="wwctrl">
+<textarea name="domain.body" cols="" rows="" id="Html_5728855142" class="max-length-null">&lt;h1&gt;&lt;span style=&quot;color: #ff0000&quot;&gt;&lt;span style=&quot;font-size: larger&quot;&gt;好好学习，&lt;/span&gt;&lt;span style=&quot;color: #000000&quot;&gt;&lt;span style=&quot;font-size: small&quot;&gt;天天向上&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/h1&gt;</textarea>
+</div> </div>
+<script type="text/javascript"> var fckEditor = new FCKeditor("domain.body", "100%", "400px", "CmsEdit");
+ fckEditor.BasePath = "/common/fckeditor/";
+ fckEditor.Config["FullPage"]=false;
+ fckEditor.ReplaceTextarea();
+</script><br></br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="4" height="30"></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="4" vAlign="top">
+                                    <table border="0" cellPadding="0" cellSpacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>修改记录：</td>
+                                            </tr>
+                                            <tr>
+                                                <td vAlign="top">
+                                                <table cellpadding="3" cellspacing="1" class="history_dataGrid" id="History_4485729024" width="100%"><tr class="header"><td class="td_username">&#29992;&#25143;&#21517;</td><td class="td_time">&#26102;&#38388;</td></tr><tr class="row"><td class="cell">admin</td><td class="cell-alt">2012-01-05 22:28:57</td></tr></table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript"><!--
+ var valid = new Validation('myform',{immediate:true});
+ setElementsDisabled(!true);
+ --></script>
+        <script language="javascript"> 
+function dyniframesizeforpage(ifm) {
+	try{
+  var bHeight = ifm.contentWindow.document.body.scrollHeight;
+var dHeight = ifm.contentWindow.document.documentElement.scrollHeight;
+var height = Math.max(bHeight, dHeight);
+height +=30;
+if(ifm != null && height != null) {
+	if(height > 400)
+       ifm.height = height;
+	else
+		ifm.height =400;
+}
+  
+  
+  
+  }catch(E){}
+}
+function setParentFrameSize(){
+	try{
+ if(parent!=null&&parent.document.getElementById("a_tabbar")!=null)
+  {
+   parent.document.getElementById("a_tabbar").style.height = '100%';
+  
+   if(document.body.scrollHeight < 500)
+   {
+   	parent.document.getElementById("a_tabbar").style.height = '100%';
+   	parent.dyniframesizeforparent("main_frame","100%");
+    }
+    else
+    {
+    	parent.document.getElementById("a_tabbar").style.height=document.body.scrollHeight+20;
+    	parent.dyniframesizeforparent("main_frame",document.body.scrollHeight+20);
+     }
+   setTimeout("top.scrollTo(0,0)",1);
+  }
+   }catch(E){}
+}
+ 
+function dyniframesizeforparent(iframename,bodyheight) {
+  var pTar = null;
+  if (parent.document.getElementById){
+    pTar = parent.document.getElementById(iframename);
+  }
+  else{
+    eval('pTar = ' + iframename + ';');
+  }
+  if (pTar && !window.opera){
+    pTar.height = '100%';
+    pTar.style.display="block";
+    pTar.height = bodyheight;
+    if (pTar.height < 500) {
+    	pTar.height = 500;
+    }
+  }
+}
+ 
+function dyniframesizeforall(iframename) {
+	try{
+  var pTar = null;
+  if (parent.document.getElementById){
+    pTar = parent.document.getElementById(iframename);
+  }
+  if (pTar && !window.opera){
+   var bHeight = pTar.contentWindow.document.body.scrollHeight;
+var dHeight = pTar.contentWindow.document.documentElement.scrollHeight;
+var height = Math.max(bHeight, dHeight);
+height +=30;
+if(pTar != null && height != null) {
+	if(height > 400)
+       pTar.height = height;
+	else
+		pTar.height =400;
+}
+ 
+  }
+  }catch(E){}
+}
+dyniframesizeforall("main_frame");
+setParentFrameSize();
+</script>
+    </body>
+</html>

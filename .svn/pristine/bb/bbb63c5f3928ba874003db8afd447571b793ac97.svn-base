@@ -1,0 +1,70 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>		
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/tree.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/attachment.js"></script>
+		<script type="text/javascript" src="../../../../../attachment/xml.js"></script>	
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>	
+		<script language="javascript">
+			new Tree().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+			<td valign="top">
+			<div id="basicView">
+			<span fckLang="DlgRootName">根节点：</span>
+			<br />
+			<input type="text" id="channelValueField" style="display:none" />
+			<input type="text" id="channelTextField" style="width: 50%" readonly="readonly" />
+			<img id="popupImg" src="../images/popup.png" style="cursor: pointer" />
+			<br />
+			<!--span fckLang="DlgUserIsdynamic">动态加载树：</span>
+			<br />
+ 		        <select id="isdynamicField" style="width:100%" >
+ 		             <option value="0" selected="selected">否</option>
+ 			     <option value="1">是</option> 			     
+			</select>
+			
+			<br /-->						
+			<span fckLang="DlgUserDefaultOpenStyle">默认展开方式：</span>
+			<br />
+ 		        <select id="deployStyleField" style="width:100%" >
+ 			 <option value="0" selected="selected">折叠所有</option>
+ 			 <option value="1">展开第一级</option>
+ 			 <option value="2">展开所有</option>
+			</select>
+			
+			<br />
+			<span fckLang="DlgClickDescribe" >点击节点事件：</span>
+			<br />
+			<textarea id="LinkField" style="width: 100%" rows="6" cols="20">document.frames['content'].location.href='${ctx}/cms/docInfo!list.action?channelId='+nodeId;</textarea>			
+			<br />						
+			<span fckLang="DlgUisShowNodeImgFieldStyle">节点显示图标：</span>
+			<select id="isShowNodeImgField">
+			 <option value="true" selected="selected">是</option>
+			 <option value="false">否</option>
+			 </select>
+			<br />
+			<br />						
+			<span fckLang="DlgUisShowNodeImgFieldStyle">自定义样式：</span>
+			<select id="isCustomCssField">
+			 <option value="false" selected="selected">否</option>
+			 <option value="true">是</option>			 
+			 </select>
+			<br />			 		        
+			</div> 			
+	               
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

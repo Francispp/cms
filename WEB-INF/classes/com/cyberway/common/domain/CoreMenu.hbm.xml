@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 3.0
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.domain.CoreMenu" 
+    table="CORE_MENU"
+>
+
+    <id
+        name="oid"
+        type="java.lang.Long"
+        column="OID"
+    >
+        <generator class="native" />
+    </id>
+<property name="portalid" type="java.lang.Long" column="PORTAL_ID"></property>
+    <property
+        name="menuname"
+        type="java.lang.String"
+        column="MENUNAME"
+        length="100"
+    />
+    <property
+        name="menucode"
+        type="java.lang.String"
+        column="MENUCODE"
+        length="50"
+    />
+    <property
+        name="pmid"
+        type="java.lang.Long"
+        column="PMID"
+        length="9"
+    />
+    <property
+        name="orderno"
+        type="java.lang.Long"
+        column="ORDERNO"
+        length="9"
+    />        
+    <property
+        name="inco"
+        type="java.lang.String"
+        column="INCO"
+        length="100"
+    />
+    <property
+        name="openInco"
+        type="java.lang.String"
+        column="OPEN_INCO"
+        length="100"
+    />
+    <property
+        name="closeInco"
+        type="java.lang.String"
+        column="CLOSE_INCO"
+        length="100"
+    />        
+     <property
+        name="url"
+        type="java.lang.String"
+        column="URL"
+        length="100"
+    />         
+    <property
+        name="remark"
+        type="java.lang.String"
+        column="REMARK"
+        length="1000"
+    />
+    <property
+        name="state"
+        type="java.lang.Long"
+        column="STATE"
+        length="18"
+    />   
+    <!-- Associations -->
+     <!-- bi-directional one-to-many association to sub CoreDept -->
+    <set
+        name="subMenus"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+		order-by="ORDERNO"
+    >
+        <key>
+            <column name="PMID" />
+        </key>
+        <one-to-many 
+            class="com.cyberway.common.domain.CoreMenu"
+        />      
+    </set> 
+</class>
+</hibernate-mapping>

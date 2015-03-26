@@ -1,0 +1,52 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../component.js"></script>	
+		<script type="text/javascript" src="../js/clickcount.js"></script>	
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Clickcount ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<span>点击数类型：</span>
+						<br />
+						<select id="clickTypeField" style="width:100%" >
+							<option value="3" selected="selected">文档</option>
+							<option value="4">频道下文档</option>
+							<option value="2">频道</option>
+							<option value="5">所有文档</option>
+							<option value="1">站点</option>
+						</select>
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="clickcount_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="clickcount_style1">Style1</option>
+							<option value="clickcount_style2">Style2</option>
+						</select>
+						<br />
+						<span fckLang="DlgUserDescribe" >描述：</span>
+						<br />
+						<textarea id="descriptionField" style="width: 100%" rows="3" cols="20"></textarea>
+						<br />
+					</div>
+
+	                <div id="hiddenScriptView" style="display: none"></div>
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

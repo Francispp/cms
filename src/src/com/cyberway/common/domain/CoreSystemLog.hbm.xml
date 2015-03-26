@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.domain.CoreSystemLog" 
+    table="CORE_SYSTEM_LOG"
+>
+
+    <id
+        name="oid"
+        type="java.lang.Long"
+        column="OID"
+    >
+        <generator class="native" />
+    </id>
+
+    <property
+        name="accesstime"
+        type="java.util.Date"
+        column="ACCESSTIME"
+        length="23"
+    />
+    <property
+        name="ipaddress"
+        type="java.lang.String"
+        column="IPADDRESS"
+        length="20"
+    />
+    <property
+        name="accessurl"
+        type="java.lang.String"
+        column="ACCESSURL"
+        length="200"
+    />
+    <property
+        name="accessid"
+        type="java.lang.Long"
+        column="ACCESSID"
+        length="18"
+    />
+    <property
+        name="accessname"
+        type="java.lang.String"
+        column="ACCESSNAME"
+        length="50"
+    />
+    <property
+        name="optname"
+        type="java.lang.String"
+        column="OPTNAME"
+        length="50"
+    />   
+     <property
+        name="type"
+        type="java.lang.Long"
+        column="TYPE"
+        length="18"
+    /> 
+    <property
+        name="pcode"
+        type="java.lang.String"
+        column="PCODE"
+        length="20"
+    />       
+    <property
+        name="remark"
+        type="java.lang.String"
+        column="REMARK"
+        length="2000"
+    />
+
+    <!-- Associations -->
+  
+
+</class>
+</hibernate-mapping>

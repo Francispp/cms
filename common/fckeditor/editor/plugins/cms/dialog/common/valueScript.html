@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    </head>
+    <body>
+
+   <span fckLang="DlgUserValueScript">值脚本：</span>
+   <br />
+   <textarea id="valueScriptField" style="width: 100%" rows="10" cols="20"></textarea>
+   <br />
+   <input type=button value="导  入"  onclick="openwindow('/component/jsfunction!selectJSComList.action','js组件',600,400)" title="双击获取JS组件"/>
+</body>
+<script type="text/javascript">
+  function   openwindow(URL,title,width,height)
+  {   
+  //根据屏幕居中   
+  var code = window.showModalDialog(URL,'请选择','resizable:yes;scroll:yes;status:no;dialogWidth=600px;dialogHeight=400px;center=yes;help=no');
+  if(code && code!='null' && code!='undefined')
+    $('valueScriptField').value = code;
+  }
+</script>

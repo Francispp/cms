@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="weixin" namespace="/weixin" extends="default">
+		<action name="suite" class="com.cyberway.weixin.business.suite.controller.SuiteController">
+			<result name="success">/WEB-INF/success.jsp</result>
+			<result name="test">/WEB-INF/tset.jsp</result>
+		</action>
+		<!-- 授权管理 -->
+		<action name="auth" class="com.cyberway.weixin.business.auth.controller.AuthController">
+			<result name="index">/WEB-INF/weixin/pages/auth/index.jsp</result>
+			<result name="list">/WEB-INF/weixin/pages/auth/list.jsp</result>
+		</action>
+		<!-- 签到签退 -->
+		<action name="attendance" class="com.cyberway.weixin.business.attendance.controller.AttendanceController">
+			<result name="success">/WEB-INF/success.jsp</result>
+			<result name="redirect_getuser" type="redirect">${redirectUrl}</result>
+			<result name="signin">/WEB-INF/weixin/pages/attendance/signin.jsp</result>
+			<result name="signin_medi">/WEB-INF/weixin/pages/attendance/signin_medi.jsp</result>
+			<result name="signin_share">/WEB-INF/weixin/pages/attendance/signin_share.jsp</result>
+			<result name="signout_medi">/WEB-INF/weixin/pages/attendance/signout_medi.jsp</result>
+			<result name="signout_share">/WEB-INF/weixin/pages/attendance/signout_share.jsp</result>
+			<result name="signout">/WEB-INF/weixin/pages/attendance/signout.jsp</result>
+			<result name="legwork">/WEB-INF/weixin/pages/attendance/legwork.jsp</result>
+			<result name="legwork_plan">/WEB-INF/weixin/pages/attendance/legwork_plan.jsp</result>
+			<result name="wRecord">/WEB-INF/weixin/pages/attendance/wRecord.jsp</result>
+			<result name="kRecord">/WEB-INF/weixin/pages/attendance/kRecord.jsp</result>
+		</action>
+		<!-- 外勤签到签退 -->
+		<action name="field" class="com.cyberway.weixin.business.field.controller.FieldController">
+			<result name="signin">/WEB-INF/weixin/pages/field/signin.jsp</result>
+			<result name="signout">/WEB-INF/weixin/pages/field/signout.jsp</result>
+			<result name="redirect_getuser" type="redirect">${redirectUrl}</result>
+			<result name="signin_share">/WEB-INF/weixin/pages/field/signin_share.jsp</result>
+			<result name="input">/WEB-INF/weixin/pages/field/legwork_plan.jsp</result>
+			<result name="map">/WEB-INF/weixin/pages/field/map.jsp</result>
+		</action>
+		<action name="legworkPlan" class="com.cyberway.weixin.business.attendance.controller.LegworkPlanController">
+			<result name="index">/WEB-INF/weixin/pages/field/legwork_plan.jsp</result>
+			<result name="redirect_getuser" type="redirect">${redirectUrl}</result>
+			<result name="list">/WEB-INF/weixin/pages/field/legwork_plan_list.jsp</result>
+			<result name="map">/WEB-INF/weixin/pages/field/map.jsp</result>
+		</action>
+		<!-- 考勤地点编辑 -->
+		<action name="sign" class="com.cyberway.weixin.sign.controller.SignController">
+			<result name="addressedit">/WEB-INF/pages/weixin/siteedit.jsp</result>
+			<result name="baidumap">/WEB-INF/pages/weixin/baidumap.jsp</result>
+		</action>
+		
+		<!-- 考勤地点管理 -->
+		<action name="attendanceManage" class="com.cyberway.weixin.business.attendance.controller.AttendanceManageController">
+				<result name="success">/WEB-INF/success.jsp</result>
+		</action>
+		<!-- 外勤记录 -->
+		<action name="fieldrecord" class="com.cyberway.weixin.business.attendance.controller.FieldRecordController"></action>
+
+	</package>
+</struts>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.xml.domain.XmlData" table="CMS_XML" lazy="true">
+        <id name="id" type="java.lang.Long">
+            <generator class="identity" />
+        </id>
+		<property name="timeCreated" not-null="true"/>
+		<property name="filePath" />
+		<property name="channelId" />
+		<property name="xmlID" />
+		<property name="condition" />
+		<property name="orderBy" />
+		<property name="sortOrder" />
+		<property name="infotype" />
+		<property name="jsonObject" />
+    </class>
+</hibernate-mapping >

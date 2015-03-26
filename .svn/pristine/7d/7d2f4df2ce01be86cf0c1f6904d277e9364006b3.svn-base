@@ -1,0 +1,105 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/property.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Property ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<span fckLang="DlgUserName">名称：</span>
+						<br />
+						<input id="nameField" style="width:100%" type="text" />
+						<br />
+						<span>office控件字段：</span><input type="checkbox" id="officeOcxField" value="1"/>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>日期字段：</span><input type="checkbox" id="dateField" value="1" onclick="viewproperty(this,'dateProperty')"/>
+						<br />
+						<div id="dateProperty" style="display:none">
+						<br />
+						<select id="formatField" style="width:100%" >
+							<option value="yyyy-MM-dd" selected="selected" >yyyy-MM-dd</option>
+							<option value="dd/MM/yyyy">dd/MM/yyyy</option>
+							<option value="yyyy年MM月dd日">yyyy年MM月dd日</option>
+							<option value="HH:mm:ss">HH:mm:ss</option>
+							<option value="HH时mm分ss秒">HH时mm分ss秒</option>
+							<option value="yyyy-MM-dd HH:mm:ss">yyyy-MM-dd HH:mm:ss</option>
+							<option value="yyyy年MM月dd日 HH时mm分ss秒">yyyy年MM月dd日 HH时mm分ss秒</option>
+						</select>
+						<br />
+						</div>
+						<span>图片标签字段：</span><input type="checkbox" id="photoField" value="1" onclick="viewproperty(this,'imgProperty')"/>
+						<br />
+						<br />
+						
+						<div id="imgProperty" style="display:none">
+						
+						<table border = 0>
+						<tr>
+						<td><span>宽度：</span></td>
+						<td><input id="imgWidth" type="text" style="width:100px;"/> </td>
+						<td><span>高度：</span></td>
+						<td><input id="imgHeight" type="text" style="width:100px;"/></td>
+						</tr>
+						</table>
+						
+						<br />
+						</div>
+						
+						
+						<br />
+						<div id="imgProperty" style="display:block">
+						<table border = 0>
+							<tr>
+								<td><span>前缀：</span></td>
+								<td><input id="valuePrefix" type="text" style="width:100px;"/> </td>
+								<td><span>后缀：</span></td>
+								<td><input id="valuePostfix" type="text" style="width:100px;"/></td>
+							</tr>
+						</table>
+						</div>	
+  					    <br />
+  					    
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="property_style1">Style1</option>
+							<option value="property_style2">Style2</option>
+						</select>
+						<br />						
+						
+					</div>
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+<script language="javascript">
+			function viewproperty(obj,viewobj)
+			{
+			//alert(obj.checked);
+			if(obj.checked)
+			{
+			$(viewobj).style.display="";
+			}
+			else
+			{
+			$(viewobj).style.display="none";
+			}
+			}
+			//viewproperty(document.all.photoField);
+</script>

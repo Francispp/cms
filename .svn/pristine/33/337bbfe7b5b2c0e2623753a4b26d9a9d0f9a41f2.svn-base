@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+	default-lazy-init="true" default-autowire="byName">
+	<!--公用业务操作Bean -->
+	<bean id="bizUtilService" class="com.cyberway.common.service.BizUtilService" />
+	<bean id="commonService" class="com.cyberway.common.service.CommonService" />
+	<!--ftp服务器配置管理Bean -->
+	<bean id="ftpServiceService"
+		class="com.cyberway.common.ftpservice.service.FtpServiceService" init-method="init" lazy-init="false">
+		<property name="siteService" ref="siteManagerService"></property>
+		<property name="siteDistributionService" ref="siteDistributionService"></property>
+		<property name="cmsIpDistributionService" ref="cmsIpDistributionService"></property>
+	</bean>
+	<!--用户管理Bean -->
+	<bean id="userManagerService" class="com.cyberway.common.user.service.UserManagerService"
+		init-method="init" lazy-init="false">
+		<!--property name="acegiCacheManager" ref="acegiCacheManager" / -->
+	</bean>
+	<!--部门管理Bean -->
+	<bean id="deptManagerService" class="com.cyberway.common.dept.service.DeptManagerService">
+		<property name="bizUtilService">
+			<ref local="bizUtilService" />
+		</property>
+	</bean>
+
+	<!--组织管理Bean -->
+	<bean id="orgManagerService" class="com.cyberway.common.org.service.OrgManagerService"
+		init-method="init" lazy-init="false" />
+	<!--角色管理Bean -->
+	<bean id="roleManagerService" class="com.cyberway.common.role.service.RoleManagerService" init-method="init" lazy-init="false">
+		<property name="commonCache" ref="commonCache"></property>
+	</bean>
+	<!--级别管理Bean -->
+	<bean id="gradeManagerService" class="com.cyberway.common.grade.service.GradeManagerService" />
+	<!--身份管理Bean -->
+	<bean id="identityManagerService"
+		class="com.cyberway.common.identity.service.IdentityManagerService" />
+	<!--菜单管理Bean -->
+	<bean id="menuManagerService" class="com.cyberway.common.menu.service.MenuManagerService" />
+	<!--资源管理Bean -->
+	<bean id="resourceManagerService"
+		class="com.cyberway.common.resource.service.ResourceManagerService"
+		init-method="init" lazy-init="false" />
+	<!--基础管理Bean -->
+	<bean id="basicService" class="com.cyberway.common.service.BasicService" />
+	<!--日志管理Bean -->
+	<bean id="systemLogService" class="com.cyberway.common.service.SystemLogService" />
+	<!--访问统计Bean
+	<bean id="visitStatisticsService"
+		class="com.cyberway.common.statistics.service.VisitStatisticsService" />
+		 -->
+	<!--访问统计Bean -->
+	<bean id="viewVisitCountService" class="com.cyberway.common.visit.service.ViewVisitCountService" />
+	<!--权限管理Bean -->
+	<bean id="permissionService"
+		class="com.cyberway.common.permission.service.PermissionService" />
+	<!--权限管理Bean -->
+	<bean id="authorityManager" class="com.cyberway.common.permission.service.AuthorityManager" />
+	
+	<!--bean id="uploadService" class="com.cyberway.common.service.UploadService"/ -->
+	<!--邮件 -->
+	<bean id="emailService" class="com.cyberway.common.service.EmailService" />
+	<!--附件上传 -->
+	<bean id="attachmentManagerService"
+		class="com.cyberway.common.attachment.service.AttachmentManagerService" />
+	<!--文件上传 -->
+	<bean id="serverFileService"
+		class="com.cyberway.common.file.service.ServerFileService" />
+	<!--附件上传 -->
+	<bean id="FCKFileManagerService"
+		class="com.cyberway.common.attachment.service.FCKFileManagerService" />
+	<!--留言版 -->
+	<bean id="messageManagerService"
+		class="com.cyberway.common.message.service.MessageManagerService" />
+	<!--定时任务 -->
+	<bean id="schedulerManagerService"
+		class="com.cyberway.common.quartz.service.SchedulerManagerService" />
+		
+	<!--邮件模板 -->
+	<bean id="emailManagerService" class="com.cyberway.common.email.service.EmailManagerService">
+		<property name="emailPageWriter" ref="template.emailPageWriter" />
+		<property name="defaultTemplateParser" ref="template.parser.default" />
+		<property name="hrHost" value="@{mail.hr.host}"/>
+		<property name="hrUsername" value="@{mail.hr.username}"/>
+		<property name="hrPassword" value="@{mail.hr.password}"/>
+	</bean>
+	<!--邮件日志 -->
+	<bean id="EmailLogManagerService"
+		class="com.cyberway.common.email.service.EmailLogManagerService" />
+	<bean id="areaService"
+		class="com.cyberway.common.area.service.AreaService" init-method="init"/>
+	<!--公共信息管理Bean -->
+	<bean id="commonInfoService"
+		class="com.cyberway.common.commoninfo.service.CommonInfoService" init-method="init"/>
+	<!--公共信息管理Bean -->
+	<bean id="commonTypeService"
+		class="com.cyberway.common.commoninfo.service.CommonTypeService" init-method="init"/>
+	<!--模版库Bean -->
+	<bean id="temLibraryService"
+		class="com.cyberway.common.temLibrary.service.TemLibraryService" />
+	<!--动态树的配置 -->
+	<bean id="xtreeService" class="com.cyberway.common.xtree.service.XTreeService" />
+	<!--门户管理的配置 -->
+	<bean id="portalManagerService" class="com.cyberway.common.portal.service.PortalManagerService" />
+	<!--动态页面 -->
+	<bean id="dynamicPageService" class="com.cyberway.common.service.DynamicPageService">
+		<property name="storeDir">
+			<bean class="com.cyberway.common.utils.ServletContextFileFactory">
+				<property name="path" value="@{dynamicPage.path}" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Ognl -->
+	<bean id="expressionEvaluator" class="com.cyberway.common.ongl.OgnlExpressionEvaluator"
+		lazy-init="false">
+		<constructor-arg>
+			<bean class="ognl.DefaultClassResolver" />
+		</constructor-arg>
+		<constructor-arg>
+			<map key-type="java.lang.Class" value-type="ognl.PropertyAccessor">
+				<entry key="org.apache.commons.beanutils.DynaBean">
+					<bean class="com.cyberway.common.ongl.DynaBeanPropertyAccessor" />
+				</entry>
+				<entry key="org.apache.lucene.document.Document">
+					<bean class="com.cyberway.common.ongl.DocumentPropertyAccessor" />
+				</entry>
+			</map>
+		</constructor-arg>
+		<constructor-arg>
+			<null />
+		</constructor-arg>
+	</bean>
+
+	<!-- File Upload -->
+	<bean id="uploadManager" class="com.cyberway.common.upload.impl.UploadManagerImpl" />
+
+	<!-- Hibernate CRUD 事件源 -->
+	<bean id="hibernateEventListener" class="com.cyberway.common.service.HibernateEventListener" />
+	<!--公用缓存 -->
+	<bean id="commonCache" class="com.cyberway.common.service.EhCacheBasedCommonCache"
+		autowire="byName">
+		<property name="coreResourceCache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="commonResourceCache" />
+			</bean>
+		</property>
+		<property name="coreUserCache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="commonUserCache" />
+			</bean>
+		</property>
+		<property name="coreOrgCache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="commonOrgCache" />
+			</bean>
+		</property>
+		<property name="coreFlowCache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="commonFlowCache" />
+			</bean>
+		</property>
+		<property name="coreSiteDistributionCache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="commonSiteDistributionCache" />
+			</bean>
+		</property>
+		<property name="roleCache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="roleCache" />
+			</bean>
+		</property>
+	</bean>
+
+	<!--动态脚本 -->
+	<bean id="scriptService" class="com.cyberway.common.internal.ScriptServiceImpl">
+		<property name="defaultContext">
+			<map>
+				<entry key="CMSRESOURCE">
+					<bean class="com.cyberway.cms.permission.service.CmsResourceService" />
+				</entry>
+				<entry key="COMMONSERVICE">
+					<bean class="com.cyberway.cms.exposed.CommonServiceJsUtil" />
+				</entry>
+				<entry key="SITESERVICE">
+					<bean class="com.cyberway.cms.exposed.SiteServiceJsUtil" />
+				</entry>
+				<entry key="CHANNELSERVICE">
+					<bean class="com.cyberway.cms.exposed.ChannelServiceJsUtil" />
+				</entry>
+				<entry key="DOCSERVICE">
+					<bean class="com.cyberway.cms.exposed.DocumentServiceJsUtil" />
+				</entry>
+				<entry key="CMSPERMISSION">
+					<bean class="com.cyberway.cms.exposed.PermissionServiceJsUtil" />
+				</entry>
+				<entry key="TOOLS">
+					<bean class="com.cyberway.cms.exposed.ToolsJsUtil" />
+				</entry>
+				<entry key="MENUSERVICE">
+					<bean class="com.cyberway.cms.exposed.MenuServiceJsUtil" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 根据模板生成word -->
+	<bean id="genWord" class="com.cyberway.cms.component.genoffice.GenWordForSimple" />
+	<!--<bean id="OfficeManagerService" class="com.cyberway.common.office.service.OfficeManagerService" />-->
+	<!--<bean id="wordTemplateManagerService"
+		class="com.cyberway.common.wordtemplate.service.WordTemplateManagerService" />
+	--><!--媒体管理视频专辑 -->
+	<bean id="albumService" class="com.cyberway.common.media.album.service.AlbumService" />
+	<bean id="mediaIntermediateService"
+		class="com.cyberway.common.media.album.service.MediaIntermediateService" init-method="init" lazy-init="false">
+		<property name="siteCache" ref="siteCache"/>
+	</bean>
+	<bean id="videoService" class="com.cyberway.common.media.video.service.VideoService" >
+	<property name="siteCache" ref="siteCache"/>
+	</bean>
+	<bean id="audioService" class="com.cyberway.common.media.audio.service.AudioService" >
+	<property name="siteCache" ref="siteCache"/>
+	</bean>
+	
+	<!-- 后台菜单管理 -->
+	<bean id="menuResourceService" class="com.cyberway.common.menu.service.MenuResourceService"></bean>
+</beans>

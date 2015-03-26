@@ -1,0 +1,218 @@
+@charset "utf-8";
+* {
+	margin: 0;
+	padding: 0;
+}
+h1, h2, h3, h4, h5, h6, em, del {
+	font-style: normal;
+	font-weight: normal;
+	font-size: 100%;
+}
+ol, ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+img {
+	border: 0;
+}
+body {
+	font-family: "微软雅黑", Verdana;
+	font-size: 14px;
+}
+a {
+	text-decoration: none;
+	border: none;
+	color: black;
+	outline: none;
+hide-focus:expression(this.hideFocus=true);
+}
+/*去除IE虚线连接框*/
+a:focus {
+	outline: none;
+}
+/*去除fireFox虚线连接框*/
+.underline {
+	text-decoration: none;
+}
+.clear {
+	clear: both;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.inblock {
+	display: inline-block;
+	zoom: 1;
+*display:inline;
+}
+.training_titel {
+	height:27px;
+	border-bottom:1px solid #d9d9d9;
+	padding-left:15px;
+	font-size:18px;
+	color:#686868;
+	font-weight:bold;
+}
+.postMark {
+	float:right;
+	font-size:12px;
+	color:#888888;
+	width:380px;
+	text-align:right;
+}
+.training_titel2 {
+	margin:17px 0px;
+	height:27px;
+	font-size:24px;
+	color:#126bbd;
+	font-weight:bold;
+	text-align:center;
+	font-family:"微软雅黑";
+}
+.training_info {
+	padding:0px 20px;
+	padding-bottom:20px;
+	font-size:14px;
+	line-height:180%;
+	color:#412e06;
+	text-align:left;
+	font-family:"微软雅黑";
+}
+.training_font1 {
+	color:#261d0a;
+	font-weight:bold;
+}
+.training_font2 {
+	color:#ff0000;
+	margin-right:5px;
+}
+.training_font3 {
+	color:#0551c3;
+}
+.training_font4 {
+	color:#000;
+	font-weight:bold;
+}
+.training_line {
+	border-bottom:1px dotted #999;
+}
+.training_survey {
+	margin:0px auto;
+	width:700px;
+	padding-top:20px;
+	padding-bottom:30px;
+}
+.training_survey ul {
+	float:left;
+	width:700px;
+	margin-bottom:20px;
+}
+.training_survey ul li {
+	float:left;
+	padding-left:18px;
+	height:25px;
+	line-height:25px;
+	width:700px;
+}
+.training_survey ul li h1 {
+	width:700px;
+	margin-bottom:10px;
+	font-weight:normal;
+	display:block;
+}
+.training_survey ul li input {
+	margin-right:5px;
+}
+.training_survey .btn {
+	width:700px;
+	text-align:center;
+}
+.training_btn1 {
+	margin-right:20px;
+	width:108px;
+	height:30px;
+	line-height:30px;
+	color:#FFF;
+	font-weight:bold;
+	font-size:14px;
+	font-family:"微软雅黑";
+	background-color:#dd2118;
+	border:0px;
+	cursor:pointer;
+}
+.training_btn1:hover {
+	background-color:#b71912;
+}
+.training_btn2 {
+	width:108px;
+	height:30px;
+	line-height:30px;
+	color:#FFF;
+	font-weight:bold;
+	font-size:14px;
+	font-family:"微软雅黑";
+	background-color:#abaaaa;
+	border:0px;
+	cursor:pointer;
+}
+.training_btn2:hover {
+	background-color:#747373;
+}
+.training_result_table {
+	background-color:#bcbbbb;
+	margin-bottom:20px;
+}
+.training_result_table th {
+	background-color:#8a8888;
+	color:#FFF;
+	font-weight:normal;
+}
+.training_result_table td {
+	background-color:#ffffff;
+	padding-left:10px;
+}
+.training_result_table2 {
+	background-color:#bcbbbb;
+	margin-bottom:20px;
+	margin-top:20px;
+}
+.training_result_table2 th {
+	background-color:#8a8888;
+	color:#FFF;
+	font-weight:normal;
+}
+.training_result_table2 td {
+	background-color:#ffffff;
+	padding-left:10px;
+	height:30px;
+	line-height:30px;
+}
+.training_result_table2 tr:hover td,.training_result_table2 tr:hover td a{ color:#b51b14;}
+.training_result_table2 tr:hover .download{background:url(../../../images/training_download2.gif) no-repeat;} 
+.training_result_table2 .line1{
+	background-color:#f4f1f1;}
+.training_result_table2 a {
+color:#412e06;
+text-decoration:none;}
+.training_result_table2 .download{
+	display:block;
+	width:16px;
+	height:17px;
+	background:url(../../../images/training_download1.gif) no-repeat; }
+.training_tutor {
+	margin:20px;
+	font-size:14px;
+	line-height:150%;
+	color:#412e06;
+	text-align:left;
+	border:1px solid #bcbbbb;
+}
+.percent{ display:inline-block; *display:inline;*zoom:1;width:210px; padding-left:4px; height:14px; vertical-align:middle; background:url(../images/percent_bgs.png) no-repeat 0px -9999px;}
+.percent span{ display:block; background:url(../images/percent_x_bg.png) repeat-x 0px 0px; height:12px;width:0px;border-right:1px solid #bcbbbb; margin-top:1px;}
+.percent.percent0{ background-position:0px 0px;}
+.percent.percentX{ background-position:0px -28px;}
+.percent.percent100{ background-position:0px -14px;}

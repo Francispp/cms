@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="basic" namespace="/" extends="default">
+		<!-- 外部用户管理 -->
+		<action name="webuser" class="com.cyberway.cms.component.webuser.view.WebUserController" >
+			<result name="input">/WEB-INF/pages/cms/component/user/registration.jsp</result>	
+			<result name="success">${location}</result>
+			<result name="login">/WEB-INF/pages/cms/component/user/login.jsp</result>
+			<result name="location" type="redirect">${location}</result>
+			<result name="inputEmail">/WEB-INF/pages/cms/component/user/findPassword.jsp</result>
+			<result name="information">/WEB-INF/pages/cms/component/user/information.jsp</result>
+			<result name="setPassword">/WEB-INF/pages/cms/component/user/setPassword.jsp</result>
+			<result name="registerInfo">/WEB-INF/pages/cms/component/user/registerInfo.jsp</result>
+			<result name="setInfo">/WEB-INF/pages/cms/component/user/setInfo.jsp</result>
+			<result name="initInfo">/WEB-INF/pages/cms/component/user/initInfo.jsp</result>
+			<result name="resetPwd">/WEB-INF/pages/cms/component/user/resetPwd.jsp</result>
+			
+			<!-- 申请记录,简历 -->
+			<result name="campusLog">/WEB-INF/pages/cms/component/user/campusLog.jsp</result>
+			<result name="socialLog">/WEB-INF/pages/cms/component/user/socialLog.jsp</result>
+			<result name="courseLog">/WEB-INF/pages/cms/component/user/courseLog.jsp</result>
+			<result name="tutorLog">/WEB-INF/pages/cms/component/user/tutorLog.jsp</result>
+			
+			<!-- 后台管理 -->
+			<result name="adminList">/WEB-INF/pages/common/webuser/user_list.jsp</result>
+			<result name="adminInput">/WEB-INF/pages/common/webuser/user_edit.jsp</result>
+			<result name="adminAjax">/WEB-INF/pages/common/webuser/ajax_result.jsp</result>
+			<result name="import">/WEB-INF/pages/common/webuser/user_import.jsp</result>
+			<result name="importResult">/WEB-INF/pages/common/webuser/user_import_result.jsp</result>
+			<result name="file_download">/filedownload</result>
+			<result name="download_error">/errors/404.jsp</result>
+		</action>
+		
+		<!--用户登录配置-->
+		<action name="login" class="com.cyberway.common.login.LoginController">
+			<result name="input">/portals/cybercms/login.jsp</result>
+			<result name="refuse">/errors/refuse.jsp</result>
+			<result name="success" type="redirect">${indexUrl}</result>
+			<result name="tofrom" type="redirect">${fromUrl}</result>
+			<result name="language" type="redirect">/login.action</result>
+		</action>
+		<action name="logon" class="com.cyberway.common.login.LoginController">
+			<result name="input">/portals/cms3/logon.jsp</result>
+			<result name="success" type="redirect">${indexUrl}</result>
+			<result name="tofrom" type="redirect">${fromUrl}</result>
+			<result name="language" type="redirect">/logon.action</result>
+		</action>
+		<action name="skipto" class="com.cyberway.common.login.LoginController" method="skipto">
+			<result name="tofrom" type="redirect">${fromUrl}</result>
+		</action>
+		<!--主页配置-->
+		<!--action name="index" class="com.cyberway.common.login.IndexController">
+			<result name="index">/portals/common/index.jsp</result>
+		    <result name="config_menu">/portals/common/config_menu.jsp</result>
+		    <result name="main">/portals/common/main.jsp</result>
+		    <result name="language" type="redirect">/index.action</result>
+		</action-->
+		<!--action name="index" class="com.cyberway.common.login.IndexController">
+			<result name="index">/portals/cms/index.jsp</result>
+		    <result name="config">/portals/cms/config_menu.jsp</result>
+		    <result name="main">/portals/cms/main.jsp</result>
+		    <result name="configmenu">/portals/cms/config_menu.jsp</result>
+		    <result name="language" type="redirect">/index.action</result>
+		</action>
+		-->
+		<action name="index" class="com.cyberway.common.login.IndexController">
+			<result name="index">/portals/cybercms/index.jsp</result>
+		    <result name="config">/portals/cybercms/config_menu.jsp</result>
+		    <result name="main">/portals/cybercms/mainFrame.jsp</result>
+		    <result name="left">/portals/cybercms/left.jsp</result>
+		    <result name="system_menu">/portals/cybercms/system_menu.jsp</result>
+		    <result name="configmenu">/portals/cybercms/config_menu.jsp</result>
+		    <result name="language" type="redirect">/index.action</result>
+			<result name="site_home" type="redirect">${siteHomeUrl}</result>
+		</action>
+		<action name="sitemap" class="com.cyberway.common.sitemap.view.SitemapController">
+			<result name="success">/WEB-INF/pages/common/sitemap/index.jsp</result>
+		</action>
+	</package>
+</struts>

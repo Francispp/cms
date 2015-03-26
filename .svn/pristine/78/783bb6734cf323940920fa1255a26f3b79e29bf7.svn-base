@@ -1,0 +1,16 @@
+﻿<span fckLang="DlgUserName">名称：</span>
+<br />
+<input id="nameField" style="width:100%" type="text" />
+<br />
+<span fckLang="DlgUserStyle">样式选择：</span>
+<br />
+ <select id="styleField" style="width:100%" >
+	<option value="" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+	<option value="style1">Style1</option>
+	<option value="style2">Style2</option>
+	<option value="">--</option>
+</select>
+<br />
+<span fckLang="DlgUserDescribe" >描述：</span>
+<br />
+<textarea id="descriptionField" style="width: 100%" rows="3" cols="20"></textarea>

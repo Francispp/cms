@@ -1,0 +1,32 @@
+package com.cyberway.weixin.suite;
+/**
+ * 
+ * @com.cyberway.weixin.suite.SuiteConfig
+ * TODO :套件名称：移动办公
+ * 发起授权域名：www.cyberway.net.cn
+ * 授权完成回调域名:www.cyberway.net.cn
+ * 服务事件接收URL：http://www.cyberway.net.cn/
+ * 白名单IP列表:219.136.251.49(赛百威官网ip)
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年2月6日 下午1:57:11
+ */
+public class SuiteConfig {
+	/**
+	 * 套件ID：
+	 */
+	public static String SUITE_ID = "tjfc481f8cafd78d48";
+	/**
+	 * 套件secret：
+	 */
+	public static String SUITE_SECRET = "Rx0TvY8ErfFsGfXNVDccuoYGPHbVn0GCYue4qhzjFWbfyMsGL4stE6QCUvhYodL2";
+	/**
+	 * EncodingAESKey：
+	 */
+	public static String SUITE_EncodingAESKey = "S3M2lh7UynKgdZsAV8ijoMBKYuiQpLxVvI8BVbgBobq";
+	/**
+	 * Token（接受消息时的校验token）:
+	 */
+	public static String SUITE_TOKEN = "cyberway";
+	
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cyberway.cms.domain" default-lazy="true">
+    <class name="com.cyberway.common.attachment.domain.FCKFile" table="CMS_FCKFILE">
+        <id name="id" type="java.lang.Long" column="ID">
+            <generator class="native" />
+        </id>
+        <property name="fileName"  type="java.lang.String" column="fileName" length="255"/>
+        <property name="fileExt" type="java.lang.String" column="fileExt" length="50"/>
+        <property name="fileSize" type="java.lang.Double" column="fileSize" length="9"/>
+        <property name="fileUrl"  type="java.lang.String" column="fileUrl" length="1000"/>
+        <property name="docId" type="java.lang.Long" column="docId"/>
+        <property name="createTime" type="java.util.Date" column="createTime" length="23"/>
+        <property name="userId"  type="java.lang.String" column="userId" length="255"/>
+    </class>
+</hibernate-mapping>

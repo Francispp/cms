@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="base" namespace="/base" extends="default">
+		<!-- - 日志管理配置 - -->
+		<action name="log" class="com.cyberway.common.log.view.LogController">
+			<result name="list">/WEB-INF/pages/common/log/log_list.jsp
+			</result>
+		</action>
+	    <!-- - 访问统计配置 - -->
+		<action name="visit"
+			class="com.cyberway.common.visit.view.ViewVisitCountController">
+			<result name="frame">/WEB-INF/pages/common/statistics/frame.jsp
+			</result>
+			<result name="listbychanel">
+				/WEB-INF/pages/common/statistics/visitbychannel.jsp</result>
+			<result name="listbysite">/WEB-INF/pages/common/statistics/visitbysite.jsp
+			</result>
+			<result name="list">/WEB-INF/pages/common/statistics/frame.jsp
+			</result>
+			<result name="viewlist">
+				/WEB-INF/pages/common/statistics/visit_view_list.jsp</result>
+			<result name="selectChannel">
+				/WEB-INF/pages/common/statistics/selectChannel.jsp</result>
+		</action>		
+		<!-- - 用户管理配置 - -->
+		<action name="user" class="com.cyberway.common.user.view.UserController">
+			<result name="list">/WEB-INF/pages/common/user/user_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/user/user_edit.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/common/user/user_edit.jsp
+			</result>
+			<result name="frame">/WEB-INF/pages/common/user/frame.jsp
+			</result>
+			<result name="view_list">/WEB-INF/pages/common/user/user_view_list.jsp
+			</result>
+			<result name="ad_list">/WEB-INF/pages/common/user/ad_user_list.jsp
+			</result>
+			<result name="select_user">/WEB-INF/pages/common/user/selectUser.jsp
+			</result>
+			<result name="search_user">/WEB-INF/pages/common/user/user_xml.jsp
+			</result>
+			<result name="updatepwd">/WEB-INF/pages/common/user/user_updatepwd.jsp
+			</result>
+		</action>
+		<!-- - 身份管理配置 - -->
+		<action name="identity"
+			class="com.cyberway.common.identity.view.IdentityController">
+			<result name="list">/WEB-INF/pages/common/identity/identity_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/identity/identity_edit.jsp
+			</result>
+		</action>
+		<!--  - 级别管理配置 - -->
+		<action name="grade" class="com.cyberway.common.grade.view.GradeController">
+			<result name="list">/WEB-INF/pages/common/grade/grade_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/grade/grade_edit.jsp
+			</result>
+		</action>
+		<!-- - 内容分发 - -->
+		<action name="distribution"
+			class="com.cyberway.common.distribution.view.DistributionController">
+			<result name="list">
+				/WEB-INF/pages/common/distribution/distribution_list.jsp</result>
+			<result name="input">
+				/WEB-INF/pages/common/distribution/distribution_edit.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/common/distribution/distribution_edit.jsp</result>
+			<result name="frame">/WEB-INF/pages/common/distribution/frame.jsp
+			</result>
+			<result name="tree">
+				/WEB-INF/pages/common/distribution/distribution_tree.jsp</result>
+		</action>
+		<!-- - ftp服务器管理 - -->
+		<action name="ftpService"
+			class="com.cyberway.common.ftpservice.view.FtpServiceController">
+			<result name="list">
+				/WEB-INF/pages/common/ftpService/ftpService_list.jsp</result>
+			<result name="selectlist">/WEB-INF/pages/common/ftpService/ip_list.jsp
+			</result>
+			<result name="input">
+				/WEB-INF/pages/common/ftpService/ftpService_edit.jsp</result>
+			<result name="ajax">/common/ec/ajax_result.jsp
+			</result>
+			<result name="deleted" type="redirectAction">ftpService.action</result>
+		</action>
+		<!-- - 部门管理配置 - -->
+		<action name="dept" class="com.cyberway.common.dept.view.DeptController">
+			<result name="tree">/WEB-INF/pages/common/dept/dept_tree.jsp
+			</result>
+			<result name="list">/WEB-INF/pages/common/dept/dept_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/dept/dept_edit.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/common/dept/dept_edit.jsp
+			</result>
+			<result name="frame">/WEB-INF/pages/common/dept/frame.jsp
+			</result>	
+									
+			<!-- 单级管理 -->
+			<result name="adminList">/WEB-INF/pages/common/dept/admin_dept_list.jsp
+			</result>
+			<result name="adminInput">/WEB-INF/pages/common/dept/admin_dept_edit.jsp
+			</result>
+			<result name="adminAjax">/WEB-INF/pages/common/dept/admin_ajax_result.jsp
+			</result>
+		</action>
+		<!-- - 角色信息管理配置 - -->
+		<action name="role" class="com.cyberway.common.role.view.RoleController">
+			<result name="list1">/WEB-INF/pages/common/role/role_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/role/role_edit.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/common/role/role_edit.jsp
+			</result>
+			<result name="frame">/WEB-INF/pages/common/role/frame.jsp
+			</result>
+			<result name="ajax">/common/ec/ajax_result.jsp
+			</result>
+			<result name="deleted" type="redirectAction">role.action</result>
+			<result name="view_list">/WEB-INF/pages/common/role/role_view_list.jsp
+			</result>
+			<result name="view_tree">/WEB-INF/pages/common/role/role_tree.jsp
+			</result>
+			<result name="view_itree">/WEB-INF/pages/common/role/role_itree.jsp
+			</result>
+			<result name="select_role">/WEB-INF/pages/common/role/selectRole.jsp
+			</result>
+			<result name="search_role">/WEB-INF/pages/common/role/role_xml.jsp
+			</result>
+			<result name="list">/WEB-INF/pages/common/role/role_list.jsp
+			</result>
+			<result name="detail">/WEB-INF/pages/common/role/role_detail.jsp
+			</result>
+		</action>
+		<!-- - 组织管理配置 - -->
+		<action name="org" class="com.cyberway.common.org.view.OrgController">
+			<result name="list">/WEB-INF/pages/common/org/org_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/org/org_edit.jsp
+			</result>
+			<!--
+				<result
+				name="success">/WEB-INF/pages/common/org/org_edit.jsp</result
+			-->
+			<result name="ajax">/common/ec/ajax_result.jsp
+			</result>
+			<result name="deleted" type="redirectAction">org.action</result>
+		</action>	
+		<!-- - 门户信息管理配置 - -->
+		<action name="portal" class="com.cyberway.common.portal.view.PortalController">
+			<result name="list">/WEB-INF/pages/common/portal/portal_list.jsp
+			</result>
+			<result name="ajax">/common/ec/ajax_result.jsp
+			</result>
+			<result name="deleted" type="redirectAction">portal.action
+			</result>
+		</action>			
+		<!-- - 菜单信息管理配置 - -->
+		<action name="menu" class="com.cyberway.common.menu.view.MenuController">
+			<result name="list">/WEB-INF/pages/common/menu/menu_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/menu/menu_edit.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/common/menu/menu_edit.jsp
+			</result>
+			<result name="frame">/WEB-INF/pages/common/menu/frame.jsp
+			</result>
+			<result name="tree">/WEB-INF/pages/common/menu/menu_tree.jsp
+			</result>
+		</action>
+		<!-- - 后台菜单管理 - -->
+		<action name="menuResource"
+			class="com.cyberway.common.menu.view.MenuResourceController">
+			<result name="list">
+				/WEB-INF/pages/common/menuResource/menuResource_list.jsp</result>
+			<result name="input">
+				/WEB-INF/pages/common/menuResource/menuResource_edit.jsp</result>
+			<result name="selectIco">/WEB-INF/pages/common/menuResource/selectico.jsp
+			</result>
+		</action>			
+		<!-- - 权限管理配置 - -->
+		<action name="permission"
+			class="com.cyberway.common.permission.view.PermissionController">
+			<result name="listperm">/WEB-INF/pages/common/permission/perm_list.jsp
+			</result>
+			<result name="list">
+				/WEB-INF/pages/common/permission/permission_list.jsp</result>
+			<result name="input">
+				/WEB-INF/pages/common/permission/permission_edit.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/common/permission/permission_edit.jsp</result>
+			<result name="frame">/WEB-INF/pages/common/permission/frame.jsp
+			</result>
+			<result name="tree_perm">
+				/WEB-INF/pages/common/permission/permission_tree.jsp</result>
+			<result name="tree">
+				/WEB-INF/pages/common/permission/permission_tree.jsp</result>
+		</action>
+		<!-- - 资源管理配置 - -->
+		<action name="resource"
+			class="com.cyberway.common.resource.view.ResourceController">
+			<result name="list">/WEB-INF/pages/common/resource/resource_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/resource/resource_edit.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/common/resource/resource_edit.jsp
+			</result>
+			<result name="frame">/WEB-INF/pages/common/resource/frame.jsp
+			</result>
+			<result name="tree">/WEB-INF/pages/common/resource/resource_tree.jsp
+			</result>
+		</action>
+		<!-- - 附件上传 - -->
+		<action name="attachment"
+			class="com.cyberway.common.attachment.view.AttachmentController">
+			<result name="input">
+				/WEB-INF/pages/common/attachment/edit_attachment.jsp</result>
+			<result name="load_file">/WEB-INF/pages/common/attachment/upload.jsp
+			</result>
+			<result name="listXml">
+				/WEB-INF/pages/common/attachment/attachment_xml.jsp</result>
+			<result name="file_download" type="redirect">/filedownload
+			</result>
+			<result name="success">/WEB-INF/pages/common/attachment/success.jsp
+			</result>
+			<result name="success1">/WEB-INF/pages/common/attachment/success1.jsp
+			</result>
+			<result name="ajax">/WEB-INF/pages/cms/document/ajax_result.jsp
+			</result>
+			<interceptor-ref name="fileUploadStack"></interceptor-ref>
+		</action>
+		<!-- - 留言版 - -->
+		<action name="message"
+			class="com.cyberway.common.message.view.MessageController">
+			<result name="list">/WEB-INF/pages/common/message/message.jsp
+			</result>
+			<result name="adminList">/WEB-INF/pages/common/message/message_admin.jsp
+			</result>
+			<result name="info">/WEB-INF/pages/common/message/messge_form.jsp
+			</result>
+		</action>
+		<!--定时任务-->
+		<action name="scheduler"
+			class="com.cyberway.common.quartz.view.SchedulerController">
+			<result name="quartz_list">/WEB-INF/pages/common/quartz/scheduler_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/quartz/edit_scheduler.jsp
+			</result>
+		</action>
+		<!-- - 邮件模板 - -->
+		<action name="email" class="com.cyberway.common.email.view.EmailController">
+			<result name="ajax">/common/ec/ajax_result.jsp
+			</result>
+			<result name="list">/WEB-INF/pages/common/email/email_list.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/common/email/email_edit.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/email/email_edit.jsp
+			</result>
+			<result name="frame">/WEB-INF/pages/common/email/frame.jsp
+			</result>
+			<result name="selectHr">/WEB-INF/pages/common/email/email_select_hr.jsp
+			</result>
+			<result name="writeHr">/WEB-INF/pages/common/email/email_write_hr.jsp
+			</result>
+		</action>
+		
+		<!--  - 邮件发送 -  -->
+		<action name="emaillog"
+			class="com.cyberway.common.email.view.EmailLogController">
+			<result name="input">/WEB-INF/pages/common/email/emaillog_edit.jsp
+			</result>
+			<result name="list">/WEB-INF/pages/common/email/emaillog_list.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/common/email/emaillog_list.jsp
+			</result>
+			<result name="jump" type="redirect">${jumUrl}</result>
+		</action>
+	
+		<!-- - 上传 - -->
+		<!--
+			action name="upload"
+			class="com.cyberway.common.upload.view.UploadController"> <result
+			name="input" type="redirect">/common/fileupload/input.jsp</result>
+			</action
+		-->
+		<!-- - 公共信息管理配置 - -->
+		<action name="commoninfo"
+			class="com.cyberway.common.commoninfo.view.CommonInfoController">
+			<result name="list">
+				/WEB-INF/pages/common/commoninfo/commoninfo_list.jsp</result>
+			<result name="input">
+				/WEB-INF/pages/common/commoninfo/commoninfo_edit.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/common/commoninfo/commoninfo_edit.jsp</result>
+		</action>
+		<!-- - 公共类别管理配置 - -->
+		<action name="commontype"
+			class="com.cyberway.common.commoninfo.view.CommonTypeController">
+			<result name="list">
+				/WEB-INF/pages/common/commoninfo/commontype_list.jsp</result>
+			<result name="input">
+				/WEB-INF/pages/common/commoninfo/commontype_edit.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/common/commoninfo/commontype_edit.jsp</result>
+			<!--
+				<result
+				name="frame">/WEB-INF/pages/common/commoninfo/commontype_frame.jsp</result>
+			-->
+			<result name="tree">
+				/WEB-INF/pages/common/commoninfo/commontype_tree.jsp</result>
+		</action>
+		
+		<!--ldapTemplate-->
+		<!--
+			<action name="ldapTemplate"
+			class="com.cyberway.common.ldap.view.UserTOController"> <result
+			name="list">/WEB-INF/pages/common/ldap/list.jsp</result> </action>
+		-->
+		
+		<!-- - 媒体管理专辑 - -->
+		<action name="album"
+			class="com.cyberway.common.media.album.view.AlbumController">
+			<result name="frame">/WEB-INF/pages/common/media/album/frame.jsp
+			</result>
+			<result name="tree">/WEB-INF/pages/common/media/album/album_tree.jsp
+			</result>
+			<result name="changeAlbumTree">
+				/WEB-INF/pages/common/media/album/change_album.jsp</result>
+			<result name="copyTree">/WEB-INF/pages/common/media/album/copy_album.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/media/album/album_edit.jsp
+			</result>
+		</action>
+		<!-- - 视频 - -->
+		<action name="video"
+			class="com.cyberway.common.media.video.view.VideoController">
+			<result name="list">
+				/WEB-INF/pages/common/media/video/video_manager_list.jsp</result>
+			<result name="list_site">/WEB-INF/pages/common/media/video/video_list.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/media/video/video_edit.jsp
+			</result>
+			<result name="broadcast">/WEB-INF/pages/common/media/video/broadcast.jsp
+			</result>
+			<result name="changeAlbum">
+				/WEB-INF/pages/common/media/video/change_album.jsp</result>
+			<result name="file_download">/filedownload</result>
+			<result name="download_error">/errors/accessDenied.jsp
+			</result>
+			<interceptor-ref name="fileUploadStack">
+			</interceptor-ref>
+		</action>
+		<!-- - 音频 - -->
+		<action name="audio"
+			class="com.cyberway.common.media.audio.view.AudioController">
+			<result name="list">
+				/WEB-INF/pages/common/media/audio/audio_manager_list.jsp</result>
+			<result name="list_site">/WEB-INF/pages/common/media/audio/audio_list.jsp
+			</result>
+			<result name="broadcast">/WEB-INF/pages/common/media/audio/broadcast.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/common/media/audio/audio_edit.jsp
+			</result>
+			<result name="changeAlbum">
+				/WEB-INF/pages/common/media/audio/change_album.jsp</result>
+			<interceptor-ref name="fileUploadStack">
+			</interceptor-ref>
+		</action>
+		
+		<!-- - 模版库 - -->
+		<action name="temLibrary"
+			class="com.cyberway.common.temLibrary.view.TemLibraryController">
+			<result name="list">
+				/WEB-INF/pages/common/temLibrary/temLibrary_list.jsp</result>
+			<result name="input">
+				/WEB-INF/pages/common/temLibrary/temLibrary_edit.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/common/temLibrary/temLibrary_edit.jsp</result>
+			<result name="tree">
+				/WEB-INF/pages/common/temLibrary/temLibrary_tree.jsp</result>
+			<result name="public">
+				/WEB-INF/pages/common/temLibrary/template_tree.jsp</result>
+			<result name="public2">
+				/WEB-INF/pages/common/temLibrary/template_tree2.jsp</result>
+		</action>
+		
+		<!-- 共用模板库管理 -->
+		<action name="comtemplate" class="com.cyberway.common.comtemplate.view.ComTemplateController">
+			<result name="list">/WEB-INF/pages/common/comtemplate/list.jsp</result>
+			<result name="select_list">/WEB-INF/pages/common/comtemplate/select_list.jsp</result>
+			<result name="input">/WEB-INF/pages/common/comtemplate/edit.jsp</result>
+			<result name="comtabbar">/WEB-INF/pages/common/comtemplate/temLibrary_com_tabbar.jsp</result>
+			<result name="comtabbar_select">/WEB-INF/pages/common/comtemplate/temLibrary_comtabbar_select.jsp</result>
+			<result name="comtabxml">/WEB-INF/pages/common/comtemplate/temLibrary_com_tabxml.jsp</result>
+			<result name="comtabxml_select">/WEB-INF/pages/common/comtemplate/temLibrary_comtabxml_select.jsp</result>
+			<result name="editscript">/WEB-INF/pages/common/comtemplate/editscript.jsp</result>
+			<result name="preview" type="redirect">${previewUrl}</result> 
+<!-- 			<result name="public">/WEB-INF/pages/common/comtemplate/select.jsp</result> -->
+		</action>
+		<!-- 共用模板库管理  -->
+		<action name="comtemplateGather" class="com.cyberway.common.comtemplate.view.ComTemplateGatherController">
+			<result name="list">/WEB-INF/pages/common/comtemplate/list.jsp</result>
+		
+		</action>
+	</package>
+		
+	<!-- 树的定义 -->
+	<package name="tree" namespace="/tree" extends="default">
+		<action name="loadXTree" method="loadXTree"
+			class="com.cyberway.common.xtree.view.XTreeAction">
+			<result name="success">/common/xloadtree/loadxtree.jsp
+			</result>
+		</action>
+	</package>
+</struts>

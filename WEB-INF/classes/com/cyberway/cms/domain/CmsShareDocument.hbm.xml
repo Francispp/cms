@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+
+<class name="com.cyberway.cms.domain.CmsShareDocument" table="CMS_SHARE_DOCUMENT">
+    <id name="oid" type="java.lang.Long" column="OID">
+        <generator class="native" />
+    </id>
+    <property name="isCopy" type="java.lang.Integer" column="ISCOPY"/>    
+    
+   <property name="docid" type="java.lang.Long" column="DOCID" length="18"/>
+    <many-to-one name="document" class="com.cyberway.cms.domain.CmsBaseDocument" not-null="true">
+        <column name="BASE_DOCUMENT_ID" />
+    </many-to-one>
+</class>
+</hibernate-mapping>

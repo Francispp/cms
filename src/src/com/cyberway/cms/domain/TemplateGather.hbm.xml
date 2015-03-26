@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+
+	<class name="com.cyberway.cms.domain.TemplateGather" table="CMS_TEMPLATE_GATHER">
+
+		<id name="oid" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property name="siteId" type="java.lang.Long" length="18" />
+		<property name="channelId" type="java.lang.Long" length="18" />
+		<property name="templateId" type="java.lang.Long" length="18" />
+		<property name="includeChannelId" type="java.lang.Long"
+			length="18" />
+		<property name="includeChannelName" type="java.lang.String"
+			length="255" />
+		<property name="templateType" type="java.lang.Integer"/>
+		<property name="timeCreated" not-null="true" />
+	</class>
+</hibernate-mapping>

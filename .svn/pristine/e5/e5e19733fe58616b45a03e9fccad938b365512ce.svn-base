@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+
+	<class name="com.cyberway.common.domain.CoreSiteDistribution" table="CORE_SITE_DISTRIBUTION">
+		<id name="id" type="java.lang.Long" column="ID">
+			<generator class="native" />
+		</id>
+		<property name="siteId" type="java.lang.Long">
+			<column name="SITE_ID" length="30" />
+		</property>
+		<property name="ftpIp" type="java.lang.String">
+			<column name="FTP_IP" length="50" not-null="true" />
+		</property>
+		<property name="port" type="java.lang.Integer">
+			<column name="PORT" length="50" not-null="true" />
+		</property>
+		<property name="isFtp" type="java.lang.String">
+			<column name="IS_FTP" length="1" />
+		</property>
+
+		<property name="userName" type="java.lang.String">
+			<column name="USER_NAME" length="100" />
+		</property>
+		<property name="passWord" type="java.lang.String">
+			<column name="PASS_WORD" length="100" />
+		</property>
+		<property name="ftpPath" type="java.lang.String">
+			<column name="FTP_PATH" length="100" />
+		</property>
+
+	</class>
+</hibernate-mapping>

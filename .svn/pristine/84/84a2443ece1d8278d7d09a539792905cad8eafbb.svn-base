@@ -1,0 +1,190 @@
+﻿<div style="vertical-align:top;height:190px;">
+	<input type="hidden" id="validateScriptTypeField" value="0" />
+	<input type="radio" id="systemScriptTypeRadio" name="scriptType" value="system" onclick="document.getElementById ('validateScriptTypeField').value = 0" checked="checked" />
+	<span fckLang="DlgUserSystemDefault" >系统默认</span>&nbsp;
+	<!--input type="radio" id="customScriptTypeRadio" name="scriptType" value ="custom" onclick="document.getElementById ('validateScriptTypeField').value = 1" />
+	<span fckLang="DlgUserOneself" >自定义</span>&nbsp;-->
+	
+	<div id="systemScriptView" style="display:block;">
+	<br/>
+									
+									
+									<table width="100%">
+										<tr>
+											<td width="50%">选项<br>
+											
+											<select id="optionLabelField" style="width:100%">
+			<option value="required">不能为空</option>
+			<option value="validate-number">有效的数字</option>
+			<option value="validate-digits">只能包含[0-9]任意个数字</option>
+			<option value="validate-integer">只能是整数,可以有正负号</option>
+			<option value="validate-alpha">仅为字母</option>
+			<option value="validate-alphanum">仅是数字和字母</option>
+			<option value="validate-one-required">至少选择一个</option>
+			<option value="validate-date">合法的时间</option>
+			<option value="validate-email">合法的Email地址</option>
+			<option value="validate-url">有效的URL地址</option> 
+			<option value="validate-date-au">日期的格式dd/mm/yyyy</option>
+			<option value="validate-date-cn">日期的格式yyyy-mm-dd</option>
+			<option value="validate-chinese">只能是中文</option>
+			<option value="validate-ip">有效的IP地址</option>
+			<option value="min-value">最小值为</option>
+			<option value="max-value">最大值为</option>
+			<option value="min-length">最小长度</option>
+			<option value="max-length">最大长度</option>
+			<option value="validate-int-range">输入值应该为 %s 至 %s 的整数</option>
+			<option value="validate-float-range">输入值应该为 %s 至 %s 的数字</option>
+			<option value="validate-length-range">输入值的长度应该在 %s 至 %s 之间</option>
+			
+			
+			
+		</select>
+		
+												
+											</td>
+											<td width="50%">值<br>
+												<input id="optionValueField" style="WIDTH: 100%" type="text" name="txtValue"/>
+											</td>
+											<td vAlign="bottom">
+												<input onclick="Add();" type="button" value="添加"/>
+											</td>
+											<td vAlign="bottom">
+												<input onclick="Delete();" type="button" value="删除"/>
+											</td>
+										</tr>
+										<tr>
+											<td rowSpan="2" colSpan="2">
+											
+											<select id="systemValidateScriptField" style="width:100%" multiple="multiple" size="10" name="cmbText" >
+			
+			
+		</select>
+												
+											<td vAlign="top" colSpan="2">
+											</td>
+										</tr>
+										<tr></tr>
+										
+									</table>
+	
+		
+	</div>
+	<div id="customScriptView" style="display:none">
+		<textarea id="validateScriptField" style="width: 100%" rows="8" cols="20"></textarea>
+		<div><button fckLang="DlgUserMustFillScript">生成必填脚本</button></div>
+	</div>
+</div>
+<script type="text/javascript">
+
+	document.getElementById ("validateScriptTypeField").onpropertychange = function ()
+	{
+	try{
+		if (event.propertyName == "value")
+		{
+			if (document.getElementById ("validateScriptTypeField").value == "0")
+			{
+				document.getElementById ("systemScriptTypeRadio").checked = true;
+				switchView ("systemScriptView");
+			}
+			else
+			{
+				//document.getElementById ("customScriptTypeRadio").checked = true;
+				//switchView("customScriptView");
+			}
+		}
+		}catch(E){}
+	}
+	
+	
+	function switchView (view)
+	{
+	try{
+		document.getElementById ("systemScriptView").style.display = "none";
+		document.getElementById ("customScriptView").style.display = "none";
+		
+		document.getElementById (view).style.display = "";
+	}catch(E){}
+	}
+</script>
+
+<script type="text/javascript">
+			function Add()
+			{
+			  var validatevalue=$("optionValueField").getValue();
+	if(validatevalue!=''){
+		validatevalue="-"+validatevalue;
+	}
+				AddComboOption($("systemValidateScriptField"), $("optionLabelField").getValue ()+validatevalue, $("optionLabelField").getValue ()+validatevalue);
+				
+			
+				$("systemValidateScriptField").selectedIndex = $("systemValidateScriptField").options.length - 1 ;
+				
+			
+				
+				$("optionValueField").value = "";
+			
+				
+			}
+			
+			function AddComboOption(combo, optionText, optionValue, documentObject, index)
+			{
+				var option;
+				
+				if (documentObject)
+					option = documentObject.createElement("OPTION") ;
+				else
+					option = document.createElement("OPTION") ;
+			
+				if (index != null)
+					combo.options.add(option, index);
+				else
+					combo.options.add(option);
+			
+				option.innerHTML = optionText.length > 0 ? HTMLEncode(optionText) : '&nbsp;';
+				option.value = optionValue ;
+			
+				return option;
+			}
+			
+			
+			
+			function Delete ()
+			{
+				$A($("systemValidateScriptField").options).each (function (option)
+				{
+					if (option.selected)
+					{
+						$("systemValidateScriptField").removeChild (option);
+					}
+				}.bind (this));
+				 
+				
+			}
+			
+			
+			
+			function HTMLEncode( text )
+			{
+				if ( !text )
+					return '' ;
+			
+				text = text.replace( /&/g, '&amp;' ) ;
+				text = text.replace( /</g, '&lt;' ) ;
+				text = text.replace( />/g, '&gt;' ) ;
+			
+				return text ;
+			}
+			
+			
+			function HTMLDecode( text )
+			{
+				if ( !text )
+					return '' ;
+			
+				text = text.replace( /&gt;/g, '>' ) ;
+				text = text.replace( /&lt;/g, '<' ) ;
+				text = text.replace( /&amp;/g, '&' ) ;
+			
+				return text ;
+			}
+		</script>

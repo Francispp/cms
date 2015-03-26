@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cyberway.cms.component.function.domain">
+  <class name="JSFunction" table="CMS_JSFUNCTION">
+        <id name="oid" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+        <property name="type" column="f_type" unique="false" not-null="true" />
+		<property name="functionName" unique="false"  not-null="true"/>
+		<property name="code" length="50000" />
+		<property name="describe" />
+		<property name="remark" />
+
+  </class>
+</hibernate-mapping>

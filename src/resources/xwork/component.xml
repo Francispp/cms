@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="component" namespace="/component" extends="default">
+	    <!-- JS组件管理 -->
+		<action name="jsfunction"
+			class="com.cyberway.cms.component.function.view.JSFunctionController">
+			<result name="function_list">
+				/WEB-INF/pages/cms/component/function/function_list.jsp</result>
+			<result name="input">
+				/WEB-INF/pages/cms/component/function/function_edit.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/function/function_edit.jsp</result>
+			<result name="uploadExcel">/WEB-INF/pages/cms/component/function/upload.jsp
+			</result>
+			<result name="mess">
+				/WEB-INF/pages/cms/component/function/importMess.jsp</result>
+			<result name="func_select">
+				/WEB-INF/pages/cms/component/function/func_select.jsp</result>
+			<result name="func_select_re">
+				/WEB-INF/pages/cms/component/function/func_select_re.jsp</result>
+			<result name="exportToExcel">/filedownload</result>
+			<interceptor-ref name="fileUploadStack">
+			</interceptor-ref>
+		</action>
+			 <!-- 留言管理 -->
+		<action name="leaveword"
+			class="com.cyberway.cms.component.leaveword.view.LeaveWordController">
+			<result name="input">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_edit.jsp</result>
+			<result name="list">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_list.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_list.jsp</result>
+			<result name="create">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_new.jsp</result>
+			<result name="email">
+				/WEB-INF/pages/cms/component/leaveWord/sendEmail.jsp</result>
+			<result name="url" type="redirect">${templateUrl}</result>
+		</action>
+		<action name="answerleaveword"
+			class="com.cyberway.cms.component.leaveword.view.AnswerLeaveWordController">
+			<result name="input">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_edit.jsp</result>
+			<result name="list">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_list.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_list.jsp</result>
+			<result name="create">
+				/WEB-INF/pages/cms/component/leaveWord/leaveWord_new.jsp</result>
+			<result name="url" type="redirect">${templateUrl}</result>
+		</action>
+			 <!-- 信息订阅管理 -->
+		<action name="subcreibe"
+			class="com.cyberway.cms.component.wsr.view.SubcreibeController">
+			<result name="input">
+				/WEB-INF/pages/cms/component/wsr/subcreibe_edit.jsp</result>
+			<result name="edit">
+				/WEB-INF/pages/cms/component/wsr/subcreibe_edit.jsp</result>
+			<result name="list">
+				/WEB-INF/pages/cms/component/wsr/subcreibe_list.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/wsr/subcreibe_list.jsp</result>
+			<result name="subc">
+				/WEB-INF/pages/cms/component/wsr/subcreibe_ing.jsp</result>
+			<result name="url" type="redirect">${templateUrl}</result>
+		</action>
+			<!-- 信息订阅 邮件服务器管理 -->
+		<action name="emailcfg"
+			class="com.cyberway.cms.component.wsr.view.EmailcfgController">
+			<result name="input">
+				/WEB-INF/pages/cms/component/wsr/emailcfg_edit.jsp</result>
+			<result name="edit">
+				/WEB-INF/pages/cms/component/wsr/emailcfg_edit.jsp</result>
+			<result name="list">
+				/WEB-INF/pages/cms/component/wsr/emailcfg_list.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/wsr/emailcfg_list.jsp</result>
+		</action> 
+			<!-- 信息订阅 频道费用 -->
+		<action name="channelfee"
+			class="com.cyberway.cms.component.wsr.view.ChannelfeeController">
+			<result name="input">
+				/WEB-INF/pages/cms/component/wsr/channelfee_edit.jsp</result>
+			<result name="edit">
+				/WEB-INF/pages/cms/component/wsr/channelfee_edit.jsp</result>
+			<result name="list">
+				/WEB-INF/pages/cms/component/wsr/channelfee_list.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/wsr/channelfee_list.jsp</result>
+		</action>
+			<!-- 文档共享管理 -->
+		<action name="docShareRelation"
+			class="com.cyberway.cms.component.docShare.view.DocShareRelationController">
+			<result name="input">
+				/WEB-INF/pages/cms/component/docshare/relation_edit.jsp</result>
+			<result name="edit">
+				/WEB-INF/pages/cms/component/docshare/relation_edit.jsp</result>
+			<result name="list">
+				/WEB-INF/pages/cms/component/docshare/relation_list.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/docshare/relation_list.jsp</result>
+		</action>
+		<action name="docShareRecord"
+			class="com.cyberway.cms.component.docShare.view.DocShareRecordController">
+			<result name="input">
+				/WEB-INF/pages/cms/component/docshare/record_edit.jsp</result>
+			<result name="edit">
+				/WEB-INF/pages/cms/component/docshare/record_edit.jsp</result>
+			<result name="list">
+				/WEB-INF/pages/cms/component/docshare/record_list.jsp</result>
+			<result name="success">
+				/WEB-INF/pages/cms/component/docshare/record_list.jsp</result>
+		</action>
+	</package>
+</struts>

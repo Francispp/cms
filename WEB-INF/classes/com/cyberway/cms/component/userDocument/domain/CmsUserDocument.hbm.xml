@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cyberway.cms.component.userDocument.domain" default-lazy="true">
+    <class name="CmsUserDocument" table="CMS_USER_DOCUMENT">
+        <id name="id" type="java.lang.Long">
+            <generator class="assigned" />
+        </id>
+        <property name="objType" not-null="true" />
+        <property name="userId" not-null="true" />
+        <property name="docId" not-null="true" />
+        <property name="timeCreated" />
+		<property name="siteId" />
+    </class>
+</hibernate-mapping>

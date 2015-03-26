@@ -1,0 +1,203 @@
+package com.cyberway.common.commoninfo.view;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.ecside.util.ServletUtils;
+
+import com.cyberway.cms.domain.CmsSite;
+import com.cyberway.cms.site.service.SiteManagerService;
+import com.cyberway.cms.webservice.service.CacheSynchroismService;
+import com.cyberway.common.commoninfo.service.CommonInfoService;
+import com.cyberway.common.commoninfo.service.CommonTypeService;
+import com.cyberway.common.domain.CoreCommonInfo;
+import com.cyberway.common.domain.CoreCommonType;
+import com.cyberway.core.dao.EntityDao;
+import com.cyberway.core.dao.support.CriteriaSetup;
+import com.cyberway.core.dao.support.Page;
+import com.cyberway.core.utils.StringUtil;
+import com.cyberway.core.web.BaseBizController;
+
+/**
+ * 公共信息类别管理控制器
+ * 
+ * @author caiw 
+ * @remark (**CommonType) 命名的方法为一组操作功能(crud)，操作以站点(siteid)分类的非树型结构数据。
+ * 
+ */
+
+public class CommonTypeController extends BaseBizController<CoreCommonType> {
+
+	private static final long serialVersionUID = 123223L;
+	CommonTypeService service = (CommonTypeService) this.getServiceById("commonTypeService");
+	SiteManagerService siteManagerService = (SiteManagerService) this.getServiceById("siteManagerService");
+	CommonInfoService commonInfoService = (CommonInfoService) this.getServiceById("commonInfoService");
+	CacheSynchroismService cacheSynchroismService = (CacheSynchroismService) this.getServiceById("cacheSynchroismService");
+	
+	private Long siteid; // 站点ID : CmsSite
+	private String treeXml;
+	private Long parentid; // 父节点 ：当前暂未应用
+
+	public String tree() {
+		siteid = super.getLoginerSiteId();
+		getHttpServletRequest().setAttribute("cmsSite", (CmsSite) siteManagerService.getSiteFromCache(siteid));
+		return TREE_RESULT;
+	}
+
+	public String xml() {
+		siteid = super.getLoginerSiteId();
+		if (siteid != null) {
+			setTreeXml(service.getCommonTypeXmls(siteid));
+		}
+		return HTMLXTREE_RESULT;
+	}
+
+	public String listBySite() throws Exception {
+		siteid = super.getLoginerSiteId();
+		if (siteid != null || parentid != null) {
+			CriteriaSetup criteria = new CriteriaSetup();
+			if (siteid != null)
+				criteria.addFilter("siteid", siteid);
+			if (parentid != null)
+				criteria.addFilter("parentid", parentid);
+			doListEntity(criteria, getTableId(), Page.DEFAULT_PAGE_SIZE);
+		}
+		return LIST_RESULT;
+	}
+
+	public String saveAjax() {
+		logger.info("save user ajax......");
+		HttpServletRequest request = this.getHttpServletRequest();
+		Map<String, Object> map = ServletUtils.getParameterMap(request);
+		if (siteid != null && siteid != 0) {
+			map.put("siteid", siteid);
+		}
+		if (parentid != null && parentid != 0) {
+			map.put("parentid", parentid);
+		}
+		boolean result = false;
+		try {
+			result = getService().saveByAjax(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.ajaxSaveInfo(result);
+		/* 缓存同步 */
+		try {
+			cacheSynchroismService.updateCommonType(getId(), "");
+		} catch (Exception ex) {
+			logger.error("", ex);
+			this.addActionMessage("保存失败!");
+		}
+		return AJAX;
+	}
+
+	public String execute() throws Exception {
+		return list();
+	}
+ 
+	public String listCommonType() throws Exception {
+		siteid = super.getLoginerSiteId();
+		if (siteid != null) {
+			CriteriaSetup criteria = new CriteriaSetup();
+			criteria.addFilter("siteid", siteid);
+			doListEntity(criteria, getTableId(), Page.DEFAULT_PAGE_SIZE);
+		}
+		return LIST_RESULT;
+	}
+
+	public String editCommonType() throws Exception {
+		siteid = super.getLoginerSiteId();
+		super.edit();
+		return INPUT;
+	}
+
+	public String saveOrUpdateCommonType() throws Exception {
+		siteid = super.getLoginerSiteId();
+		domain.setSiteid(siteid);
+		super.saveOrUpdate();
+		/* 缓存同步 */
+		try {
+			cacheSynchroismService.updateCommonType(getId(), "");
+		} catch (Exception ex) {
+			logger.error("", ex);
+			this.addActionMessage("保存失败!");
+		}
+		addActionMessage("保存成功!");
+		return EDIT_RESULT;
+	}
+
+	/**
+	 * 第一步：删除关联数据CoreCommonInfo 第二步：执行删除操作
+	 */
+	public String deleteCommonType() throws Exception {
+		if (!StringUtil.isEmpty(keys)) {
+			String[] tempArray = keys.split(",");
+			StringBuffer strCoreCommonInfoId = new StringBuffer();
+			for (int i = 0; i < tempArray.length; i++) {
+				Long tempIdLong = Long.valueOf(tempArray[i]);
+				List<CoreCommonInfo> tempList = commonInfoService.getCoreCommonInfosByCommonTypeId(tempIdLong);// service.findBy("parentid", tempArray[i]);
+				if (tempList != null && tempList.size() > 0) {
+					for (CoreCommonInfo coreCommonInfo : tempList) {
+						strCoreCommonInfoId.append(coreCommonInfo.getId()).append(",");
+						//commonInfoService.remove(coreCommonInfo);
+					} 
+				}
+			}
+			if (strCoreCommonInfoId.length()>0) {
+				strCoreCommonInfoId.deleteCharAt(strCoreCommonInfoId.length()-1);
+				List<Long> list = StringUtil.splitToList(strCoreCommonInfoId.toString(), ",");
+				commonInfoService.removeByIds(list);
+				
+				for (Long long1 : list) {
+					try {
+						cacheSynchroismService.updateCommonType(long1, "del");
+					} catch (Exception ex) {
+						logger.error("", ex);
+						this.addActionMessage("删除失败!");
+					}
+				}
+				
+			}
+			List<Long> list  = StringUtil.splitToList(keys, ",");
+			getService().removeByIds(list);
+			this.addActionMessage(this.getText("RESOURCE.HINTINFO.DELETESUCCESS"));
+		} else
+			this.addActionError(this.getText("RESOURCE.HINTINFO.LETSELECTDELETERECORDWORD"));
+		return listCommonType();
+	}
+
+
+	public Long getParentid() {
+		return parentid;
+	}
+
+	public void setParentid(Long parentid) {
+		this.parentid = parentid;
+	}
+
+	public String getTreeXml() {
+		return treeXml;
+	}
+
+	public void setTreeXml(String treeXml) {
+		this.treeXml = treeXml;
+	}
+
+	public Long getSiteid() {
+		// loginer.setSiteId(cmsSite.getOid());
+		return super.getLoginerSiteId();
+	}
+
+	public void setSiteid(Long siteid) {
+		this.siteid = siteid;
+	}
+
+	@Override
+	protected EntityDao getService() {
+		return service;
+	}
+}

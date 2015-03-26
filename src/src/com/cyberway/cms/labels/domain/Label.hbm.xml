@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.labels.domain.Label" table="CMS_LABEL">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+		<property name="title" />
+		<property name="content" length="3000"/>
+    </class>
+</hibernate-mapping >

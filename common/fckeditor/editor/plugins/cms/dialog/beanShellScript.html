@@ -1,0 +1,49 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/beanShellScript.js"></script>
+		<script language="javascript">
+			new BeanShellScript ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td>
+					<table cellSpacing="0" cellPadding="0" align="center" border="0">
+					 <tr>
+						<td>语言:</td>
+						<td>
+							<select id="languageField">
+								<!-- <option value="groovy">groovy</option>-->
+								<option value="javascript">javascript</option>
+								<option value="jsp">jsp</option>
+								<!-- <option value="ruby">ruby</option> --> 
+							</select>
+						</td>
+						<td align="right"><input type="button" value="导  入" onclick="openwindow('/component/jsfunction!selectJSComList.action','js组件',600,400)"/></td>
+					 </tr>
+					 <tr>
+						<td>代码:</td>
+						<td colspan="2"><textarea id="valueField" cols="60" rows="17"></textarea></td>
+					 </tr>	
+					</table>
+				</td>
+			</tr>
+		</table>
+<script type="text/javascript">
+  function   openwindow(URL,title,width,height)
+  {   
+  //根据屏幕居中   
+  var code = window.showModalDialog(URL,'请选择','resizable:yes;scroll:yes;status:no;dialogWidth=600px;dialogHeight=400px;center=yes;help=no');
+  if(code!=null && code!='undefined')
+   $('valueField').value = code;
+  }
+</script>
+	</body>
+</html>

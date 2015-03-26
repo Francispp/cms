@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+  <!-- cms过滤器 --> 
+  <distributable/>
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>cyberway.root</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:context/**/*.xml</param-value>
+    </context-param>
+   
+   <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+    </filter> 
+  	<filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+  <filter>
+    <filter-name>webfilter</filter-name>
+    <filter-class>com.cyberway.cms.web.filter.WebFilter</filter-class>
+  </filter> 
+      
+   <filter-mapping>   
+    <filter-name>webfilter</filter-name>
+    <url-pattern>/*</url-pattern>
+   </filter-mapping>   
+   
+   
+   <!-- 
+   <filter>
+    <filter-name>pageFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+    	<param-name>targetBeanName</param-name>
+    	<param-value>cms.staticer.pageFilter</param-value>
+    </init-param>
+  </filter> 
+  <filter-mapping>   
+    <filter-name>pageFilter</filter-name>
+    <url-pattern>/cms/*</url-pattern>
+   </filter-mapping>  
+   
+  <filter-mapping>   
+    <filter-name>pageFilter</filter-name>
+    <url-pattern>/cms/index.action*</url-pattern>
+   </filter-mapping>  
+   
+    <filter-mapping>   
+    <filter-name>pageFilter</filter-name>
+    <url-pattern>/cms/docInfo!list.action*</url-pattern>
+   </filter-mapping>  
+   
+    <filter-mapping>   
+    <filter-name>pageFilter</filter-name>
+    <url-pattern>/cms/docInfo!view.action*</url-pattern>
+   </filter-mapping>  
+     -->   
+ 
+    <!-- Acegi安全控制 Filter 配置 用FilterToBeanProxy来代理每个filter request -->
+    <filter>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+        </init-param>
+    </filter>
+    	
+	<filter>
+		<filter-name>eXtremeExport</filter-name>
+		<filter-class>org.ecside.filter.ECSideFilter</filter-class>
+		<init-param>
+			<param-name>useEasyDataAccess</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>useEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+    
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    
+    <!--filter>
+        <filter-name>log4jMDCUserFilter</filter-name>
+        <filter-class>com.cyberway.core.web.Log4JUserFilter</filter-class>
+    </filter-->
+
+
+	  	<!-- oscache filter -->
+  	<filter>
+		<filter-name>OSCacheFilter</filter-name>
+		<filter-class>
+			com.cyberway.cms.component.oscache.filter.CMSCacheURLFilter
+		</filter-class>
+		<init-param>
+			<param-name>oscache-properties-file</param-name>
+			<param-value>
+				/oscache.properties
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>scope</param-name>
+			<param-value>application</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ICacheKeyProvider</param-name>
+			<param-value>com.cyberway.cms.component.oscache.plugins.CacheKeyProvider</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ICacheGroupsProvider</param-name>
+			<param-value>com.cyberway.cms.component.oscache.plugins.CacheGroupsProvider</param-value>
+		</init-param>
+	</filter>
+	
+  	<filter-mapping>
+			<filter-name>OSCacheFilter</filter-name>
+			<url-pattern>*.action</url-pattern>
+			<dispatcher>REQUEST</dispatcher>
+			<dispatcher>FORWARD</dispatcher>
+			<dispatcher>INCLUDE</dispatcher>
+			<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+  	<filter-mapping>
+			<filter-name>OSCacheFilter</filter-name>
+			<url-pattern>*.html2</url-pattern>
+	</filter-mapping>
+  	<filter-mapping>
+			<filter-name>OSCacheFilter</filter-name>
+			<url-pattern>*.html3</url-pattern>
+	</filter-mapping>		
+  	<!-- <filter-mapping>
+			<filter-name>OSCacheFilter</filter-name>
+			<url-pattern>*.html</url-pattern>
+	</filter-mapping>-->
+	<filter-mapping>
+			<filter-name>OSCacheFilter</filter-name>
+			<url-pattern>/webwork/*</url-pattern>
+	</filter-mapping>
+    <filter-mapping>
+        <filter-name>OSCacheFilter</filter-name>
+        <url-pattern>/service/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>OSCacheFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>webwork</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+    
+	<filter>
+    	<filter-name>CompressingFilter</filter-name>
+   		<filter-class>com.planetj.servlet.filter.compression.CompressingFilter</filter-class>
+    	<init-param>
+      		<param-name>debug</param-name>
+      		<param-value>false</param-value>
+    	</init-param>
+    	<init-param>
+      		<param-name>statsEnabled</param-name>
+      		<param-value>false</param-value>
+    	</init-param>
+  	</filter>   
+  
+    
+  
+    <!--实现的安全过滤--> 
+    <filter-mapping>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>    
+    <filter-mapping>
+        <filter-name>eXtremeExport</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>CompressingFilter</filter-name>
+    	<url-pattern>/service/*</url-pattern>
+  	</filter-mapping>
+    <!--filter-mapping>
+        <filter-name>log4jMDCUserFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>log4jMDCUserFilter</filter-name>
+        <url-pattern>/service/*</url-pattern>
+    </filter-mapping-->
+    
+  	<filter-mapping>
+			<filter-name>webwork</filter-name>
+			<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+  	<filter-mapping>
+			<filter-name>webwork</filter-name>
+			<url-pattern>*.html2</url-pattern>
+	</filter-mapping>
+  	<filter-mapping>
+			<filter-name>webwork</filter-name>
+			<url-pattern>*.html3</url-pattern>
+	</filter-mapping>		
+  	<filter-mapping>
+			<filter-name>webwork</filter-name>
+			<url-pattern>*.html</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+			<filter-name>webwork</filter-name>
+			<url-pattern>/webwork/*</url-pattern>
+	</filter-mapping>	
+	<filter-mapping>
+			<filter-name>webwork</filter-name>
+			<url-pattern>/struts/*</url-pattern>
+	</filter-mapping>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/service/*</url-pattern>
+    </filter-mapping>
+   
+   <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>*.action</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>/service/*</url-pattern>
+    </servlet-mapping>
+             	
+    <listener>    
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+ 	<listener>
+		<listener-class>
+			com.cyberway.core.web.listener.MySessionListener
+		</listener-class>
+	</listener> 
+	<!--Spring 刷新Introspector防止内存泄露
+	-->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.cyberway.core.web.InitBeanFactoryListener</listener-class>
+    </listener>
+    <!--
+    发布HttpSessionApplicationEvents和HttpSessionDestroyedEvent事件给spring的applicationcontext
+    -->
+    <listener>
+        <listener-class>org.acegisecurity.ui.session.HttpSessionEventPublisher</listener-class>
+    </listener>  
+
+    <!-- oscache 缓存 -->
+    <listener>
+		<listener-class>
+			com.opensymphony.oscache.web.CacheContextListener
+		</listener-class>
+	</listener>
+	  <!--信息抓取
+    <listener>
+        <listener-class>com.cyberway.issue.crawler.WebappLifecycle</listener-class>
+    </listener>
+	-->
+	
+	<listener>
+        <listener-class>org.apache.struts2.dispatcher.ng.listener.StrutsListener</listener-class>
+    </listener>
+    
+  	<servlet>
+    	<servlet-name>JspSupportServlet</servlet-name>
+    	<servlet-class>org.apache.struts2.views.JspSupportServlet</servlet-class>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	
+	<!-- For JS remote call java-->
+
+	<servlet>
+		<servlet-name>service</servlet-name>
+		<servlet-class>
+			com.cyberway.core.utils.ajax.BuffaloServiceServlet
+		</servlet-class>
+	</servlet>
+  <servlet>
+  <servlet-name>QuartzInitializer</servlet-name>
+  <servlet-class>org.quartz.ee.servlet.QuartzInitializerServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+  </servlet>
+
+	<!-- XFire -->
+<!--
+   <servlet>
+     <servlet-name>xfire</servlet-name>
+     <servlet-class>org.codehaus.xfire.spring.XFireSpringServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+    <servlet-name>xfire</servlet-name>
+    <url-pattern>/service/*</url-pattern>
+   </servlet-mapping>
+   -->
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>scriptCompressed</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+  <servlet>
+    <servlet-name>filedownload</servlet-name>
+    <servlet-class>com.cyberway.common.fileDownload.FileDownload</servlet-class>
+  </servlet>
+	<!-- FCKEditor -->
+	<!-- 
+	<servlet>
+		<servlet-name>FCKConnector</servlet-name>
+		<servlet-class>com.fredck.FCKeditor.connector.ConnectorServlet</servlet-class>
+		<init-param>
+			<param-name>baseDir</param-name>
+			<param-value>/cms_file/uploads/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>FCKConnector</servlet-name>
+		<url-pattern>/common/fckeditor/editor/filemanager/browser/default/connectors/jsp/connector</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FCKSimpleUploader</servlet-name>
+		<servlet-class>com.cyberway.common.attachment.servlet.SimpleUploaderServlet</servlet-class>
+		<init-param>
+			<param-name>baseDir</param-name>
+			<param-value>/cms_file/uploads/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enabled</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>AllowedExtensionsFile</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>DeniedExtensionsFile</param-name>
+			<param-value>php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi</param-value>
+		</init-param>
+		<init-param>
+			<param-name>AllowedExtensionsImage</param-name>
+			<param-value>jpg|gif|jpeg|png|bmp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DeniedExtensionsImage</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>AllowedExtensionsFlash</param-name>
+			<param-value>swf|fla</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DeniedExtensionsFlash</param-name>
+			<param-value></param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>FCKSimpleUploader</servlet-name>
+		<url-pattern>/common/fckeditor/editor/filemanager/upload/simpleuploader</url-pattern>
+	</servlet-mapping> 
+	 -->
+  <servlet-mapping>
+    <servlet-name>filedownload</servlet-name>
+    <url-pattern>/filedownload</url-pattern>
+  </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>service</servlet-name>
+		<url-pattern>/ajax/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Web Service -->
+	<servlet>
+		<servlet-name>AxisServlet</servlet-name>
+		<servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/servlet/AxisServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>*.jws</url-pattern>
+	</servlet-mapping>
+	
+	<!-- For ReportPlatform-->
+	<servlet>
+		<servlet-name>pdf</servlet-name>
+		<servlet-class>
+			com.cyberway.core.reports.view.PdfServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>html</servlet-name>
+		<servlet-class>
+			com.cyberway.core.reports.view.HtmlServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>image</servlet-name>
+		<servlet-class>
+			com.cyberway.core.reports.view.ImageServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>rtf</servlet-name>
+		<servlet-class>
+			com.cyberway.core.reports.view.RtfServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>xls</servlet-name>
+		<servlet-class>
+			com.cyberway.core.reports.view.XlsServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>applet</servlet-name>
+		<servlet-class>
+			com.cyberway.core.reports.view.AppletServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>pdf</servlet-name>
+		<url-pattern>/reports/pdf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>html</servlet-name>
+		<url-pattern>/reports/html</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>image</servlet-name>
+		<url-pattern>/reports/image</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>rtf</servlet-name>
+		<url-pattern>/reports/rtf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>xls</servlet-name>
+		<url-pattern>/reports/xls</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>applet</servlet-name>
+		<url-pattern>/reports/applet</url-pattern>
+	</servlet-mapping>
+	
+	
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
+
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errors/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errors/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/errors/403.jsp</location>
+    </error-page>
+     <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/errors/except.jsp</location>
+    </error-page>   
+	<jsp-config>
+		<taglib>
+			<taglib-uri>ecside</taglib-uri>
+			<taglib-location>/WEB-INF/tld/ecside.tld</taglib-location>
+		</taglib>
+		<!--
+		<taglib>
+			<taglib-uri>fck</taglib-uri>
+			<taglib-location>/WEB-INF/tld/FCKeditor</taglib-location>
+		</taglib>
+		-->
+		<taglib>
+			<taglib-uri>cms</taglib-uri>
+			<taglib-location>/WEB-INF/tld/cms.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>webwork</taglib-uri>
+			<taglib-location>/WEB-INF/tld/struts-tags.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<listener>
+		<listener-class>com.cyberway.staticer.Configuration$Initializer</listener-class>
+	</listener>    
+	
+	<mime-mapping>
+		<extension>xml</extension>
+		<mime-type>text/xml</mime-type>
+	</mime-mapping>
+</web-app>

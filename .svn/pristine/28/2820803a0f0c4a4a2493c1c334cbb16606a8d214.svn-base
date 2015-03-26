@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cyberway.cms.domain" default-lazy="true">
+    <class name="com.cyberway.cms.domain.CmsBaseDocument" table="CMS_BASE_DOCUMENT">
+        <id name="id" type="java.lang.Long">
+            <generator class="assigned" />
+        </id>
+        <property name="numberOfClick" not-null="true" />
+        <property name="isInheritPerm" not-null="true" />
+        <property name="isShare"/>
+        <property name="isHeadline"/>
+        
+		<property name="toped" />
+		<property name="newsed" />
+		<property name="firstpage" />
+        <property name="body" type="text" length="50000"/>
+		<many-to-one name="channel" class="com.cyberway.cms.domain.Channel" column="channel_id"/>
+		<many-to-one name="site" class="com.cyberway.cms.domain.CmsSite" column="site_id"/>
+    </class>
+</hibernate-mapping>

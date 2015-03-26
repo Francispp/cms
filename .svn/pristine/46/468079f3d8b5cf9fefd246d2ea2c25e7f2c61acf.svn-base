@@ -1,0 +1,214 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/select.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Select ().handleDialog ();
+		</script>
+		<script type="text/javascript">
+			function Add()
+			{
+				AddComboOption($("optionLabelList"), $("optionLabelField").getValue (), $("optionLabelField").getValue ());
+				AddComboOption($("optionValueList"), $("optionValueField").getValue (), $("optionValueField").getValue ());
+			
+				$("optionLabelList").selectedIndex = $("optionLabelList").options.length - 1 ;
+				$("optionValueList").selectedIndex = $("optionValueList").options.length - 1 ;
+			
+				$("optionLabelField").value = "";
+				$("optionValueField").value = "";
+			
+				$("optionLabelField").focus();
+			}
+			
+			function AddComboOption(combo, optionText, optionValue, documentObject, index)
+			{
+				var option;
+				
+				if (documentObject)
+					option = documentObject.createElement("OPTION") ;
+				else
+					option = document.createElement("OPTION") ;
+			
+				if (index != null)
+					combo.options.add(option, index);
+				else
+					combo.options.add(option);
+			
+				option.innerHTML = optionText.length > 0 ? HTMLEncode(optionText) : '&nbsp;';
+				option.value = optionValue ;
+			
+				return option;
+			}
+			
+			function Modify()
+			{
+				var index = $("optionValueList").selectedIndex;
+				
+				if (index < 0) 
+					return;
+			
+				$("optionLabelList").options[index].innerHTML	= HTMLEncode($("optionLabelField").getValue ());
+				$("optionLabelList").value = $("optionLabelField").getValue ();
+				
+				$("optionValueList").options[index].innerHTML	= HTMLEncode($("optionValueField").getValue ());
+				$("optionValueList").value = $("optionValueField").getValue ();
+			        $("optionLabelList").removeChild($("optionLabelList").options[index]);
+			        $("optionValueList").removeChild ($("optionValueList").options[index]);
+				$("optionLabelField").focus();
+			}
+			
+			function Delete ()
+			{
+				$A($("optionLabelList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+						$("optionLabelList").removeChild (option);
+					}
+				}.bind (this));
+				 
+				$A($("optionValueList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+						$("optionValueList").removeChild (option);
+					}
+				}.bind (this));
+			}
+			
+			function SetSelectedValue()
+			{
+				var index = $("optionValueList").selectedIndex;
+				
+				if (index < 0)
+					return;
+				
+				$("selectedField").value = $("optionValueList").getValue ();
+			}
+			
+			function HTMLEncode( text )
+			{
+				if ( !text )
+					return '' ;
+			
+				text = text.replace( /&/g, '&amp;' ) ;
+				text = text.replace( /</g, '&lt;' ) ;
+				text = text.replace( />/g, '&gt;' ) ;
+			
+				return text ;
+			}
+			
+			
+			function HTMLDecode( text )
+			{
+				if ( !text )
+					return '' ;
+			
+				text = text.replace( /&gt;/g, '>' ) ;
+				text = text.replace( /&lt;/g, '<' ) ;
+				text = text.replace( /&amp;/g, '&' ) ;
+			
+				return text ;
+			}
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<table width="100%" height="100%">
+							<tr>
+								<td>
+									<table width="100%">
+										<tr>
+											<td nowrap>名称:</td>
+											<td width="100%" colSpan="2">
+												<input id="nameField" style="WIDTH: 100%" type="text"/>
+											</td>
+										</tr>
+										<tr>
+											<td nowrap>选定:</td>
+											<td width="100%" colSpan="2">
+												<input id="selectedField" style="WIDTH: 100%; BACKGROUND-COLOR: buttonface" type="text" readonly>
+											</td>
+										</tr>
+										<tr>
+											<td nowrap>显示行数:</td>
+											<td nowrap>
+												<input id="sizeField" type="text" size="2">行
+											</td>
+											<td nowrap align="right">
+												<input id="multipleField" type="checkbox"/>允许多选
+											</td>
+										</tr>
+									</table>
+									<br>
+									<hr style="POSITION: absolute">
+									<span style="LEFT: 10px; POSITION: relative; TOP: -7px" class="BackColor">行表值</span>
+									<table width="100%">
+										<tr>
+											<td width="50%">标签<br>
+												<input id="optionLabelField" style="WIDTH: 100%" type="text" name="txtText"/>
+											</td>
+											<td width="50%">值<br>
+												<input id="optionValueField" style="WIDTH: 100%" type="text" name="txtValue"/>
+											</td>
+											<td vAlign="bottom">
+												<input onclick="Add();" type="button" value="添加"/>
+											</td>
+											<td vAlign="bottom">
+												<input onclick="Modify();" type="button" fckLang="DlgSelectBtnModify" value="修改"/>
+											</td>
+										</tr>
+										<tr>
+											<td rowSpan="2">
+												<select id="optionLabelList" 
+													style="WIDTH: 100%" 
+													onchange="GetE('cmbValue').selectedIndex = this.selectedIndex;Select(this);"
+													size="5" 
+													name="cmbText">
+												</select>
+											</td>
+											<td rowSpan="2">
+												<select id="optionValueList" 
+													style="WIDTH: 100%" 
+													onchange="GetE('cmbText').selectedIndex = this.selectedIndex;Select(this);"
+													size="5" 
+													name="cmbValue">
+												</select>
+											</td>
+											<td vAlign="top" colSpan="2">
+											</td>
+										</tr>
+										<tr></tr>
+										<tr>
+											<td valign="bottom" colSpan="4">
+												<input onclick="SetSelectedValue();" type="button" value="设为初始化时选定" />
+												<input onclick="Delete();" type="button" value="删除"/>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+	                <div id="valueScriptView" style="display: none"></div>
+	                <div id="validateScriptView" style="display: none;"></div>
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

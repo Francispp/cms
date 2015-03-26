@@ -1,0 +1,63 @@
+package com.cyberway.weixin.controller;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import javax.servlet.ServletInputStream;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+import com.cyberway.core.web.BaseController;
+
+/**
+ * 
+ * @com.cyberway.weixin.controller.SuiteController TODO :
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年2月6日 下午3:26:15
+ */
+public class SuiteController extends BaseController {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * <xml> //<SuiteId><![CDATA[wxfc918a2d200c9a4c]]></SuiteId> //<InfoType>
+	 * <![CDATA[suite_ticket]]></InfoType> //<TimeStamp>1403610513</TimeStamp>
+	 * //<SuiteTicket><![CDATA[asdfasfdasdfasdf]]></SuiteTicket> //</xml>
+	 * <p>
+	 * TODO (这里用一句话描述这个方法的作用)
+	 * </p>
+	 * 
+	 * @return
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
+	public String getSuiteTicket() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(ServletInputStream) getRequest().getInputStream()));
+		String line = null;
+		StringBuilder sb = new StringBuilder();
+		while ((line = br.readLine()) != null) {
+			sb.append(line);
+		}
+		System.out.println(sb.toString());
+		// SAXReader reader = new SAXReader();
+		// InputStream input= getRequest().getInputStream();
+		// Document document = reader.read(input);
+		// Element root = document.getRootElement();
+		// String suiteId = root.element("SuiteId").getText();
+		// String infoType = root.element("InfoType").getText();
+		// String timeStamp = root.element("TimeStamp").getText();
+		// String suiteTicket = root.element("SuiteTicket").getText();
+		// System.out.println(suiteId+"------------suiteId");
+		// System.out.println(infoType+"-----------infoType");
+		// System.out.println(timeStamp+"-----------timeStamp");
+		// System.out.println(suiteTicket+"-----------suiteTicket");
+		// <xml><ToUserName><![CDATA[tjfc481f8cafd78d48]]></ToUserName><Encrypt><![CDATA[zTzzKkRL+NJIeeFK+1F0hpvlJC9/ak+BV7NHVd2a+ppl25fWeBEu2PcpfI2LiefCFpq/GKdI32rpnEdIaCiqWq4jbPaICMAyAm0k/bAwDCYkXIUVv6d490WWsDLhkzEqd6Hau92lgYGr8jBhs6n1q751E7kIG1Tip7vAWJG5jrWhv6oLjNRD0GUzpBzwATsfs4a9sriI9E9ui0u46sKMTZNj3NWFWusOmbFfMUN1M4ff0Xy/zxbeWAX21klJcO5dZ9EIzr+rTQkQG3MThz/eH0tjTbMgpxGC3MH6ldpGm6dsncsC31joMBzycg4Y5SXwwIZbi+fqKFrYRxoT7zEVIOAsDt9fPm/kIc+UQtHPtjq3VAk7T01emhcES9av810t]]></Encrypt><AgentID><![CDATA[]]></AgentID></xml>
+		return "success";
+	}
+}

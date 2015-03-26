@@ -1,0 +1,8 @@
+
+.lddiv{
+	width:500px;
+	height:500px;
+	margin: auto;
+	padding: auto;
+	background-color: F5F5F5;
+}

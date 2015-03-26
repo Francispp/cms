@@ -1,0 +1,58 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/flow.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Flow ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<span fckLang="DlgUserName">输出流程内容：</span>
+						<br />
+						<select id="functionTypeField" style="width:100%" onchange="setPrintContent(this);">
+							<option value="" selected="selected" ></option>
+							<option value="activityName" >显示活动名</option>
+							<option value="compleButton">完成按钮</option>
+							<option value="flowButton">流程处理按钮</option>
+							<option value="flowLog">流程处理记录</option>
+							<option value="other">其他</optin>
+						</select>
+						<br />
+						<textarea id="customField" style="width: 100%" rows="4" cols="20"></textarea>						
+						<br />
+						</div>
+						<br />													
+					</div>
+	               
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+<script language="javascript">
+ function setPrintContent(_this){
+       if(_this.value=='activityName')
+         $('customField').value="${activityname}";
+       else  if(_this.value=='compleButton')
+          $('customField').value="<a href='javascript:saveAndComple()'>完成</a>";
+       else  if(_this.value=='flowButton')
+          $('customField').value="";
+        else  if(_this.value=='flowLog')
+          $('customField').value="<iframe src=\"${ctx}/flow/track.action?id=${domain.id}\" name='trackFrame' frameBorder='0' width='100%' height='150'> </iframe>";
+       else  if(_this.value=='')
+          $('customField').value="";
+                          
+      }
+</script>

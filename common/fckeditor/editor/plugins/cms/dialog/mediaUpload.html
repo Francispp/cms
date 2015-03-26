@@ -1,0 +1,125 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/mediaUpload.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new MediaUpload ().handleDialog ();
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+						<span fckLang="DlgUserName">名称：</span>
+						<br />
+						<input id="nameField" style="width:100%" type="text" />
+						<br />
+						<div style="display:none">
+						<input type="hidden" id="issueRadioField" value="1" /> 
+						<span fckLang="DlgAdvertisementStyle">是否分发：</span> 
+							<input type="radio" name="issueRadio" id="issueRadio" value="1" onclick="document.getElementById ('issueRadioField').value = '1'" checked="checked" /> 
+							<span>是</span>&nbsp;
+							<input type="radio" name="issueRadio" value="0" onclick="document.getElementById ('issueRadioField').value = '0'" />
+							<span>否</span>&nbsp; 
+						<br />
+						</div>
+						<span>媒体类型：</span>
+						<select id="mediaType" name="mediaType" style="width:60%" onchange="showMediaUploadType(this.value)">
+							<option value='video' >视频</option>
+							<option value='audio'>音频</option>
+						</select>
+						<br />
+						<input id="mediaWidth" type="hidden" value="300"/>
+						<input id="mediaHeight" type="hidden" value="400"/>
+						
+						<span>上传类型：</span>
+						<span id="videoMediaTypeView" style="display:none">
+							<select id="videoUploadType" name="videoUploadType" style="width:60%" onchange="showMediaUploadFormat(this.value)">
+								<option value='flv' >flv</option>
+								<option value='wmv,avi'>media</option>
+							</select>
+						</span>
+						<span id="audioMediaTypeView" style="display:none">
+							<select id="audioUploadType" name="audioUploadType" style="width:60%" onchange="showMediaUploadFormat(this.value)">
+								<option value='mp3' >mp3</option>
+							</select>
+						</span>
+						
+						<br />
+						<span>支持格式：</span><span id="showMediaUploadFormat"></span>
+						<br />
+						<span>文件大小：</span>
+						<input id="mediaSize" style="width:20%" type="text" />M
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						 <select id="styleField" style="width:100%" >
+							<option value="media_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="media_style1">Style1</option>
+							<option value="media_style2">Style2</option>
+						</select>
+						<br />
+						<span fckLang="DlgUserDescribe" >描述：</span>
+						<br />
+						<textarea id="descriptionField" style="width: 100%" rows="3" cols="20"></textarea>
+						<br />
+					</div>
+
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+		
+		<SCRIPT LANGUAGE="JavaScript">
+	
+		function showMediaUploadFormat(value){
+			$("showMediaUploadFormat").innerText=value;
+		}
+		function showMediaUploadType(value){
+			var temp=$('mediaType');
+			for(var i=0;i<temp.length;i++){
+				if(temp[i].selected){
+					$(temp[i].value+'MediaTypeView').style.display="";
+					var _temp=$(temp[i].value+'UploadType');
+					for(var k=0;k<_temp.length;k++){
+						if(_temp[k].selected){
+							showMediaUploadFormat(_temp[k].value);
+						}
+					}
+					
+				}else{
+					$(temp[i].value+'MediaTypeView').style.display="none";	
+				}
+			}
+		}
+		
+		
+	document.getElementById ("issueRadioField").onpropertychange = function ()
+	{
+		if (event.propertyName == "value")
+		{
+			if (document.getElementById ("issueRadioField").value == "1")
+			{
+				document.getElementsByName("issueRadio")[0].checked = true;
+			}
+			else{
+			    document.getElementsByName("issueRadio")[1].checked = true;
+			}
+		}
+	}	
+	
+</SCRIPT>
+	</body>
+</html>

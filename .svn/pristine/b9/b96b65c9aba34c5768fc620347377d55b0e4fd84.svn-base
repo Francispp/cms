@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cyberway.weixin.business.auth.domain.Auth" table="WX_AUTH">
+        <id name="id" type="java.lang.Long" column="ID">
+            <generator class="native" />
+        </id>
+        <property name="corpId" type="java.lang.String" column="CORP_ID"/>
+        <property name="corpName" type="java.lang.String" column="CORP_NAME"/>
+        <property name="corpType" type="java.lang.String" column="CORP_TYPE"/>
+        <property name="permanentCode"  type="java.lang.String" column="PERMANENT_CODE" />
+        <property name="corp_round_logo_url"  type="java.lang.String" column="CORP_ROUND_LOGO_URL" />
+        <property name="corp_square_logo_url"  type="java.lang.String" column="CORP_SQUARE_LOGO_URL" />
+        <property name="corp_user_max"  type="java.lang.Integer" column="CORP_USER_MAX" />
+        <property name="corp_agent_max"  type="java.lang.Integer" column="CORP_AGENT_MAX" />
+        <property name="corp_wxqrcode"  type="java.lang.String" column="CORP_WXQRCODE" />
+        <property name="createDate"  type="java.util.Date" column="CREATE_DATE" />
+    </class>
+</hibernate-mapping>

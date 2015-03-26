@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+
+<class name="com.cyberway.common.domain.CoreADUserRole" table="CORE_AD_USER_ROLE">
+    <id name="oid" type="java.lang.Long" column="OID">
+        <generator class="native" />
+    </id>
+   <property name="userid" type="java.lang.Long" column="USERID" length="18"/>
+    <many-to-one name="coreRole" class="com.cyberway.common.domain.CoreRole" not-null="true">
+        <column name="ROLEID" />
+    </many-to-one>
+</class>
+</hibernate-mapping>

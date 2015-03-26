@@ -1,0 +1,213 @@
+﻿<html>
+<head>
+<title>Placeholder Properties</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="noindex, nofollow" name="robots">
+<script type="text/javascript" src="../../../../../mootools.js"></script>
+<script type="text/javascript"
+	src="../../../dialog/common/fck_dialog_common.js"></script>
+<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+
+<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+<script type="text/javascript"
+	src="../../../../../../dwr/interface/CoreFormService.js"></script>
+<script src="../../../../../../dwr/interface/StaticResourceService.js" type="text/javascript"></script>	
+<script type="text/javascript" src="../component.js"></script>
+<script type="text/javascript"
+	src="../../../../../attachment/attachment.js"></script>
+<script type="text/javascript" src="../js/advertisement.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+<script language="javascript">
+			new Advertisement().handleDialog ();
+			
+			var oEditor		= window.parent.InnerDialogLoaded() ;
+var FCK			= oEditor.FCK ;
+var FCKLang		= oEditor.FCKLang ;
+var FCKConfig	= oEditor.FCKConfig ;
+
+		</script>
+</head>
+<body scroll="no" style="OVERFLOW: hidden">
+<table height="100%" cellSpacing="0" cellPadding="0" width="100%"
+	border="0">
+	<tr>
+		<td valign="top">
+		<div id="basicView"><br />
+		<span fckLang="DlgAdvertisementStyle">样式</span><br /> 
+		<select
+			id="styleField" style="width:80%">
+			<option value="advertisement_default" selected="selected"
+				fckLang="DlgUserSystemDefault">系统默认</option>
+			<option value="advertisement_style1">Style1</option>
+			<option value="advertisement_style2">Style2</option>
+		</select> <br />
+		<input type="hidden" id="buttonScriptTypeField" value="0" /> 
+		<span fckLang="DlgAdvertisementStyle">类型</span> 
+			<input type="radio" name="buttonTypeRadio" value="img" onclick="document.getElementById ('buttonScriptTypeField').value = 0" checked="checked" /> 
+			<span>Image</span>&nbsp;
+			<input type="radio" name="buttonTypeRadio" value="flash" onclick="document.getElementById ('buttonScriptTypeField').value = 1" />
+			<span>Flash</span>&nbsp; 
+		<br />
+		<span fckLang="DlgAdvertisementStyle">展现类型</span><br /> 
+		 <select
+			id="showType" style="width:80%">
+			<option value="showtype_default" selected="selected"
+				fckLang="DlgUserSystemDefault">右下角</option>
+			<option value="showType1">随机飘动</option>
+			<option value="showType2">对联方式</option>
+		</select> <br />
+				
+		<span>图标选择</span><br />
+		<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td><input id="iconField" type="text" style="width:200px" /></td>
+				<td>
+				<button id="addIconButton">添加</button>
+				<button id="removeIconButton">移除</button>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><select id="iconList" size="2"
+					style="width:200px" style="margin-top:5px" multiple="multiple"></select>
+				</td>
+			</tr>
+		</table>
+		<br />
+
+
+		<span>点击事件跳转路径</span>&nbsp; <input type="text" id="jumpURL"
+			name="jumpURL" /> <br />
+		<span>描述</span>&nbsp; <br /><textarea id="descriptionField"
+			style="width: 100%" rows="3" cols="20"></textarea> <br />
+		</div>
+
+		<div id="privilegeScriptView" style="display: none"></div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
+<SCRIPT LANGUAGE="JavaScript">
+var onclickMethod=new Array();
+onclickMethod[0]="insertItem(${channelId},0);";
+onclickMethod[1]="insertItem(${channelId},1);";
+onclickMethod[2]="editItem('${id}','${channelId}');";
+onclickMethod[3]="save();";
+onclickMethod[4]="issueItem();";
+onclickMethod[5]="deleteItem();";
+onclickMethod[6]="window.close();";
+onclickMethod[7]="window.opener.location.href=window.opener.location.href;window.close();";
+onclickMethod[8]="saveAndPublic();";
+onclickMethod[9]="PublicAndRefreshView();";
+onclickMethod[10]="overdueItem();";
+onclickMethod[11]="setDocPermission();";
+onclickMethod[12]="moveItem();";
+onclickMethod[13]="sharedocItem('${documentId}',1)";
+onclickMethod[14]="sharedocItem('${documentId}',0)";
+onclickMethod[15]="sharedoc()";
+onclickMethod[16]="<ww:if test=\"${not empty session['loginer'] && session['loginer'].loginType == 2}\">onlineRSS()</ww:if><ww:else>alert('请先登陆系统！')</ww:else>";
+onclickMethod[17]="";
+/*
+function writeOnclickScript(n)
+{
+$("onclickField").value=onclickMethod[n];
+}
+
+
+	document.getElementById ("buttonScriptTypeField").onpropertychange = function ()
+	{
+		if (event.propertyName == "value")
+		{
+			if (document.getElementById ("buttonScriptTypeField").value == "0")
+			{
+				document.getElementById ("textTypeRadio").checked = true;
+				switchView ("textView");
+				//$("onclickField").value="";
+			}
+			else
+			{
+				document.getElementById ("iconTypeRadio").checked = true;
+				switchView("iconView");
+				$("onclickField").value="";
+				writeOnclickScript($("buttonField").options.selectedIndex);
+			}
+		}
+	}
+	
+*/	
+function switchView (view)
+	{
+		document.getElementById ("textView").style.display = "none";
+		document.getElementById ("iconView").style.display = "none";
+		document.getElementById (view).style.display = "";
+	}
+	Ext.onReady (function ()
+	{
+	StaticResourceService.findByType (oEditor.parent.document.getElementById ("siteField").value,new Array("image","flash") , function (result)
+		{
+			var store = new Ext.data.SimpleStore({fields : ["name", "value"], data : $A(result).map (function (item)
+			{
+				return [item.name, item.name];
+			})});
+			
+			var comboBox = new Ext.form.ComboBox ({id : "iconField", applyTo : "iconField", mode : "local", store : store, width : 190, displayField : "name", valueField : "value", triggerAction : "all", forceSelection : true});
+			
+			
+			
+			$("addIconButton").addEvent ("click", function ()
+			{
+				if (comboBox.getValue ())
+				{
+					var exists = $A($("iconList").options).some (function (item)
+					{
+						return item.value = comboBox.getValue ();
+					});
+					
+					if (!exists)
+					{
+						var option = document.createElement ("OPTION");
+						option.value = comboBox.getValue ();
+						option.innerText =comboBox.getRawValue ();
+						
+						$("iconList").appendChild (option);
+					}
+				}
+			});
+			
+			$("removeIconButton").addEvent ("click", function ()
+			{
+				$A($("iconList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+						$("iconList").removeChild (option);
+					}
+				});
+			});
+			
+			
+		});
+		
+				
+		
+	});
+	
+	
+	document.getElementById ("buttonScriptTypeField").onpropertychange = function ()
+	{
+		if (event.propertyName == "value")
+		{
+			if (document.getElementById ("buttonScriptTypeField").value == "0")
+			{
+				document.getElementsByName("buttonTypeRadio")[0].checked = true;
+			}
+			else if (document.getElementById ("buttonScriptTypeField").value == "1")
+			{
+			    document.getElementsByName("buttonTypeRadio")[1].checked = true;
+			}
+		}
+	}	
+</SCRIPT>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="com.cyberway.core.web.domain.LoginLog"
+        table="CMS_LOGINLOG"
+    >
+
+        <id
+            name="oid"
+            column="oid"
+            type="java.lang.Long"
+        >
+            <generator class="native">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-LoginLog.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <property
+            name="loginSuccess"
+            type="java.lang.Boolean"
+            column="loginSuccess"
+        />
+
+        <property
+            name="errorMessage"
+            type="java.lang.String"
+            column="errorMessage"
+        />
+
+        <property
+            name="userid"
+            type="java.lang.Long"
+            column="userid"
+        />
+
+        <property
+            name="loginid"
+            type="java.lang.String"
+            column="loginid"
+        />
+
+        <property
+            name="deptcode"
+            type="java.lang.Long"
+            column="deptcode"
+        />
+
+        <property
+            name="username"
+            type="java.lang.String"
+            column="username"
+        />
+
+        <property
+            name="loginTime"
+            type="java.sql.Timestamp"
+            column="loginTime"
+        />
+
+        <property
+            name="logoutTime"
+            type="java.sql.Timestamp"
+            column="logoutTime"
+        />
+
+        <property
+            name="userType"
+            type="java.lang.String"
+            column="userType"
+        />
+
+        <property
+            name="remoteIpAddress"
+            type="java.lang.String"
+            column="remoteIpAddress"
+        />
+
+        <property
+            name="orgid"
+            type="java.lang.Long"
+            column="orgid"
+        />
+
+        <property
+            name="orgName"
+            type="java.lang.String"
+            column="orgName"
+        />
+
+        <property
+            name="orgCode"
+            type="java.lang.String"
+            column="orgCode"
+        />
+
+        <property
+            name="portalid"
+            type="java.lang.String"
+            column="portalid"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-LoginLog.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

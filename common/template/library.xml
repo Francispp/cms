@@ -1,0 +1,28 @@
+<TemplateLibrary>
+	<Template name="universal">
+		<![CDATA[
+			#if ($displayMode == "table")
+				<table cellspacing="1" cellpadding="3" border="0">
+					<thead>
+						<tr align="center">
+							#foreach ($field in $displayFields)
+								<td>${field}</td>
+							#end
+						</tr>
+					</thead>
+					<tbody>
+						<dir t_type="DocumentLoop" pageIndex="1" pageSize="10" where="channel=${channel.id}">
+							<tr>
+								#foreach ($field in $displayFields)
+									<td><span t_type="Output" name="${field}">${field}</span></td>
+								#end
+							</tr>
+						</dir>
+					</tbody>
+				</table>
+			#elseif ($displayMode == "li")
+				测试LI方式
+			#end
+		]]>
+	</Template>
+</TemplateLibrary>

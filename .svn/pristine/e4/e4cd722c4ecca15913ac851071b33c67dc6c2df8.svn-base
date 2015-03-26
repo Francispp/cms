@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- EhCache Manager -->
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation">
+			<value>classpath:ehcache.xml</value>
+		</property>
+	</bean>
+
+	<bean id="localCache"
+		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName"
+			value="com.cyberway.cache.LOCAL_CACHE" />
+	</bean>
+	
+	<bean id="cacheUtil"
+		class="com.cyberway.core.cache.CacheUtil" init-method="init" destroy-method="destory">
+		<property name="cacheServerList" value="#{cache.servers}"/>
+		<property name="cacheServerWeights" value="#{cache.cacheServerWeights}"/>
+		<property name="cacheCluster" value="#{cache.cluster}"/>
+		<property name="localCache" ref="localCache"/>
+	</bean>
+</beans>

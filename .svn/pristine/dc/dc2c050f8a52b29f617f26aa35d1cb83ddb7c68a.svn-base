@@ -1,0 +1,218 @@
+﻿<html>
+	<head>
+		<title>Placeholder Properties</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script type="text/javascript" src="../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../dialog/common/fck_dialog_common.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+		<script type="text/javascript" src="../../../../../../dwr/interface/CoreFormService.js"></script>
+		<script src="../../../../../../dwr/interface/StaticResourceService.js" type="text/javascript"></script>
+		<script type="text/javascript" src="../component.js"></script>
+		<script type="text/javascript" src="../js/button.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+		<script language="javascript">
+			new Button ().handleDialog ();
+var oEditor		= window.parent.InnerDialogLoaded() ;
+var FCK			= oEditor.FCK ;
+var FCKLang		= oEditor.FCKLang ;
+var FCKConfig	= oEditor.FCKConfig ;
+
+					</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+	<iframe src='fckblank.html' style="width:1px;height:1px;" name="uploadiframe"></iframe>
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+					<div id="basicView">
+	<input type="hidden" id="buttonScriptTypeField" value="0" />
+					<input type="radio" id="textTypeRadio" name="buttonTypeRadio" value="text" onclick="document.getElementById ('buttonScriptTypeField').value = 0" checked="checked" />
+	<span>文本</span>&nbsp;
+	<input type="radio" id="iconTypeRadio" name="buttonTypeRadio" value ="icon" onclick="document.getElementById ('buttonScriptTypeField').value = 1" />
+	<span>图标</span>&nbsp;
+	<br />
+	<br />
+	<div id="textView" style="display:block;">
+	
+						<span fckLang="DlgUserName">名称：</span>						
+						<input id="_nameField" style="width:60%" type="text" />
+						<br />
+						<br />
+						</div>
+						<span>功能选择：</span>
+						<br />
+						<select id="buttonField" style="width:100%" onChange="writeOnclickScript(this.options.selectedIndex);">
+			<option value=0>新建(当前窗口)</option>
+			<option value=1>新建(新窗口)</option>
+			<option value=2>编辑</option>
+			<option value=3>保存为草稿</option>
+			<option value=4>发布</option>
+			<option value=5>删除</option>
+			<option value=6>关闭(当前窗口)</option>
+			<option value=7>关闭(新窗口)</option>
+			<option value=8>保存并发布(当前窗口)</option>
+			<option value=9>保存并发布(新窗口)</option>
+			<option value=10>标为过期</option>
+			<option value=11>文档权限设置</option>
+			<option value=12>移动文档</option>
+			<option value=13>共享文档</option>
+			<option value=14>取消共享</option>
+			<option value=15>共享库</option>
+			<option value=16>在线订阅</option>
+			<option value=17>其它</option>
+			
+		</select>
+						<br />
+						
+	<div id="iconView" style="display:none">
+	
+			<span>图标选择</span><br />
+			<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td><input id="iconField" type="text" style="width:200px" /></td>
+							<td>
+								<button id="addIconButton">添加</button>
+								<button id="removeIconButton">移除</button>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<select id="iconList" size="2" style="width:200px" style="margin-top:5px" multiple="multiple"></select>
+							</td>
+						</tr>
+					</table>
+			<br/>
+	</div>
+						<span fckLang="DlgUserOnclick" >单击事件：</span>
+						
+						<textarea id="onclickField" style="width: 100%" rows="3" cols="20"></textarea>						
+						<br />
+						<span fckLang="DlgUserStyle">样式选择：</span>
+						<br />
+						<select id="styleField" style="width:100%" >
+							<option value="button_default" selected="selected" fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="button_style1">Style1</option>
+							<option value="button_style2">Style2</option>
+						</select>
+						<br />
+						<span fckLang="DlgUserDescribe" >描述：</span>
+						<br />
+						<textarea id="descriptionField" style="width: 100%" rows="3" cols="20"></textarea>
+						
+					</div>
+	
+	                <div id="privilegeScriptView" style="display: none"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
+<SCRIPT LANGUAGE="JavaScript">
+var onclickMethod=new Array();
+onclickMethod[0]="insertItem(${channelId},0);";
+onclickMethod[1]="insertItem(${channelId},1);";
+onclickMethod[2]="editItem('${id}','${channelId}');";
+onclickMethod[3]="save();";
+onclickMethod[4]="issueItem();";
+onclickMethod[5]="deleteItem();";
+onclickMethod[6]="window.close();";
+onclickMethod[7]="window.opener.location.href=window.opener.location.href;window.close();";
+onclickMethod[8]="saveAndPublic();";
+onclickMethod[9]="PublicAndRefreshView();";
+onclickMethod[10]="overdueItem();";
+onclickMethod[11]="setDocPermission();";
+onclickMethod[12]="moveItem();";
+onclickMethod[13]="sharedocItem('${documentId}',1)";
+onclickMethod[14]="sharedocItem('${documentId}',0)";
+onclickMethod[15]="sharedoc()";
+onclickMethod[16]="<ww:if test=\"${not empty session['loginer'] && session['loginer'].loginType == 2}\">onlineRSS()</ww:if><ww:else>alert('请先登陆系统！')</ww:else>";
+onclickMethod[17]="";
+function writeOnclickScript(n)
+{
+$("onclickField").value=onclickMethod[n];
+}
+
+
+	document.getElementById ("buttonScriptTypeField").onpropertychange = function ()
+	{
+		if (event.propertyName == "value")
+		{
+			if (document.getElementById ("buttonScriptTypeField").value == "0")
+			{
+				document.getElementById ("textTypeRadio").checked = true;
+				switchView ("textView");
+				//$("onclickField").value="";
+			}
+			else
+			{
+				document.getElementById ("iconTypeRadio").checked = true;
+				switchView("iconView");
+				$("onclickField").value="";
+				writeOnclickScript($("buttonField").options.selectedIndex);
+			}
+		}
+	}
+	
+	
+function switchView (view)
+	{
+		document.getElementById ("textView").style.display = "none";
+		document.getElementById ("iconView").style.display = "none";
+		document.getElementById (view).style.display = "";
+	}
+	Ext.onReady (function ()
+	{
+		
+		
+		StaticResourceService.findByType (oEditor.parent.document.getElementById ("siteField").value, "image", function (result)
+		{
+			var store = new Ext.data.SimpleStore({fields : ["name", "value"], data : $A(result).map (function (item)
+			{
+				return [item.name, item.name];
+			})});
+			
+			var comboBox = new Ext.form.ComboBox ({id : "iconField", applyTo : "iconField", mode : "local", store : store, width : 190, displayField : "name", valueField : "value", triggerAction : "all", forceSelection : true});
+			
+			
+			
+			$("addIconButton").addEvent ("click", function ()
+			{
+				if (comboBox.getValue ())
+				{
+					var exists = $A($("iconList").options).some (function (item)
+					{
+						return item.value = comboBox.getValue ();
+					});
+					
+					if (!exists)
+					{
+						var option = document.createElement ("OPTION");
+						option.value = comboBox.getValue ();
+						option.innerText =comboBox.getRawValue ();
+						
+						$("iconList").appendChild (option);
+					}
+				}
+			});
+			
+			$("removeIconButton").addEvent ("click", function ()
+			{
+				$A($("iconList").options).each (function (option)
+				{
+					if (option.selected)
+					{
+						$("iconList").removeChild (option);
+					}
+				});
+			});
+			
+			
+		});
+	});
+	
+	
+</SCRIPT>

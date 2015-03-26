@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.domain.CmsColumn" table="CMS_COLUMN">
+        <id name="id" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+        <property name="name" not-null="true" />
+        <property name="columnCode" not-null="true" />
+		<property name="timeCreated" />
+		<property name="sortOrder" />
+		<property name="path" />
+		<property name="remark" />		
+		<property name="state" />	
+		<many-to-one name="parent" column="parent_id" class="com.cyberway.cms.domain.CmsColumn"/>
+		<many-to-one name="site" column="site_id" class="com.cyberway.cms.domain.CmsSite" />
+		<bag name="subColumn" inverse="true" order-by="sortOrder">
+			<key column="parent_id"/>
+			<one-to-many class="com.cyberway.cms.domain.CmsColumn" not-found="ignore"/>
+		</bag>		
+    </class>
+</hibernate-mapping >

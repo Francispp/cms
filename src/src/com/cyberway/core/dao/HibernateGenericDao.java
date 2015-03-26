@@ -1,0 +1,404 @@
+package com.cyberway.core.dao;
+
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.impl.CriteriaImpl;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.util.Assert;
+
+import com.cyberway.core.dao.support.Page;
+import com.cyberway.core.utils.BeanUtils;
+
+/**
+ * Hibernate Dao的泛型基类.
+ * <p/>
+ * 继承于Spring的HibernateDaoSupport,提供分页函数和若干便捷查询方法，并对返回值作了泛型类型转换.
+ *
+ * @author caiw
+ * @see HibernateDaoSupport
+ * @see HibernateEntityDao
+ */
+@SuppressWarnings("unchecked")
+public class HibernateGenericDao extends HibernateDaoSupport {
+	/**
+	 * 根据ID获取对象
+	 */
+	public <T> T get(Class<T> entityClass, Serializable id) {
+		return (T) (getHibernateTemplate().load(entityClass, id));
+	}
+
+	/**
+	 * 获取全部对象
+	 */
+	public <T> List<T> getAll(Class<T> entityClass) {
+		return getHibernateTemplate().loadAll(entityClass);
+	}
+
+	/**
+	 * 保存对象
+	 */
+	public void save(Object o) {
+		getHibernateTemplate().saveOrUpdate(o);
+	}
+
+	/**
+	 * 删除对象
+	 */
+	public void remove(Object o) {
+		if(o!=null)
+		getHibernateTemplate().delete(o);
+	}
+	
+	public void flush() {
+		getHibernateTemplate().flush();
+	}
+	/**
+	 * 根据ID删除对象
+	 */
+	public <T> void removeById(Class<T> entityClass, Serializable id) {
+		remove(get(entityClass, id));
+	}
+
+	/**
+	 * 创建Query对象.
+	 * 对于需要first,max,fetchsize,cache,cacheRegion等诸多设置的函数,可以返回Query后自行设置.
+	 * 留意可以连续设置,如 dao.getQuery(hql).setMaxResult(100).setCacheable(true).list();
+	 *
+	 * @param values 可变参数
+	 *               用户可以如下四种方式使用
+	 *               dao.getQuery(hql)
+	 *               dao.getQuery(hql,arg0);
+	 *               dao.getQuery(hql,arg0,arg1);
+	 *               dao.getQuery(hql,new Object[arg0,arg1,arg2])
+	 */
+	public Query getQuery(String hql, Object... values) {
+		Query query = getSession().createQuery(hql);
+		for (int i = 0; i < values.length; i++) {
+			query.setParameter(i, values[i]);
+		}
+		return query;
+	}
+
+	/**
+	 * 创建Criteria对象
+	 *
+	 * @criterion 可变条件列表,Restrictions生成的条件
+	 */
+	public <T> Criteria getCriteria(Class<T> entityClass, Criterion... criterion) {
+		Criteria criteria = getSession().createCriteria(entityClass);
+		for (Criterion c : criterion) {
+			criteria.add(c);
+		}
+		return criteria;
+	}
+	/**
+	 * 创建Query对象. 对于需要first,max,fetchsize,cache,cacheRegion等诸多设置的函数,可以在返回Query后自行设置.
+	 * 留意可以连续设置,如下：
+	 * <pre>
+	 * dao.getQuery(hql).setMaxResult(100).setCacheable(true).list();
+	 * </pre>
+	 * 调用方式如下：
+	 * <pre>
+	 *        dao.createQuery(hql)
+	 *        dao.createQuery(hql,arg0);
+	 *        dao.createQuery(hql,arg0,arg1);
+	 *        dao.createQuery(hql,new Object[arg0,arg1,arg2])
+	 * </pre>
+	 *
+	 * @param values 可变参数.
+	 */
+	public Query createQuery(String hql, Object... values) {
+		Assert.hasText(hql);
+		Query query = getSession().createQuery(hql);
+		for (int i = 0; i < values.length; i++) {
+			query.setParameter(i, values[i]);
+		}
+		return query;
+	}
+
+	/**
+	 * 创建Criteria对象.
+	 *
+	 * @param criterions 可变的Restrictions条件列表,见{@link #createQuery(String,Object...)}
+	 */
+	public <T> Criteria createCriteria(Class<T> entityClass, Criterion... criterions) {
+		Criteria criteria = getSession().createCriteria(entityClass);
+		for (Criterion c : criterions) {
+			criteria.add(c);
+		}
+		return criteria;
+	}
+
+	/**
+	 * 创建Criteria对象，带排序字段与升降序字段.
+	 *
+	 * @see #createCriteria(Class,Criterion[])
+	 */
+	public <T> Criteria createCriteria(Class<T> entityClass, String orderBy, boolean isAsc, Criterion... criterions) {
+		Assert.hasText(orderBy);
+
+		Criteria criteria = createCriteria(entityClass, criterions);
+
+		if (isAsc)
+			criteria.addOrder(Order.asc(orderBy));
+		else
+			criteria.addOrder(Order.desc(orderBy));
+
+		return criteria;
+	}
+
+
+	/**
+	 * hql查询.
+	 *
+	 * @param values 可变参数
+	 *               用户可以如下四种方式使用
+	 *               dao.find(hql)
+	 *               dao.find(hql,arg0);
+	 *               dao.find(hql,arg0,arg1);
+	 *               dao.find(hql,new Object[arg0,arg1,arg2])
+	 */
+	public List find(String hql, Object... values) {
+		return getHibernateTemplate().find(hql, values);
+	}
+
+	/**
+	 * 根据属性名和属性值查询对象.
+	 *
+	 * @return 符合条件的对象列表
+	 */
+	public <T> List<T> findBy(Class<T> entityClass, String name, Object value) {
+		Assert.hasText(name);
+		return getCriteria(entityClass, Restrictions.eq(name, value)).list();
+	}
+
+	/**
+	 * 根据属性名和属性值查询唯一对象.
+	 *
+	 * @return 符合条件的唯一对象
+	 */
+	public <T> T findUniqueBy(Class<T> entityClass, String name, Object value) {
+		Assert.hasText(name);
+		return (T) getCriteria(entityClass, Restrictions.eq(name, value)).uniqueResult();
+	}
+
+	/**
+	 * 根据属性名和属性值以Like AnyWhere方式查询对象.
+	 */
+	public <T> List<T> findByLike(Class<T> entityClass, String name, String value) {
+		Assert.hasText(name);
+		return getCriteria(entityClass, Restrictions.like(name, value, MatchMode.ANYWHERE)).list();
+	}
+
+	/**
+	 * 判断对象某些属性的值在数据库中不存在重复
+	 *
+	 * @param names 在POJO里不能重复的属性列表,以逗号分割
+	 *              如"name,loginid,password"
+	 */
+	public <T> boolean isNotUnique(Class<T> entityClass, Object entity, String names) {
+		Assert.hasText(names);
+		org.hibernate.Session session= getSession();
+		Criteria criteria = session.createCriteria(entityClass).setProjection(Projections.rowCount());
+		//Criteria criteria = getCriteria(entityClass).setProjection(Projections.rowCount());
+		String[] nameList = names.split(",");
+		try {
+			//循环加入
+			for (String name : nameList) {
+				criteria.add(Restrictions.eq(name, PropertyUtils.getProperty(entity, name)));
+			}
+
+			//以下代码为了如果是update的情况,排除entity自身.
+
+			//通过Hibernate的MetaData接口取得主键名
+			String pkName = getHibernateTemplate().getSessionFactory().getClassMetadata(entityClass).getIdentifierPropertyName();
+			
+			if (pkName != null) {
+				//通过反射取得entity的主键值
+				Object id = PropertyUtils.getProperty(entity, pkName);
+				//如果id!=null,说明对象已存在,该操作为update,加入排除自身的判断
+				if (id != null)
+					criteria.add(Restrictions.not(Restrictions.eq(pkName, id)));
+			} else {
+				logger.error(this.getClass().getSimpleName() + "has no id column define");
+				return false;
+			}
+		} catch (IllegalAccessException e) {
+			logger.error("Error when reflection on entity," + e.getMessage());
+			return false;
+		} catch (InvocationTargetException e) {
+			logger.error("Error when reflection on entity," + e.getMessage());
+			return false;
+		} catch (NoSuchMethodException e) {
+			logger.error("Error when reflection on entity," + e.getMessage());
+			return false;
+		}
+		Integer count=(Integer) criteria.uniqueResult();
+		releaseSession(session);
+		return count > 0;
+	}
+
+	/**
+	 * 分页查询函数，使用Criteria.
+	 *
+	 * @param pageNo 页号,从0开始.
+	 */
+	public Page pagedQuery(Class entityClass, int pageNo, int pageSize, Criterion... criterion) {
+		Criteria criteria = getCriteria(entityClass, criterion);
+		return pagedQuery(criteria, pageNo, pageSize);
+	}
+
+	/**
+	 * 分页查询函数，使用Criteria.
+	 *
+	 * @param pageNo 页号,从0开始.
+	 */
+	public Page pagedQuery(Criteria criteria, int pageNo, int pageSize) {
+		CriteriaImpl impl = (CriteriaImpl) criteria;
+
+		//先把Projection和OrderBy条件取出来,清空两者来执行Count操作
+		Projection projection = impl.getProjection();
+		List<CriteriaImpl.OrderEntry> orderEntries;
+		try {
+			orderEntries = (List) BeanUtils.getDeclaredProperty(impl, "orderEntries");
+			BeanUtils.setDeclaredProperty(impl, "orderEntries", new ArrayList());
+		}
+		catch (Exception e) {
+			throw new InternalError(" Runtime Exception impossibility throw ");
+		}
+        //logger.info("page type:"+criteria.setProjection(Projections.rowCount()).uniqueResult().getClass());
+		//执行查询
+		Object totalCountobj = criteria.setProjection(Projections.rowCount()).uniqueResult();
+		int totalCount = totalCountobj==null?0:(Integer) totalCountobj;
+
+		//将之前的Projection和OrderBy条件重新设回去
+		criteria.setProjection(projection);
+		if (projection == null) {
+			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		}
+		try {
+			BeanUtils.setDeclaredProperty(impl, "orderEntries", orderEntries);
+		} catch (Exception e) {
+			throw new InternalError(" Runtime Exception impossibility throw ");
+		}
+
+		//返回分页对象
+		if (totalCount < 1) return new Page();
+
+		int startIndex = Page.getStartOfPage(pageNo, pageSize);
+		List list = criteria.setFirstResult(startIndex).setMaxResults(pageSize).list();
+
+		return new Page(startIndex, totalCount, pageSize, list);
+	}
+
+	/**
+	 * 分页查询函数，使用hql.
+	 *
+	 * @param pageNo 页号,从0开始.
+	 */
+	public Page pagedQuery(String hql, int pageNo, int pageSize, Object... values) {
+		Assert.hasText(hql);
+		//Count查询
+		String countQueryString = " select count (*) " + removeSelect(removeOrders(hql));
+		List countlist = getHibernateTemplate().find(countQueryString, values);
+		int totalCount =0;
+		if(countlist.get(0) instanceof Long)
+			totalCount = ((Long) countlist.get(0)).intValue();
+		else 
+		    totalCount = (Integer) countlist.get(0);
+		if (totalCount < 1) return new Page();
+		//实际查询返回分页对象
+		int startIndex = Page.getStartOfPage(pageNo, pageSize);
+		Query query = getQuery(hql, values);
+		List list = query.setFirstResult(startIndex).setMaxResults(pageSize).list();
+
+		return new Page(startIndex, totalCount, pageSize, list);
+	}
+
+
+	/**
+	 * 去除hql的select 子句，未考虑union的情况,，用于pagedQuery.
+	 */
+	private static String removeSelect(String hql) {
+		Assert.hasText(hql);
+		int beginPos = hql.toLowerCase().indexOf("from");
+		Assert.isTrue(beginPos != -1, " hql : " + hql + " must has a keyword 'from'");
+		return hql.substring(beginPos);
+	}
+
+	/**
+	 * 去除hql的orderby 子句，用于pagedQuery.
+	 */
+	private static String removeOrders(String hql) {
+		Assert.hasText(hql);
+		Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(hql);
+		StringBuffer sb = new StringBuffer();
+		while (m.find()) {
+			m.appendReplacement(sb, "");
+		}
+		m.appendTail(sb);
+		return sb.toString();
+	}
+	/**
+	 * 构造Criteria的排序条件默认函数.可供其他查询函数调用
+	 * 
+	 * @param criteria
+	 *            Criteria实例.
+	 * @param sortMap
+	 *            排序条件.
+	 * @param entity
+	 *            entity对象,用于使用反射来获取某些属性信息
+	 */
+	protected void sortCriteria(Criteria criteria, Map sortMap, Object entity) {
+		if (!sortMap.isEmpty()) {
+			for (Object o : sortMap.keySet()) {
+				String fieldName = o.toString();
+				String orderType = sortMap.get(fieldName).toString();
+
+				// 处理嵌套属性如category.name,modify_user.id,暂时只处理一级嵌套
+				if (fieldName.indexOf('.') != -1) {
+					String alias = StringUtils.substringBefore(fieldName, ".");
+					String aliasType = alias;
+					try {
+						aliasType = PropertyUtils.getProperty(entity, alias)
+								.getClass().getSimpleName();
+					} catch (Exception e) {
+						logger.error("Get property" + alias + " error");
+					}
+					criteria.createAlias(aliasType, alias);
+				}
+
+				if ("asc".equalsIgnoreCase(orderType)) {
+					criteria.addOrder(Order.asc(fieldName));
+				} else {
+					criteria.addOrder(Order.desc(fieldName));
+				}
+			}
+		}
+	}
+	/**
+	 * @return
+	 */
+	public Connection getConnection() {
+		return this.getSession().connection();
+	}
+}

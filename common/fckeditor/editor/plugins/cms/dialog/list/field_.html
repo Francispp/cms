@@ -1,0 +1,90 @@
+﻿<html>
+	<head>
+		<title>列属性设置</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		
+		<script type="text/javascript" src="../../../../../../mootools.js"></script>
+		<script type="text/javascript" src="../../../../dialog/common/fck_dialog_common.js"></script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+			<tr>
+				<td valign="top">
+				<table border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="30%">&nbsp;<span fckLang="DlgUserName">标题：</span></td>
+						<td width="70%">
+							<input id="titleField" style="width:60%" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >字段：</span></td>
+						<td width="70%">
+							<input id="propertyField" style="width:60%" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >最大显示字符数：</span></td>
+						<td width="70%">
+							<input id="maxLengthField" style="width:60%" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >类型：</span></td>
+						<td width="70%">
+						<select id="typeField">
+						<option value="text">文本</option>
+						<option value="link">链接</option>
+						<option value="news">最新新闻</option>
+					</select>
+						</td>
+					</tr>	
+					<tr id="pathHolder" style="display:none">
+						<td width="30%">&nbsp;<span fckLang="DlgUserOnclick" >路径：</span></td>
+						<td nowrap="nowrap" width="70%">
+							<input id="pathField" style="width:60%" type="text" />
+						<span>在新窗口打开：</span>
+						<input type="checkbox" id="linkOpenInNewWindowField" />	
+						</td>
+					</tr>																				
+				</table>								
+				</td>
+			</tr>
+		</table>
+	</body>
+	<script type="text/javascript">
+		function updateHolders ()
+		{
+			$("pathHolder").style.display = $("typeField").getValue () == "link" ? "inline" : "none";
+		}
+		
+		$("typeField").addEvent ("change", function ()
+		{
+			updateHolders ();
+		});
+		
+		var field = Json.evaluate (window.dialogArguments);
+		$("titleField").value = field.title;
+		$("propertyField").value = field.property;
+		$A($("typeField").options).each (function (option)
+		{
+			option.selected = option.value == field.type; 
+		});
+		$("maxLengthField").value = field.maxLength ? field.maxLength : "";
+		$("pathField").value = field.path ? field.path : "/${channel.channelPath}/${id}.html3"
+		$("linkOpenInNewWindowField").checked = field.linkOpenInNewWindow ? true : false;
+		
+		window.onunload = function ()
+		{
+			window.returnValue = Json.toString ({ title : $("titleField").value, 
+				property : $("propertyField").value, 
+				type : $("typeField").getValue (), 
+				path : $("pathField").value, 
+				maxLength : $("maxLengthField").value,
+				linkOpenInNewWindow : $("linkOpenInNewWindowField").checked});
+		}
+		
+		updateHolders ();
+	</script>
+</html>

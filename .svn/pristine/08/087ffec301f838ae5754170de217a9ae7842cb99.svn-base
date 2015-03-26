@@ -1,0 +1,62 @@
+package com.cyberway.weixin.business.attendance.service;
+
+
+import java.util.Map;
+
+import org.dom4j.DocumentException;
+
+import com.cyberway.core.dao.HibernateEntityDao;
+import com.cyberway.weixin.business.attendance.domain.Attendance;
+import com.cyberway.weixin.util.AccessTokenUtil;
+import com.cyberway.weixin.util.Constants;
+import com.cyberway.weixin.util.JSSDKUtil;
+/**
+ * 
+ * @com.cyberway.weixin.business.attendance.service.AttendanceService
+ * TODO :
+ * @author yanruqian
+ * @version 1.0.0
+ * @createDate：2015年2月16日 下午1:56:32
+ */
+public class AttendanceService extends HibernateEntityDao<Attendance>{
+	/**
+	 * 
+//			<xml><ToUserName><![CDATA[wx5c2cc405f9858fc8]]></ToUserName>
+//				<FromUserName><![CDATA[yrqian]]></FromUserName>
+//				<CreateTime>1425282941</CreateTime>
+//				<MsgType><![CDATA[event]]></MsgType>
+//				<Event><![CDATA[LOCATION]]></Event>
+//				<Latitude>23.167000</Latitude>
+//				<Longitude>113.430603</Longitude>
+//				<Precision>30.000000</Precision>
+//				<AgentID>5</AgentID>
+//			</xml>
+	 * @param xmltext
+	 * @throws DocumentException
+	 */
+	public void parseXml(String xmltext)  {
+//		try {
+//			Document document = DocumentHelper.parseText(xmltext);
+//			Element root = document.getRootElement();
+//			String user = root.elementText("FromUserName");
+//			String type = root.elementText("Event");
+//			switch (type) {
+//			case "LOCATION":
+//				Attendance attendance = new Attendance();
+//				String latitude = root.elementText("Latitude");//地理位置纬度
+//				String longitude = root.elementText("Longitude");//地理位置经度 
+//				String precision = root.elementText("Precision");//地理位置精度 
+//				attendance.setLatitude(Double.parseDouble(latitude));
+//				attendance.setLongitude(Double.parseDouble(longitude));
+//				attendance.setPrecision(Double.parseDouble(precision));
+//				attendance.setUserId(user);
+//				this.saveOrUpdate(attendance);
+//				break;
+//			default:
+//				break;
+//		}
+//		} catch (DocumentException e) {
+//			e.printStackTrace();
+//		}
+	}
+}

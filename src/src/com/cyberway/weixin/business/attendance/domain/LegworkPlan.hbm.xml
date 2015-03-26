@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.cyberway.weixin.business.attendance.domain.LegworkPlan" table="WX_LEGWORK_PLAN">
+		<id name="id" type="java.lang.Long" column="id">
+			<generator class="native" />
+		</id>
+		<property name="userId" type="java.lang.String" column="userId"/>
+		<property name="userName" type="java.lang.String" column="userName"/>
+		<property name="startDate" type="java.util.Date" column="startDate"/>
+		<property name="endDate" type="java.util.Date" column="endDate"/>
+		<property name="fieldType" type="java.lang.Integer" column="fieldType" />
+		<property name="signType" type="java.lang.Integer" column="signType" />
+		<property name="cause" type="java.lang.String" column="cause" />
+		<property name="createDate" type="java.util.Date" column="createDate" />
+	</class>
+</hibernate-mapping >

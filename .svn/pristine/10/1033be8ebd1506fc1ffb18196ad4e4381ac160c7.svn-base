@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping >
+<!-- 
+    Created by the Middlegen Hibernate plugin 3.1
+
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.domain.CoreUser" table="CORE_USER"
+>
+
+    <id
+        name="userid"
+        type="java.lang.Long"
+        column="USERID"
+    >
+        <generator class="native" />
+    </id>
+
+    <property
+        name="loginid"
+        type="java.lang.String"
+        column="LOGINID"
+        length="20"
+    />
+    <property
+        name="password"
+        type="java.lang.String"
+        column="PASSWORD"
+        length="50"
+    />
+    <property
+        name="empcode"
+        type="java.lang.String"
+        column="EMPCODE"
+        length="20"
+    />
+    <property
+        name="username"
+        type="java.lang.String"
+        column="USERNAME"
+        length="50"
+    />
+    <property
+        name="sex"
+        type="java.lang.String"
+        column="SEX"
+        length="10"
+    />
+    <property
+        name="hireaddr"
+        type="java.lang.String"
+        column="HIREADDR"
+        length="200"
+    />
+    <property
+        name="hiredate"
+        type="java.util.Date"
+        column="HIREDATE"
+        length="23"
+    />
+    <property
+        name="craft"
+        type="java.lang.String"
+        column="CRAFT"
+        length="10"
+    />
+    <property
+        name="empclass"
+        type="java.lang.String"
+        column="EMPCLASS"
+        length="10"
+    />
+    <property
+        name="skilllevel"
+        type="java.lang.String"
+        column="SKILLLEVEL"
+        length="10"
+    />
+    <property
+        name="socsecnum"
+        type="java.lang.String"
+        column="SOCSECNUM"
+        length="20"
+    />
+    <property
+        name="workdate"
+        type="java.util.Date"
+        column="WORKDATE"
+        length="23"
+    />
+    <property
+        name="raisedate"
+        type="java.util.Date"
+        column="RAISEDATE"
+        length="23"
+    />
+    <property
+        name="email"
+        type="java.lang.String"
+        column="EMAIL"
+        length="50"
+    />
+    <property
+        name="mobilephone"
+        type="java.lang.String"
+        column="MOBILEPHONE"
+        length="20"
+    />
+    <property
+        name="homeaddr"
+        type="java.lang.String"
+        column="HOMEADDR"
+        length="200"
+    />
+    <property
+        name="homephone"
+        type="java.lang.String"
+        column="HOMEPHONE"
+        length="20"
+    />
+    <property
+        name="officephone"
+        type="java.lang.String"
+        column="OFFICEPHONE"
+        length="20"
+    />
+    <property
+        name="qq"
+        type="java.lang.String"
+        column="QQ"
+        length="20"
+    />
+    <property
+        name="icq"
+        type="java.lang.String"
+        column="ICQ"
+        length="20"
+    />
+    <property
+        name="hotmail"
+        type="java.lang.String"
+        column="HOTMAIL"
+        length="100"
+    />
+    <property
+        name="remark"
+        type="java.lang.String"
+        column="REMARK"
+        length="1000"
+    />
+    <property
+        name="state"
+        type="java.lang.Long"
+        column="STATE"
+        length="18"
+    />
+     <property
+        name="indexstyle"
+        type="java.lang.String"
+        column="INDEXSTYLE"
+        length="1000"
+    />   
+    <property
+        name="ename"
+        type="java.lang.String"
+        column="ENAME"
+        length="200"
+    />   
+    <property
+        name="deptname"
+        type="java.lang.String"
+        column="DEPTNAME"
+        length="200"
+    />   
+    <property
+        name="inarea"
+        type="java.lang.String"
+        column="INAREA"
+        length="200"
+    />   
+    <property
+        name="inprovince"
+        type="java.lang.String"
+        column="INPROVINCE"
+        length="200"
+    />   
+     <property
+        name="level"
+        type="java.lang.String"
+        column="LEVEL1"
+        length="200"
+    /> 
+    <property
+        name="cheadship"
+        type="java.lang.String"
+        column="CHEADSHIP"
+        length="200"
+    />    
+    <property
+        name="eheadship"
+        type="java.lang.String"
+        column="EHEADSHIP"
+        length="200"
+    />    
+     <property
+        name="marry"
+        type="java.lang.String"
+        column="MARRY"
+        length="200"
+    />    
+    <property
+        name="bosslogin"
+        type="java.lang.String"
+        column="BOSSLOGIN"
+        length="200"
+    />    
+    <!-- Associations -->
+  
+    <!-- bi-directional one-to-many association to CoreUserRole -->
+    <set
+        name="coreUserRoles"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="USERID" />
+        </key>
+        <one-to-many 
+            class="com.cyberway.common.domain.CoreUserRole"
+        />
+    </set>
+    
+     <set name="message" lazy="true" inverse="true" cascade="none">
+        <key>
+            <column name="USERID" />
+        </key>
+        <one-to-many class="com.cyberway.common.message.domain.Message"/>
+    </set>
+    <!-- bi-directional many-to-one association to CoreDept -->
+    <many-to-one
+        name="coreDept"
+        class="com.cyberway.common.domain.CoreDept"
+        not-null="true" lazy="false"
+    >
+        <column name="DEPTID" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

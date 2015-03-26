@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.permission.domain.CmsPermResource" table="CMS_PERM_RESOURCE">
+        <id name="oid" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+    <property name="resourceCode" not-null="true"/>
+	<many-to-one name="permission" column="permission_id" class="com.cyberway.cms.permission.domain.CmsPermission"/>
+	<many-to-one name="resource" column="resource_id" class="com.cyberway.cms.permission.domain.CmsResource" />
+    </class>
+</hibernate-mapping >

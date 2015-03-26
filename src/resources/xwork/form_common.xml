@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="form" namespace="/form" extends="default">
+		<!--表单管理配置-->
+		<action name="form" class="com.cyberway.cms.form.view.CoreFormController">
+			<result name="list">/WEB-INF/pages/cms/form/form_list.jsp</result>
+			<result name="input">/WEB-INF/pages/cms/form/form_edit.jsp</result>	
+			<result name="success">/WEB-INF/pages/cms/form/form_edit.jsp</result>	
+			<result name="view">/WEB-INF/pages/cms/form/form_view.jsp</result>
+			<result name="ajax">/common/ec/ajax_result.jsp</result>	
+			<result name="deleted" type="redirectAction">
+				form.action
+			</result>
+		</action>
+		<action name="formField" class="com.cyberway.cms.form.view.CoreFormFieldController">
+			<result name="list">/WEB-INF/pages/cms/form/form_field_list.jsp</result>	
+			<result name="ajax">/common/ec/ajax_result.jsp</result>	
+			<result name="deleted" type="redirectAction">
+				formField.action
+			</result>
+		</action>
+		<!--表单字段选择配置-->
+		<action name="fields" class="com.cyberway.cms.form.view.FieldSelectController">
+			<result name="select">/WEB-INF/pages/cms/form/form_field_select.jsp</result>
+			<result name="select_list">/WEB-INF/pages/cms/form/form_field_select_list.jsp</result>
+		    <result name="set_flow_select_list">/WEB-INF/pages/cms/form/field_set_flow_list.jsp</result>
+		</action>
+	</package>	
+	<!-- 流程信息管理配置-->	
+	<!--package name="item" namespace="/item" extends="default">
+
+		
+		<action name="document" class="com.cyberway.cms.common.view.DocumentController">
+			<result name="input">${formUrl}</result>
+			<result name="view">${formUrl}</result> 
+			<result name="list">${formUrl}</result>	
+			<result name="success">${formUrl}</result>
+			<result name="startflow">/WEB-INF/pages/flow/document/list.jsp</result>
+		</action>
+	</package-->	
+</struts>

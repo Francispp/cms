@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.domain.CoreDept" 
+    table="CORE_DEPT"
+>
+
+    <id
+        name="deptid"
+        type="java.lang.Long"
+        column="DEPTID"
+    >
+        <generator class="native" />
+    </id>
+
+    <property
+        name="pdeptid"
+        type="java.lang.Long"
+        column="P_DEPTID"
+        length="18"
+    />
+    <property
+        name="deptname"
+        type="java.lang.String"
+        column="DEPTNAME"
+        length="50"
+    />
+    <property
+        name="depttype"
+        type="java.lang.String"
+        column="DEPTTYPE"
+        length="30"
+    />
+    <property
+        name="remark"
+        type="java.lang.String"
+        column="REMARK"
+        length="1000"
+    />
+    <property
+        name="state"
+        type="java.lang.Long"
+        column="STATE"
+        length="18"
+    />
+    <!-- Associations -->
+  
+    <!-- bi-directional one-to-many association to CoreUser -->
+    <set
+        name="coreUsers"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="DEPTID" />
+        </key>
+        <one-to-many 
+            class="com.cyberway.common.domain.CoreUser"
+        />
+    </set>
+
+    <!-- bi-directional one-to-many association to sub CoreDept -->
+    <set
+        name="subDepts"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="P_DEPTID" />
+        </key>
+        <one-to-many 
+            class="com.cyberway.common.domain.CoreDept"
+        />      
+    </set>
+     <!-- bi-directional many-to-one association to CoreDept -->
+    <many-to-one
+        name="coreOrg"
+        class="com.cyberway.common.domain.CoreOrg"
+        not-null="true" lazy="false">
+        <column name="ORG_ID" />
+    </many-to-one>    
+</class>
+</hibernate-mapping>

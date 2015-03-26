@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-lazy-init="true" default-autowire="byName">
+	<bean id="jobsManagerService" class="com.cyberway.crawl.jobs.service.JobsManagerService"/>
+	<bean id="extractManagerService" class="com.cyberway.crawl.extractor.service.ExtractManagerService"/>
+	<bean id="extractLogManagerService" class="com.cyberway.crawl.extractor.service.ExtractLogManagerService"/>
+	<bean id="regularManagerService" class="com.cyberway.crawl.regular.service.RegularManagerService"/>
+</beans>

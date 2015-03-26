@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="select" namespace="/select" extends="default">		
+		<!--用户选择配置-->
+		<action name="user" class="com.cyberway.common.user.view.UserSelectController">
+			<result name="select">/WEB-INF/pages/common/user/user_select.jsp</result>
+			<result name="selectAll">/WEB-INF/pages/common/user/user_selectAll.jsp</result>							
+		</action>
+		<!--部门选择配置-->
+		<action name="dept" class="com.cyberway.common.dept.view.DeptSelectController">
+			<result name="select">/WEB-INF/pages/common/dept/dept_select.jsp</result>							
+		</action>
+		<!--用户组选择配置-->
+		<action name="role" class="com.cyberway.common.role.view.RoleSelectController">
+			<result name="select">/WEB-INF/pages/common/role/role_select.jsp</result>							
+		</action>	 
+		
+	</package>
+</struts>

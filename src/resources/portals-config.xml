@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 站点机构信息 -->
+<portal_config>
+	<portal>
+		<cname>CyberWay新系统框架</cname>
+		<portalcode>frame</portalcode>
+		<deptids></deptids>
+		<style>
+			<css>view.css</css>
+			<imgpath>images</imgpath>
+		</style>
+    </portal>
+	<portal>
+		<cname>CyberWay 测试框架</cname>
+		<portalcode>test</portalcode>
+		<deptids></deptids>
+		<style>
+			<css>view.css</css>
+			<imgpath>images</imgpath>
+		</style>
+    </portal>    
+</portal_config>

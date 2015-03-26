@@ -1,0 +1,140 @@
+﻿<html>
+<head>
+<title>Placeholder Properties</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="noindex, nofollow" name="robots">
+<script type="text/javascript" src="../../../../../mootools.js"></script>
+<script type="text/javascript"
+	src="../../../dialog/common/fck_dialog_common.js"></script>
+<script type="text/javascript"
+	src="../../../../../ext-2.0.2/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../../../../../ext-2.0.2/ext-all.js"></script>
+<script type="text/javascript" src="../../../../../../dwr/engine.js"></script>
+<script type="text/javascript" src="../../../../../../dwr/util.js"></script>
+<script type="text/javascript"
+	src="../../../../../../dwr/interface/CoreFormService.js"></script>
+<script type="text/javascript" src="../component.js"></script>
+<script type="text/javascript" src="../js/search.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../../../../../ext-2.0.2/resources/css/ext-all.css"></link>
+<script language="javascript">
+	new Search().handleDialog();
+
+	var start = 0;
+	var end = 0;
+	function savePos(textBox) {
+		if (typeof (textBox.selectionStart) == "number") {
+			start = textBox.selectionStart;
+			end = textBox.selectionEnd;
+		} else if (document.selection) {
+			var range = document.selection.createRange();
+			if (range.parentElement().id == textBox.id) {
+				var range_all = document.body.createTextRange();
+				range_all.moveToElementText(textBox);
+				range_all.collapse(true);
+				range_all.setEndPoint("StartToStart", range);
+				start = range_all.text.length;
+
+				range_all.collapse(true);
+				range_all.setEndPoint("StartToEnd", range);
+				end = range_all.text.length;
+			}
+		}
+	}
+	function changeView(value){
+		if(value=='custom'){
+			
+			$("customShowList").style.display="";
+			$("defaultShowList").style.display="none";
+			$("showListHeader").style.display="none";
+		}else{
+			$("customShowList").style.display="none";
+			$("defaultShowList").style.display="";
+			$("defaultShowList1").style.display="";
+			$("showListHeader").style.display="";
+		}
+	}
+	function writeDefault()
+	{
+	$("page").value="<cms:tablePager style='tablePager' pageIndex='_data.currentPage' pageSize='_data.pageSize' recordCount='_data.virtualCount'></cms:tablePager>"
+	}
+</script>
+</head>
+<body scroll="no" style="OVERFLOW: hidden">
+	<table height="100%" cellSpacing="0" cellPadding="0" width="100%"
+		border="0">
+		<tr>
+			<td valign="top">
+				<div id="basicView">
+
+					<span>每页显示的条数：</span>
+					 <input id="pageSizeField" style="width: 50%"
+						type="text" value="10" /> <br /> 
+						
+					<span>只显示已发布信息：</span> 
+					 <input type="checkbox" id="publishedField" /> <br />
+					 
+					 <span id="showListHeader">
+				    <span>是否显示头部：</span>
+					<select id="showHeaderField" style="width: 50%">
+						<option value="true" selected="selected">是</option>
+						<option value="false">否</option>
+					</select> <br /> 
+					</span>
+					<span>列表选择：</span>
+					 <select id="showList" style="width: 50%" onchange="changeView(this.value)">
+						<option value="default" selected="selected">默认列表</option>
+						<option value="custom">自定义列表</option>
+					</select> <br /> 
+					
+					<table>
+					<tr><td>
+					
+					 <span>列表显示字段：</span> </td>
+					<td><input id="availableDisplayFieldInput" type="text" /></td>
+					<td><button id="addFieldButton">添加</button> </td>
+					<td><span id="defaultShowList1" style="display: none"> <button id="removeFieldButton">移除</button></span> </td>
+					</tr></table>
+					
+				
+					
+					
+					 <span id="defaultShowList" style="display: none">
+						<span style="margin: center;">列表选择：</span>
+						<select id="displayFieldSelect" multiple="multiple" size="8" style="width: 60%"></select> <br /> 
+						
+						<span>样式：</span> 
+						<select
+						id="styleField">
+							<option value="" selected="selected"
+								fckLang="DlgUserSystemDefault">系统默认</option>
+							<option value="list_search_style1">Style1</option>
+							<option value="list_search_style2">Style2</option>
+						</select> 
+					
+					</span> 
+					
+					<span id="customShowList" style="display: none">
+					 <br />
+					<table><tr><td>
+					<span >列表HTML代码</span></td>
+					<td>
+					<textarea
+							id="texthtml" onKeyup="savePos(this)" onmouseup="savePos(this)"
+							cols="40" rows="13"></textarea></td>
+					</tr></table> 		
+					<br/>
+					
+						<span>分页</span>
+							<button  onclick="writeDefault()">默认方式</button>
+						<textarea id="page" style="width:300px;" rows="4"></textarea>	
+					</span>
+						
+
+				</div>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

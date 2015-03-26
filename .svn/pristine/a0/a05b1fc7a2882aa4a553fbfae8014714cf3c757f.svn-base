@@ -1,0 +1,28 @@
+package com.cyberway.weixin.test;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import com.cyberway.weixin.api.DepartmentAPI;
+import com.cyberway.weixin.api.SuiteAPI;
+import com.cyberway.weixin.service.SuiteService;
+import com.cyberway.weixin.suite.SuiteConfig;
+import com.cyberway.weixin.util.AccessTokenUtil;
+import com.cyberway.weixin.util.CommonUtil;
+import com.cyberway.weixin.util.ConnectionUtil;
+import com.cyberway.weixin.util.Constants;
+
+public class Test5 {
+
+	public static void main(String[] args) {
+		String jsonData = SuiteService.getJsonObjectData(SuiteConfig.SUITE_ID, SuiteConfig.SUITE_SECRET, null);
+		JSONObject jsonobject =ConnectionUtil.getHttpRequest( SuiteAPI.GET_SUITE_ACCESS_TOKEN_URL, "POST", null);
+		if (null != jsonobject) {
+			int errcode = jsonobject.getInt("errcode");
+			String errmsg = jsonobject.getString("errmsg");
+			if (0 != errcode) {
+			} else {
+			}
+	}
+}
+}

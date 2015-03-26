@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.1
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="com.cyberway.common.domain.CoreIdentity" 
+    table="CORE_Identity"
+>
+
+    <id
+        name="iid"
+        type="java.lang.Long"
+        column="IID"
+    >
+        <generator class="native" />
+    </id>
+ 
+ <property
+        name="icode"
+        type="java.lang.String"
+        column="ICODE"
+        length="20"
+    />
+    <property
+        name="iname"
+        type="java.lang.String"
+        column="INAME"
+        length="100"
+    />
+    <property
+        name="iremark"
+        type="java.lang.String"
+        column="IREMARK"
+        length="200"
+    />
+  
+  <property name="orderno" type="java.lang.Long" column="ORDERNO" length="5" />
+  <property name="siteId" type="java.lang.Long" column="SITEID" length="18" />
+</class>
+</hibernate-mapping>

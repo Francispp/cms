@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	    <!-- 调查管理 -->
+	    <package name="survey" namespace="/survey" extends="default">
+	    	<action name="questionnaire" class="com.cyberway.cms.survey.view.QuestionnaireController" >
+				<result name="list">/WEB-INF/pages/cms/survey/questionnaire_list.jsp</result>
+				<result name="input">/WEB-INF/pages/cms/survey/questionnaire_edit.jsp</result>
+				<result name="add">/WEB-INF/pages/cms/survey/questionnaire_add.jsp</result>
+				<result name="editArgs">/WEB-INF/pages/cms/survey/questionnaire_add.jsp</result>
+				<result name="defaultView">/survey/${domain.styleFile}</result>
+				<result name="preview">/WEB-INF/pages/cms/survey/survey_default.jsp</result>
+				<result name="thanks">/WEB-INF/pages/cms/survey/survey_thanks.jsp</result>
+				<result name="result">/WEB-INF/pages/cms/survey/survey_result.jsp</result>
+				<result name="tourl">${tourl}</result>
+			</action>
+			<action name="question" class="com.cyberway.cms.survey.view.QuestionController" >
+				<result name="list">/WEB-INF/pages/cms/survey/question_list.jsp</result>
+				<result name="questionnaire" type="redirect">/survey/questionnaire!edit.action?id=${questionnaireId}</result>
+				<result name="input">/WEB-INF/pages/cms/survey/questionnaire_question_edit.jsp</result>
+				<result name="addQuestionToQuestionnaire">/WEB-INF/pages/cms/survey/close.jsp</result>
+				<result name="listby">/WEB-INF/pages/cms/survey/question_listby.jsp</result>
+			</action>
+			<action name="answer" class="com.cyberway.cms.survey.view.QuestionnaireAnswerController" >
+				<result name="tourl" type="redirect">${tourl}</result>
+				<result name="result" type="redirect">/survey/questionnaire!result.action?id=${domain.questionnaireId}</result>
+				<result name="thanks" type="redirect">/survey/questionnaire!thanks.action?id=${domain.questionnaireId}</result>
+				<result name="close">/WEB-INF/pages/cms/survey/close.jsp</result>
+				<result name="error">/WEB-INF/pages/cms/survey/error.jsp</result>
+			</action>
+	      </package>
+</struts>

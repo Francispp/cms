@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+    <class name="com.cyberway.cms.component.leaveword.domain.LeaveWord" table="CMS_LEAVEWORD" lazy="true">
+        <id name="oid" type="java.lang.Long">
+            <generator class="native" />
+        </id>
+        <property name="siteId" />
+        <property name="siteName" length="100"/>
+		<property name="removeIp" length="100"/>
+		<property name="userId" />
+		<property name="userName" length="100"/>
+		<property name="leaveTime" />
+		<property name="title" length="200"/>
+		<property name="link" length="100"/>
+		<property name="content" length="5000"/>
+		<property name="email" length="100"/> 
+		<property name="status" /> 
+		
+		<!--回复-->
+		<set name="answers" inverse="false" cascade="delete" lazy="false" >
+			<key column="topicid"></key>
+			<one-to-many class="com.cyberway.cms.component.leaveword.domain.AnswerLeaveWord"  />
+		</set>
+    </class>
+</hibernate-mapping >

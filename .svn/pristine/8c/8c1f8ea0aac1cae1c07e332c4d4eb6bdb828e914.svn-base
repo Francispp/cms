@@ -1,0 +1,192 @@
+﻿<span fckLang="DlgUserPopedom">权限控制</span>
+<br />
+<select style="width:100%" id="popedom_choose">
+</select>
+<br />
+<span>只读权限脚本：</span>
+<br />
+<textarea id="readOnlyPrivilegeScriptField" style="width:100%;word-break:break-all" rows="5" cols="20"></textarea>
+<br />
+<span>隐藏权限脚本：</span>
+<br />
+<textarea id="hiddenPrivilegeScriptField" style="width:100%;word-break:break-all" rows="5" cols="20"></textarea>
+<br />
+<span style="display:none;">
+<textarea id="privilegeScriptField" style="width:100%;word-break:break-all" rows="5" cols="20"></textarea>
+</span>
+<div>
+<button  onclick="writePrivilegeScriptValue(window.readOnlyPrivilegeScriptField)">生成只读脚本</button>
+<button fckLang="DlgUserWriteScript" onclick="writePrivilegeScriptValue(window.hiddenPrivilegeScriptField)">生成隐藏脚本</button>
+
+</div>
+<script type="text/javascript">
+function writePrivilegeScriptValue(ScriptField)
+{
+var sel_Object = document.getElementById("popedom_choose");
+var selPopedom = sel_Object.options[sel_Object.selectedIndex].value;
+if(selPopedom.indexOf("CMS_CHANNEL") != -1 )
+{
+ScriptField.value = "CMSPERMISSION.haveThePermission($WEB.getWebUser(),\""+selPopedom+"\",2,$WEB.getChannelId());";
+}
+else
+{
+//ScriptField.value = "CMSPERMISSION.haveThePermission($WEB.getWebUser(),\""+selPopedom+"\",3,$WEB.getTemplateId());";
+ScriptField.value = "CMSPERMISSION.haveThePermission($WEB.getWebUser(),\""+selPopedom+"\",3,$WEB.getDocumentId());";
+
+}
+}
+function writeDisplayScriptValue(ScriptField)
+{
+ScriptField.value = writeScript(viewDisplayReadOnlyScript(),viewDisplayHiddenScript());
+}
+
+function viewDisplayHiddenScript ()
+	{
+	var str = "";
+	str += "if(((Boolean)@Hidden).booleanValue()){";
+	str +="--split--";
+	str +="}";
+	var hiddenValue = splitScript(str);
+	return hiddenValue;
+	}
+function viewDisplayReadOnlyScript ()
+	{
+	var str = "";
+	str += "if(((Boolean)@ReadOnly).booleanValue()){";
+	str +="--split--";
+	str +="}";
+	str +="else{";
+	str +="@NAME";
+	str += "}";
+	var readOnlyValue = splitScript(str);
+	return readOnlyValue;
+	}
+function writePrivilegeScriptValue1(ScriptField,readORhidden)
+{
+  var sel_Object = document.getElementById("popedom_choose");
+  if(readORhidden == "hidden" && ScriptField.value.length >0 && ScriptField.value.indexOf("<hidden>") != -1 && ScriptField.value.indexOf("</hidden>") != -1)
+   {
+     var str = ScriptField.value;
+     var subStr = str.substring(str.indexOf("<hidden>"),str.lastIndexOf("</hidden>")+9);
+     if(subStr != undefined)
+      {
+       var viwStr = "<hidden>\n" + viewHiddenScript(sel_Object)+ "</hidden>\n"; 
+        str = str.replace(subStr,viwStr);
+      }
+    ScriptField.value = str;
+   }
+   
+  else if(readORhidden == "readonly" && ScriptField.value.length >0 && ScriptField.value.indexOf("<readonly>") != -1 && ScriptField.value.indexOf("</readonly>") != -1)
+   {
+    var str = ScriptField.value;
+    var subStr = str.substring(str.indexOf("<readonly>"),str.lastIndexOf("</readonly>")+11);
+    if(subStr != undefined)
+      {
+      var viwStr = "<readonly>\n" + viewReadOnlyScript(sel_Object)+ "</readonly>\n"; 
+        str = str.replace(subStr,viwStr);
+      }
+    ScriptField.value = str;
+   }
+   else
+   {
+    if(readORhidden == "readonly")
+    {
+    ScriptField.value = writeScript(viewReadOnlyScript (sel_Object),'');
+    }
+    else if (readORhidden == "hidden")
+    {
+     ScriptField.value = writeScript('',viewHiddenScript (sel_Object));
+    }
+    else
+    {
+    ScriptField.value = writeScript(viewReadOnlyScript (sel_Object),viewHiddenScript (sel_Object));
+    }
+   }
+}
+function viewHiddenScript (sel_Object)
+	{
+	var selPopedom = sel_Object.options[sel_Object.selectedIndex].value;
+	var str = "";
+	str += " var Permission = CMSPERMISSION.haveThePermission($WEBUSER,\""+selPopedom+"\",3,1);\n";
+	str +=" if(Permission == true){\n";
+	str +="--split--";
+	str +="}\n";
+	var hiddenValue = splitScript(str);
+	return hiddenValue;
+	}
+function viewReadOnlyScript (sel_Object)
+	{
+	var selPopedom = sel_Object.options[sel_Object.selectedIndex].value;
+	var str = "";
+	str += " var Permission = CMSPERMISSION.haveThePermission($WEBUSER,\""+selPopedom+"\",3,1);\n";
+	str +=" if(Permission == true){\n";
+	str +="--split--";
+	str +="}\n";
+	str +="else{\n";
+	str +="$HTML.print(\"$REQUEST.getParameter('@NAME')\");\n";
+	str += "}";
+	var readOnlyValue = splitScript(str);
+	return readOnlyValue;
+	}
+function writeScript(readOnlyValue,hiddenValue)
+  {
+   var str = "";
+   str +="<root>";
+   if(readOnlyValue != undefined && readOnlyValue != "")
+   {
+   str += "<readonly>";
+   str += readOnlyValue;
+   str += "</readonly>";
+   }
+   else
+   {
+   str += "<readonly>";
+   str += "</readonly>";
+   }
+   if(hiddenValue != undefined && hiddenValue != "")
+   {
+   str += "<hidden>";
+   str += hiddenValue +"";
+   str += "</hidden>";
+   }
+   else
+   {
+   str += "<hidden>";
+   str += "</hidden>";
+   }
+    str +="</root>";
+    
+    return str;
+  }
+  
+function splitScript(scriptValue)
+  {
+  var str = ""; 
+  if(scriptValue != undefined)
+  {
+     if(scriptValue.indexOf("--split--") != -1)
+     {
+     var rt = new Array();
+     rt = scriptValue.split("--split--");
+     if(rt.length < 2)
+      {
+       str+= "<start></start>";
+       str+= "<end></end>";
+      }
+     else
+      {
+       str+= "<start>"+rt[0]+"</start>";
+       str+= "<end>"+rt[1]+"</end>";
+      }
+     }
+  }
+  else{
+  str+= "<start></start>\n";
+  str+= "<end></end>\n";
+  }
+    
+    return str;
+  }
+  
+//writeDisplayScriptValue(window.privilegeScriptField);
+</script>
